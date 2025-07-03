@@ -87,9 +87,9 @@ class DynamicPageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showDaynamicPage($page_slug)
+    public function showDynamicPage($slug)
     {
-        $page = DynamicPage::where('page_slug', $page_slug)->where('status', 'active')->firstOrFail();
+        $page = DynamicPage::where('page_slug', $slug)->where('status', 'active')->firstOrFail();
         $pages = DynamicPage::where('status', 'active')->get();
 
         return view('backend.layouts.settings.dynamic_page.show', compact(['page', 'pages']));

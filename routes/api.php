@@ -70,5 +70,5 @@ Route::group(['middleware' => ['auth:api', 'check_is_user_or_entertainer_or_venu
 
     // dynamic page
     Route::get("dynamic-pages", [HomePageController::class, "getDynamicPages"]);
-    Route::get("dynamic-pages/single/{slug}", [HomePageController::class, "showDaynamicPage"]);
+    Route::get("dynamic-pages/single/{slug}", [HomePageController::class, "showDynamicPage"]);
 });

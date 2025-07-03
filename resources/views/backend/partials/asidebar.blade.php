@@ -106,7 +106,7 @@ $systemSetting = App\Models\SystemSetting::first();
             <li class="menu-item {{ request()->routeIs('dynamic_page.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">clarify</span>
-                    <span class="title">Daynamic page</span>
+                    <span class="title">Dynamic Page</span>
                 </a>
                 <ul class="menu-sub">
                     <li class="menu-item">
