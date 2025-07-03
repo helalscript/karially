@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
+use App\Http\Controllers\Web\Backend\PlanController;
+use App\Http\Controllers\Web\Backend\FeatureController;
 
 
 Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function () {
@@ -56,6 +58,13 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   // Routes for FaqController
   Route::resource('/faqs', FaqController::class)->names('faqs');
   Route::post('/faqs/status/{id}', [FaqController::class, 'status'])->name('faqs.status');
+
+  // Routes for PlanController
+  Route::resource('/plans', PlanController::class)->names('plans');
+  Route::post('/plans/status/{id}', [PlanController::class, 'status'])->name('plans.status');
+
+  // Routes for FeatureController
+  Route::resource('/features', FeatureController::class)->names('features');
   // Route Social link
   Route::resource('/home-page/social-link/index', HomePageSocialLinkContainerController::class)->names('cms.home_page.social_link')->except('show');
   Route::post('/home-page/social-link/status/{id}', [HomePageSocialLinkContainerController::class, 'status'])->name('cms.home_page.social_link.status');

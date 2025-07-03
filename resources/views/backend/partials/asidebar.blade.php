@@ -125,6 +125,24 @@ $systemSetting = App\Models\SystemSetting::first();
                 </ul>
             </li>
 
+            <li class="menu-item {{ request()->routeIs('plans.*', 'features.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">view_agenda</span>
+                    <span class="title">Subscription</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('plans.index') }}" class="menu-link {{ request()->routeIs('plans.index') ? 'active' : '' }}">
+                            Plans
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('features.index') }}" class="menu-link {{ request()->routeIs('features.index') ? 'active' : '' }}">
+                            Features
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">CMS</span>
             </li>
