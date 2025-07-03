@@ -34,7 +34,7 @@ class HomePageController extends Controller
         try {
             $per_page = $request->has('per_page') ? $request->per_page : 25;
             $data = CMS::select('id', 'title', 'image', 'link_url')->where('page', Page::HomePage)->where('section', Section::SocialLinkContainer)->where('status', 'active')->paginate($per_page);
-            return Helper::jsonResponse(true, 'Social links data fatced successfully', 200, $data, true);
+            return Helper::jsonResponse(true, 'Social links data fetched successfully', 200, $data, true);
         } catch (Exception $e) {
             Log::error("HomePageController::getSocialLinks" . $e->getMessage());
             return Helper::jsonErrorResponse('Something went wrong', 500);
@@ -51,7 +51,7 @@ class HomePageController extends Controller
     public function getSystemInfo(Request $request): JsonResponse
     {
         try {
-            $data = SystemSetting::select('id', 'system_name', 'logo', 'favicon', 'copyright_text', 'address', 'company_open_hour', 'description', 'contact_number', 'address', 'email')->first();
+            $data = SystemSetting::select('id', 'system_name', 'logo', 'favicon', 'copyright_text', 'address', 'company_open_hour', 'description', 'contact_number', 'email')->first();
             return Helper::jsonResponse(true, 'System data fetched successfully', 200, $data);
         } catch (Exception $e) {
             Log::error("HomePageController::getSystemInfo" . $e->getMessage());
@@ -94,14 +94,14 @@ class HomePageController extends Controller
      * active, it returns a JSON response with an error message and a status
      * code of 403.
      *
-     * @param string $page_slug The slug of the dynamic page to retrieve.
+     * @param string $slug The slug of the dynamic page to retrieve.
      * @return \Illuminate\Http\JsonResponse A JSON response with the dynamic
      * page data or an error message.
      */
-    public function showDaynamicPage($page_slug): JsonResponse
+    public function showDynamicPage($slug): JsonResponse
     {
         try {
-            $page = DynamicPage::where('page_slug', $page_slug)->where('status', 'active')->firstOrFail();
+            $page = DynamicPage::where('page_slug', $slug)->where('status', 'active')->firstOrFail();
             if (!$page) {
                 return Helper::jsonResponse(true, 'No data found', 200, []);
             }

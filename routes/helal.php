@@ -74,4 +74,4 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
 
 // Public route for dynamic pages accessible to all users
-Route::get('/pages/{slug}', [DynamicPageController::class, 'showDaynamicPage'])->name('pages');
+Route::get('/pages/{slug}', [DynamicPageController::class, 'showDynamicPage'])->name('pages');
