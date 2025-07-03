@@ -4,9 +4,11 @@
 @push('styles')
 @endpush
 
+
 @section('content')
 <div class="main-content-container overflow-hidden">
     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+
         <h3 class="mb-0">Create Plan</h3>
     </div>
     <div class="card bg-white border-0 rounded-3 mb-4">

@@ -1,8 +1,8 @@
 @extends('backend.app')
 @section('title', 'Features')
-
 @push('styles')
 @endpush
+
 
 @section('content')
 <div class="main-content-container overflow-hidden">

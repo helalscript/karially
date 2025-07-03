@@ -12,6 +12,7 @@ use App\Http\Controllers\API\V1\User\StripePaymentController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use App\Http\Controllers\API\V1\User\UserSubscriptionController;
 use App\Http\Controllers\API\V1\User\UserFaqController;
+use App\Http\Controllers\API\V1\User\SubscriptionController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -73,4 +74,5 @@ Route::group(['middleware' => ['auth:api', 'check_is_user_or_entertainer_or_venu
     // dynamic page
     Route::get("dynamic-pages", [HomePageController::class, "getDynamicPages"]);
     Route::get("dynamic-pages/single/{slug}", [HomePageController::class, "showDynamicPage"]);
+    Route::get('/subscription', [SubscriptionController::class, 'current']);
 });
