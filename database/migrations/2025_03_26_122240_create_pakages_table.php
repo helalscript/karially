@@ -16,10 +16,34 @@ return new class extends Migration {
             $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->longText('description')->nullable();
+            $table->integer('trial_period_days')->nullable();
+            $table->enum('billing_cycle', ['monthly', 'yearly', 'lifetime'])->default('monthly');
             $table->decimal('price', 10, 2);
-            $table->integer('duration')->default(30); // Duration in days
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
+
+            $table->index(['slug', 'billing_cycle']);
+        });
+
+        Schema::create('features', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->longText('description')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->timestamps();
+        });
+
+        Schema::create('pakage_features', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('pakage_id')->constrained('pakages')->onDelete('cascade');
+            $table->foreignId('feature_id')->constrained('features')->onDelete('cascade');
+            $table->enum('access_lavel', ["view_only", "read_only", "unlimited", "custom"])->default("view_only");
+            $table->string('custom_tag')->nullable(); //goal, cover_letter, etc.
+            $table->integer('custom_value')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->timestamps();
+
+            $table->index(['pakage_id', 'feature_id', 'access_lavel']);
         });
     }
 
