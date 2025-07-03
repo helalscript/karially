@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Feature;
+use App\Models\Pakage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PakageFeatureFactory extends Factory
@@ -11,8 +13,8 @@ class PakageFeatureFactory extends Factory
     public function definition(): array
     {
         return [
-            'pakage_id' => \App\Models\Pakage::factory(),
-            'feature_id' => \App\Models\Feature::factory(),
+            'pakage_id' => Pakage::factory(),
+            'feature_id' => Feature::inRandomOrder()->value('id') ?? Feature::factory()->create()->id,
             'access_lavel' => $this->faker->randomElement(['view_only', 'read_only', 'unlimited', 'custom']),
             'custom_tag' => $this->faker->word,
             'custom_value' => $this->faker->numberBetween(1, 100),
