@@ -10,6 +10,7 @@ use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
 use App\Http\Controllers\API\V1\User\StripePaymentController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
+use App\Http\Controllers\API\V1\User\UserSubscriptionController;
 use App\Http\Controllers\API\V1\User\UserFaqController;
 
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,7 @@ Route::post('/payments-create/stripe', [StripePaymentController::class, 'handleW
 // only for user and host
 Route::group(['middleware' => ['auth:api', 'check_is_user_or_entertainer_or_venue_holder']], function ($router) {
     Route::get('/faqs', [UserFaqController::class, 'index']);
+    Route::get('/subscription/my-plan', [UserSubscriptionController::class, 'myPlan']);
     Route::post('/contact-support-message/sent', [UserContactSupportController::class, 'store']);
     // --------- cms part --------------
     Route::get('/cms/social-link', [HomePageController::class, 'getSocialLinks']);
