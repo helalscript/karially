@@ -6,29 +6,46 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pakage extends Model
 {
-    // Define the table name if it's not the default
     protected $table = 'pakages';
 
-    // Fillable columns for mass assignment
     protected $fillable = [
         'title',
+        'slug',
+        'image',
         'description',
+        'trial_period_days',
+        'billing_cycle',
         'price',
-        'duration',
-        'status'
+        'status',
     ];
 
     protected $casts = [
         'title' => 'string',
+        'slug' => 'string',
+        'image' => 'string',
         'description' => 'string',
+        'trial_period_days' => 'integer',
+        'billing_cycle' => 'string',
         'price' => 'decimal:2',
-        'duration' => 'integer',
         'status' => 'string',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
-
 
     public function subscriptions()
     {
-        return $this->hasMany(Subcription::class);  // Assuming a package can have many subscriptions
+        return $this->hasMany(Subcription::class);
+    }
+
+    public function pakageFeatures()
+    {
+        return $this->hasMany(PakageFeature::class);
+    }
+
+    public function features()
+    {
+        return $this->belongsToMany(Feature::class, 'pakage_features')
+            ->withPivot('access_lavel', 'custom_tag', 'custom_value', 'status')
+            ->withTimestamps();
     }
 }
