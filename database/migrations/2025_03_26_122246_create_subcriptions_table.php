@@ -14,9 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('pakage_id')->nullable()->constrained('pakages')->onDelete('cascade');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->enum('status', ['pending','active', 'inactive', 'cancelled'])->default('pending');
+            $table->string('stripe_subscription_id')->nullable();
+            $table->date('started_at')->nullable();
+            $table->date('ended_at')->nullable();
+            $table->enum('status', ['pending', 'active', 'expired', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }
