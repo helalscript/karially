@@ -12,9 +12,11 @@ return new class extends Migration {
     {
         Schema::create('coaches', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignId('category_id')->index()->constrained()->onDelete('cascade');
-            $table->text('description')->nullable();
+            $table->string('name');
+            $table->string('avatar')->nullable();
+            $table->text('bio')->nullable();
+            $table->string('calendly_user_id')->nullable();
             $table->string('calendly_link')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();

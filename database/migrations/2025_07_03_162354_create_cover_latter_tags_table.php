@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('cover_latter_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cover_letter_id')->constrained()->onDelete('cascade');
+            $table->foreignId('cover_letter_id')->constrained('cover_latters')->onDelete('cascade');
             $table->foreignId('tag_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

@@ -107,30 +107,4 @@ class Helper
         return response()->json($response, $code);
     }
 
-
-    public static function sendNotifyMobile($token, $notifyData): void
-    {
-        try {
-            $SystemSetting = SystemSetting::first();
-            if ($SystemSetting) {
-                $app_logo = $SystemSetting->logo;
-            } else {
-                $app_logo = 'logo.png';
-            }
-
-            $factory = (new Factory)->withServiceAccount(storage_path('app/private/easy-to-manage-firebase-adminsdk-76x4g-a33d9372d7.json'));
-
-            $messaging = $factory->createMessaging();
-            $notification = Notification::create(
-                $notifyData['title'],
-                Str::limit($notifyData['body'], 100),
-                $app_logo
-            );
-            $message = CloudMessage::withTarget('token', $token)->withNotification($notification);
-            $messaging->send($message);
-            Log::error("firebase notification success");
-        } catch (\Exception $exception) {
-            Log::error($exception);
-        }
-    }
 }

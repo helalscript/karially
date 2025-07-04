@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('resumes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_profile_id')->constrained()->onDelete('cascade');
-            $table->foreignId('template_id')->constrained('templates')->onDelete('set null')->nullable();
-            $table->foreignId('ai_prompt_id')->constrained('ai_prompts')->onDelete('set null')->nullable();
+            $table->foreignId('template_id')->nullable()->constrained('templates')->onDelete('set null');
+            $table->foreignId('ai_prompt_id')->nullable()->constrained('ai_prompts')->onDelete('set null');
             $table->text('generated_html')->nullable();
             $table->string('status')->default('draft');
             $table->unsignedInteger('version')->default(1);

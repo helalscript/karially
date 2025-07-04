@@ -39,5 +39,8 @@ return [
         'secret' => env('STRIPE_SECRET_KEY'),
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
     ],
+    'calendly' => [
+        'token' => env('CALENDLY_TOKEN'),
+    ],
 
 ];

@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->dateTime('start_time');
             $table->string('calendly_link')->nullable();
+            $table->text('notes')->nullable();
+            $table->string('attendance_status')->nullable(); // attended, no_show_user, no_show_coach
             $table->enum('status', ['pending', 'confirmed', 'cancelled','re_scheduled'])->default('pending');
             $table->timestamps();
 

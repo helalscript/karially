@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_profile_id')->constrained()->onDelete('cascade');
             $table->text('prompt_text');
-            $table->enum('used_for', ['resume', 'cover_letter']);
+            $table->enum('used_for', ['resume', 'cover_letter', 'weekly', 'career_goal'])->nullable();
             $table->timestamps();
         });
     }

@@ -10,9 +10,11 @@ class Coach extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'category_id',
-        'description',
+        'name',
+        'avatar',
+        'bio',
+        'calendly_user_id', // This field is used to store the Calendly user ID
         'calendly_link',
         'status',
     ];
@@ -20,7 +22,9 @@ class Coach extends Model
     protected $casts = [
         'category_id' => 'integer',
         'name' => 'string',
-        'description' => 'string',
+        'avatar' => 'string',
+        'bio' => 'string',
+        'calendly_user_id' => 'string',
         'calendly_link' => 'string',
         'status' => 'string',
     ];

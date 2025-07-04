@@ -14,6 +14,8 @@ class Booking extends Model
         'user_id',
         'start_time',
         'calendly_link',
+        'notes',
+        'attendance_status',
         'status',
     ];
 
@@ -22,6 +24,8 @@ class Booking extends Model
         'user_id' => 'integer',
         'start_time' => 'datetime',
         'calendly_link' => 'string',
+        'notes' => 'string',
+        'attendance_status' => 'string',
         'status' => 'string',
     ];
 

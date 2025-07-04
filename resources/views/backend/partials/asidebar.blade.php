@@ -40,6 +40,24 @@ $systemSetting = App\Models\SystemSetting::first();
                     <span class="title">Contact Support Message</span>
                 </a>
             </li> --}}
+
+            <!-- Category Menu Item -->
+            <li class="menu-item {{ request()->routeIs('category.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">help</span>
+                    <span class="title">Category</span>
+                </a>
+                <ul class="menu-sub">
+                    <!-- Category Settings Submenu -->
+                    <li class="menu-item ">
+                        <a href="{{ route('category.index') }}"
+                            class="menu-link {{ request()->routeIs('category.index') ? 'active' : '' }} ">
+                            Category List
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
             <!-- Faqs Menu Item -->
             <li class="menu-item {{ request()->routeIs('faqs.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
