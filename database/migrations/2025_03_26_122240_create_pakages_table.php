@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('pakages', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
@@ -33,9 +33,9 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('pakage_features', function (Blueprint $table) {
+        Schema::create('package_features', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pakage_id')->constrained('pakages')->onDelete('cascade');
+            $table->foreignId('package_id')->constrained('packages')->onDelete('cascade');
             $table->foreignId('feature_id')->constrained('features')->onDelete('cascade');
             $table->enum('access_lavel', ["view_only", "read_only", "unlimited", "custom"])->default("view_only");
             $table->string('custom_tag')->nullable(); //goal, cover_letter, etc.
@@ -43,7 +43,7 @@ return new class extends Migration {
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
 
-            $table->index(['pakage_id', 'feature_id', 'access_lavel']);
+            $table->index(['package_id', 'feature_id', 'access_lavel']);
         });
     }
 

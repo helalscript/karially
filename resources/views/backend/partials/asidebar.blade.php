@@ -41,6 +41,23 @@ $systemSetting = App\Models\SystemSetting::first();
                 </a>
             </li> --}}
 
+            <!-- Coaches Menu Item -->
+            <li class="menu-item {{ request()->routeIs('coaches.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">help</span>
+                    <span class="title">Coaches</span>
+                </a>
+                <ul class="menu-sub">
+                    <!-- Coaches Settings Submenu -->
+                    <li class="menu-item ">
+                        <a href="{{ route('coaches.index') }}"
+                            class="menu-link {{ request()->routeIs('coaches.index') ? 'active' : '' }} ">
+                            Coaches List
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
             <!-- Category Menu Item -->
             <li class="menu-item {{ request()->routeIs('category.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">

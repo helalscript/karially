@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('avatar')->nullable();
             $table->text('bio')->nullable();
+            $table->string('email')->nullable();
             $table->string('calendly_user_id')->nullable();
             $table->string('calendly_link')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');

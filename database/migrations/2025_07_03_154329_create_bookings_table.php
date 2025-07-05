@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('calendly_link')->nullable();
             $table->text('notes')->nullable();
             $table->string('attendance_status')->nullable(); // attended, no_show_user, no_show_coach
-            $table->enum('status', ['pending', 'confirmed', 'cancelled','re_scheduled'])->default('pending');
+            $table->enum('status', ['pending','upcoming', 'confirmed', 'cancelled','re_scheduled', 'completed'])->default('pending');
             $table->timestamps();
 
             $table->index(['coach_id', 'user_id', 'start_time']);
