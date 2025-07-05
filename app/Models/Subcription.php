@@ -12,7 +12,7 @@ class Subcription extends Model
     // Fillable columns for mass assignment
     protected $fillable = [
         'user_id',
-        'pakage_id',
+        'package_id',
         'stripe_subscription_id',
         'started_at',
         'ended_at',
@@ -22,7 +22,7 @@ class Subcription extends Model
     // Column casts for type safety
     protected $casts = [
         'user_id' => 'integer',
-        'pakage_id' => 'integer',
+        'package_id' => 'integer',
         'stripe_subscription_id' => 'string',
         'started_at' => 'date',
         'ended_at' => 'date',
