@@ -22,14 +22,14 @@ class Feature extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function pakageFeatures()
+    public function packageFeatures()
     {
-        return $this->hasMany(PakageFeature::class);
+        return $this->hasMany(PackageFeature::class);
     }
 
-    public function pakages()
+    public function packages()
     {
-        return $this->belongsToMany(Pakage::class, 'pakage_features')
+        return $this->belongsToMany(Package::class, 'package_features')
             ->withPivot('access_lavel', 'custom_tag', 'custom_value', 'status')
             ->withTimestamps();
     }
