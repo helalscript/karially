@@ -9,8 +9,10 @@
  */
 
 
+use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\CMS\FaqController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
+use App\Http\Controllers\Web\Backend\CoachController;
 use App\Http\Controllers\Web\Backend\ContactMessageController;
 use App\Http\Controllers\Web\Backend\NotificationController;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +61,17 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   // Route Social link
   Route::resource('/home-page/social-link/index', HomePageSocialLinkContainerController::class)->names('cms.home_page.social_link')->except('show');
   Route::post('/home-page/social-link/status/{id}', [HomePageSocialLinkContainerController::class, 'status'])->name('cms.home_page.social_link.status');
+
+  // Route for CategoryController
+  Route::resource('/category', CategoryController::class)->names('category')->except(['create']);
+  Route::post('/category/status/{id}', [CategoryController::class, 'status'])->name('category.status');
+
+  // Route for CoachController
+  Route::resource('/coaches', CoachController::class)->names('coaches');
+  Route::post('/coaches/status/{id}', [CoachController::class, 'status'])->name('coaches.status');
+  
+
+
 
 
   // Routes for NotificationController

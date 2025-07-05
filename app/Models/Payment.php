@@ -2,65 +2,52 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Payment extends Model
 {
-    // Define the table name if it's not the default
-    protected $table = 'payments';
-
-    // Fillable columns for mass assignment
+    /** @use HasFactory<\Database\Factories\PaymentFactory> */
+    use HasFactory;
     protected $fillable = [
-        'booking_id',
         'user_id',
-        'transaction_id',
-        'promo_code_id',
-        'promo_code',
-        'transaction_number',
+        'payable_type',
+        'payable_id',
         'payment_method',
-        'payment_intent_id',
-        'client_secret',
+        'stripe_payment_id',
+        'currency',
         'amount',
-        'status'
+        'metadata',
+        'type',
+        'status',
     ];
 
-    // Column casts for type safety
     protected $casts = [
-        'booking_id' => 'integer',
         'user_id' => 'integer',
-        'transaction_id' => 'integer',
-        'promo_code_id' => 'integer',
-        'promo_code' => 'string',
-        'transaction_number' => 'string',
+        'payable_type' => 'string',
+        'payable_id' => 'integer',
         'payment_method' => 'string',
-        'payment_intent_id' => 'string',
-        'client_secret' => 'string',
-        'amount' => 'decimal:2',
+        'stripe_payment_id' => 'string',
+        'currency' => 'string',
+        'amount' => 'integer',
+        'metadata' => 'array',
+        'type' => 'string', // since it's an ENUM stored as string
         'status' => 'string',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
-
-
-    // A Payment belongs to a Booking
-    public function booking()
+    // Relationship with User
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Booking::class); // Foreign key 'booking_id'
+        return $this->belongsTo(User::class);
     }
 
-    // A Payment belongs to a User
-    public function user()
+    // Polymorphic relationship
+    public function payable(): MorphTo
     {
-        return $this->belongsTo(User::class); // Foreign key 'user_id'
-    }
-
-    // A Payment belongs to a Transaction
-    public function transaction()
-    {
-        return $this->belongsTo(Transaction::class); // Foreign key 'transaction_id'
-    }
-
-    public function isPaid()
-    {
-        return $this->status === 'success';
+        return $this->morphTo();
     }
 }

@@ -3148,7 +3148,7 @@ textarea.form-control-lg {
   width: 2em;
   margin-left: -2.5em;
   background-image: var(--bs-form-switch-bg);
-  background-position: left center;
+  background-position: left center ;
   border-radius: 2em;
   transition: background-position 0.15s ease-in-out;
 }

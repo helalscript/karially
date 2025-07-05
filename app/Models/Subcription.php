@@ -7,29 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Subcription extends Model
 {
     // Define the table name if it's not the default
-    protected $table = 'subscriptions';
+    protected $table = 'subcriptions';
 
     // Fillable columns for mass assignment
     protected $fillable = [
         'user_id',
-        'parking_space_id',
         'package_id',
-        'start_date',
-        'end_date',
+        'stripe_subscription_id',
+        'started_at',
+        'ended_at',
         'status'
     ];
 
     // Column casts for type safety
     protected $casts = [
         'user_id' => 'integer',
-        'parking_space_id' => 'integer',
         'package_id' => 'integer',
-        'start_date' => 'date',
-        'end_date' => 'date',
+        'stripe_subscription_id' => 'string',
+        'started_at' => 'date',
+        'ended_at' => 'date',
         'status' => 'string',
     ];
 
-    
 
     // A Subscription belongs to a User
     public function user()
@@ -37,15 +36,8 @@ class Subcription extends Model
         return $this->belongsTo(User::class); // Foreign key 'user_id'
     }
 
-    // A Subscription belongs to a ParkingSpace
-    public function parkingSpace()
+    public function pakage()
     {
-        return $this->belongsTo(ParkingSpace::class); // Foreign key 'parking_space_id'
+        return $this->belongsTo(Pakage::class);
     }
-
-    // A Subscription belongs to a Package
-    // public function package()
-    // {
-    //     return $this->belongsTo(Package::class); // Foreign key 'package_id'
-    // }
 }

@@ -82,7 +82,7 @@ class RegisterController extends Controller
                 $user = User::create($userData);
             }
 
-            Mail::to($user->email)->send(new OtpMail($otp, $user, 'Verify Your Email Address'));
+            // Mail::to($user->email)->send(new OtpMail($otp, $user, 'Verify Your Email Address'));
 
             DB::commit();
             return Helper::jsonResponse(true, 'A verification email has been successfully sent to your email address. Please check your inbox to complete the verification.', 200);

@@ -73,14 +73,8 @@ class CategoryController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
-            'description' => 'required|string|max:255',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        // dd($validatedData);
         try {
-            if ($request->hasFile('thumbnail')) {
-                $validatedData['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'category', time() . '_' . getFileName($request->file('thumbnail')));
-            }
             Category::Create($validatedData);
             return response()->json([
                 "success" => true,
@@ -119,20 +113,9 @@ class CategoryController extends Controller
         // dd($request->all());
         $validatedData = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $id,
-            'description' => 'required|string|max:255',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
-            $data = Category::findOrFail($id);
-            if (in_array($data->name, ['Car', 'Restaurant', 'Real Estate'])) {
-                unset($validatedData['name']); // Prevent updating `name`
-            }
-            if ($request->hasFile('thumbnail')) {
-                if ($data && $data->thumbnail && file_exists(public_path($data->thumbnail))) {
-                    Helper::fileDelete(public_path($data->thumbnail));
-                }
-                $validatedData['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'category', time() . '_' . getFileName($request->file('thumbnail')));
-            }
+            
             $data = Category::findOrFail($id);
             $data->update($validatedData);
 
@@ -155,20 +138,7 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $data = Category::findOrFail($id);
-        // Prevent deletion of specific categories
-        if (in_array($data->name, ['Car', 'Restaurant', 'Real Estate'])) {
-            return response()->json([
-                "success" => false,
-                "message" => "This category cannot be deleted."
-            ], 403);
-        }
-
-        // delete the category
-        if (!empty($data->thumbnail) && $data->thumbnail !== 'uploads/category/demo_pic.jpg') {
-            Helper::fileDelete(public_path($data->thumbnail));
-        }
         $data->delete();
-
         return response()->json([
             "success" => true,
             "message" => "Item deleted successfully."

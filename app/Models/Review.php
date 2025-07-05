@@ -2,23 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
-        'parking_space_id',
-        'comment',
+        'coach_id',
+        'booking_id',
         'rating',
-        'status'
+        'comment',
+        'status',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
-        'parking_space_id' => 'integer',
-        'comment' => 'string',
+        'coach_id' => 'integer',
+        'booking_id' => 'integer',
         'rating' => 'integer',
+        'comment' => 'string',
         'status' => 'string',
     ];
 
@@ -27,11 +32,13 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function parkingSpace()
+    public function coach()
     {
-        return $this->belongsTo(ParkingSpace::class);
+        return $this->belongsTo(Coach::class);
     }
 
-    
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class);
+    }
 }
-
