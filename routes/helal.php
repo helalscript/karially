@@ -69,6 +69,7 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   // Route for CoachController
   Route::resource('/coaches', CoachController::class)->names('coaches');
   Route::post('/coaches/status/{id}', [CoachController::class, 'status'])->name('coaches.status');
+  
 
 
 

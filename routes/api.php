@@ -8,7 +8,10 @@ use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
+use App\Http\Controllers\Api\V1\User\BookingController;
+use App\Http\Controllers\ApI\V1\User\CoachController;
 use App\Http\Controllers\API\V1\User\StripePaymentController;
+use App\Http\Controllers\Api\V1\User\SubcriptionController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use App\Http\Controllers\API\V1\User\UserFaqController;
 
@@ -44,17 +47,18 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
 
 // only for user
 Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router) {
+    //route for coaches
+    Route::apiResource('/coaches', CoachController::class)->only(['index', 'show']);
+    //route for bookings
+    Route::apiResource('/my-bookings', BookingController::class);
+    Route::post('/my-bookings/cancel/{id}', [BookingController::class, 'cancelBooking'])->name('my_bookings.cancel');
+    //route for subscription
+    Route::get('/packages', [SubcriptionController::class, 'getPackages']);
+    // Route::get('/my-subscription', [SubcriptionController::class, 'getSubscription']);
+    // Route::get('/payments', [SubcriptionController::class, 'getPayments']);
 
 });
 
-//only for entertrainer
-Route::group(['middleware' => ['auth:api', 'check_is_entertrainer']], function ($router) {
-
-});
-//only for venue holder
-Route::group(['middleware' => ['auth:api', 'check_is_venue_holder']], function ($router) {
-
-});
 
 
 //payments webhook
