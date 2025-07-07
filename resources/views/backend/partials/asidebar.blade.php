@@ -75,6 +75,21 @@ $systemSetting = App\Models\SystemSetting::first();
 
                 </ul>
             </li>
+            <!-- Packages Menu Item -->
+            <li class="menu-item {{ request()->routeIs('packages.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">inventory_2</span>
+                    <span class="title">Packages</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item ">
+                        <a href="{{ route('packages.index') }}"
+                            class="menu-link {{ request()->routeIs('packages.index') ? 'active' : '' }} ">
+                            Package List
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <!-- Faqs Menu Item -->
             <li class="menu-item {{ request()->routeIs('faqs.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
