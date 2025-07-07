@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::post('/my-bookings/cancel/{id}', [BookingController::class, 'cancelBooking'])->name('my_bookings.cancel');
     //route for subscription
     Route::get('/packages', [SubcriptionController::class, 'getPackages']);
+    Route::get('/packages/single/{id}', [SubcriptionController::class, 'getSinglePackages']);
     // Route::get('/my-subscription', [SubcriptionController::class, 'getSubscription']);
     // Route::get('/payments', [SubcriptionController::class, 'getPayments']);
 
