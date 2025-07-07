@@ -15,6 +15,7 @@ use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
 use App\Http\Controllers\Web\Backend\CoachController;
 use App\Http\Controllers\Web\Backend\ContactMessageController;
 use App\Http\Controllers\Web\Backend\NotificationController;
+use App\Http\Controllers\Web\Backend\PackageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
@@ -65,6 +66,10 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   // Route for CategoryController
   Route::resource('/category', CategoryController::class)->names('category')->except(['create']);
   Route::post('/category/status/{id}', [CategoryController::class, 'status'])->name('category.status');
+
+  // Route for PackageController
+  Route::resource('/packages', PackageController::class)->names('packages');
+  Route::post('/packages/status/{id}', [PackageController::class, 'status'])->name('packages.status');
 
   // Route for CoachController
   Route::resource('/coaches', CoachController::class)->names('coaches');
