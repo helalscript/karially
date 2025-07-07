@@ -31,6 +31,10 @@ class Package extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
     public function subscriptions()
     {
@@ -45,7 +49,6 @@ class Package extends Model
     public function features()
     {
         return $this->belongsToMany(Feature::class, 'package_features')
-            ->withPivot('access_lavel', 'custom_tag', 'custom_value', 'status')
-            ->withTimestamps();
+            ->withPivot('access_lavel', 'custom_tag', 'custom_value','description', 'status');
     }
 }
