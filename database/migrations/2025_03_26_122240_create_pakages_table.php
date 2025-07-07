@@ -40,6 +40,7 @@ return new class extends Migration {
             $table->enum('access_lavel', ["view_only", "read_only", "unlimited", "custom"])->default("view_only");
             $table->string('custom_tag')->nullable(); //goal, cover_letter, etc.
             $table->integer('custom_value')->nullable();
+            $table->longText('description')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
 
