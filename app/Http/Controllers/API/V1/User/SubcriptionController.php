@@ -34,6 +34,19 @@ class SubcriptionController extends Controller
             return Helper::jsonErrorResponse('Failed to fetch plans.', 500, [$e->getMessage()]);
         }
     }
+    /**
+     * Display a listing of the resource.
+     */
+    public function getSinglePackages($id)
+    {
+        try {
+            $plans = $this->subscriptionService->getSinglePackages($id);
+            return Helper::jsonResponse(true, 'Plans fetched successfully.', 200, new GetPackageResource($plans));
+        } catch (\Exception $e) {
+            Log::error("SubcriptionController::getPackages - " . $e->getMessage());
+            return Helper::jsonErrorResponse('Failed to fetch plans.', 500, [$e->getMessage()]);
+        }
+    }
 
 
 }
