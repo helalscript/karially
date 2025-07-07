@@ -25,9 +25,12 @@ class SubcriptionService
     {
         try {
             $per_page = $request->get('per_page', 10);
-            $data = Package::with([
-                'packageFeatures'
-            ])
+            $billing_cycle = $request->get('billing_cycle', 'monthly');
+            $data = Package::with(['features'])
+                ->when($billing_cycle, function ($query) use ($billing_cycle) {
+                    return $query->where('billing_cycle', $billing_cycle);
+                })
+                ->select('id', 'title', 'slug', 'trial_period_days', 'billing_cycle', 'price', 'status')
                 ->latest()
                 ->paginate($per_page);
             return $data;
@@ -35,7 +38,6 @@ class SubcriptionService
         } catch (Exception $e) {
             Log::error("SubcriptionService::index" . $e->getMessage());
             throw $e;
-
         }
     }
 
