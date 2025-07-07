@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PackageFeature extends Model
 {
-    protected $table = 'pakage_features';
+    protected $table = 'package_features';
 
     protected $fillable = [
         'pakage_id',
@@ -14,6 +14,7 @@ class PackageFeature extends Model
         'access_lavel',
         'custom_tag',
         'custom_value',
+        'description',
         'status',
     ];
 
@@ -23,9 +24,13 @@ class PackageFeature extends Model
         'access_lavel' => 'string',
         'custom_tag' => 'string',
         'custom_value' => 'integer',
+        'description' => 'string',
         'status' => 'string',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+    ];
+
+     protected $hidden = [
+        'created_at',
+        'updated_at',
     ];
 
     public function package()
