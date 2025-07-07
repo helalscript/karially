@@ -22,6 +22,12 @@ class Feature extends Model
         'updated_at' => 'datetime',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'description', // Hide description if not needed in API responses
+    ];
+
     public function packageFeatures()
     {
         return $this->hasMany(PackageFeature::class);
