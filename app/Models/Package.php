@@ -49,6 +49,11 @@ class Package extends Model
     public function features()
     {
         return $this->belongsToMany(Feature::class, 'package_features')
-            ->withPivot('access_lavel', 'custom_tag', 'custom_value','description', 'status');
+            ->withPivot('access_lavel', 'custom_tag', 'custom_value', 'description', 'status');
+    }
+
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'payable');
     }
 }
