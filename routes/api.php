@@ -55,10 +55,11 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     //route for subscription
     Route::get('/packages', [SubcriptionController::class, 'getPackages']);
     Route::get('/packages/single/{id}', [SubcriptionController::class, 'getSinglePackages']);
-    // Route::get('/my-subscription', [SubcriptionController::class, 'getSubscription']);
-    // Route::get('/payments', [SubcriptionController::class, 'getPayments']);
-
+    Route::get('/my-subscription', [SubcriptionController::class, 'getMySubscription']);
+    Route::post('/create-subscription/{packageId}', [SubcriptionController::class, 'createSubscription']);
+    
 });
+Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
 
 
 
