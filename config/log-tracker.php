@@ -36,7 +36,8 @@ return [
     | - 'auth': Restricts access to authenticated users only.
     |
     */
-    'middleware' => ['web', 'auth','role_check'],
+    'middleware' => ['web'],
+    // 'middleware' => ['web', 'auth','role_check'],
 
     /*
     |--------------------------------------------------------------------------

@@ -42,5 +42,8 @@ return [
     'calendly' => [
         'token' => env('CALENDLY_TOKEN'),
     ],
+    'openai' => [
+        'key' => env('OPENAI_KEY'),
+    ],
 
 ];
