@@ -36,8 +36,9 @@ class Subcription extends Model
         return $this->belongsTo(User::class); // Foreign key 'user_id'
     }
 
-    public function pakage()
+    public function package()
     {
-        return $this->belongsTo(Pakage::class);
+        return $this->belongsTo(Package::class);
     }
+    
 }

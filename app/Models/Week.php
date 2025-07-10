@@ -11,10 +11,10 @@ class Week extends Model
 
     protected $fillable = [
         'user_id',
-        'career_plan_id',
+        'career_goal_id',
         'week_number',
         'title',
-        'goal',
+        'description',
         'start_date',
         'end_date',
         'status',
@@ -22,10 +22,10 @@ class Week extends Model
 
     protected $casts = [
         'user_id' => 'integer',
-        'career_plan_id' => 'integer',
+        'career_goal_id' => 'integer',
         'week_number' => 'integer',
         'title' => 'string',
-        'goal' => 'string',
+        'description' => 'string',
         'start_date' => 'date',
         'end_date' => 'date',
         'status' => 'string',
@@ -36,9 +36,9 @@ class Week extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function careerPlan()
+    public function careerGoal()
     {
-        return $this->belongsTo(CareerPlan::class);
+        return $this->belongsTo(CareerGoal::class);
     }
 
     public function weeklyTasks()

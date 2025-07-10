@@ -29,9 +29,9 @@ class CareerGoal extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function careerPlans()
+    
+    public function weeks()
     {
-        return $this->hasMany(CareerPlan::class);
+        return $this->hasMany(Week::class);
     }
 }

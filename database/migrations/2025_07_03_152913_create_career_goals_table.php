@@ -20,25 +20,15 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('career_plans', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('career_goal_id')->nullable()->constrained()->onDelete('set null');
-            $table->integer('target_week');
-            $table->text('description')->nullable();
-            $table->enum('status', ['not_started', 'in_progress', 'completed'])->default('not_started');
-            $table->timestamps();
-        });
-
         Schema::create('weeks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('career_plan_id')->nullable()->constrained()->onDelete('set null');
-            $table->integer('week_number');
+            $table->foreignId('career_goal_id')->nullable()->constrained()->onDelete('set null');
+            $table->integer('week_number')->nullable();
             $table->string('title');
-            $table->string('goal')->nullable();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->text('description')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->enum('status', ['not_started', 'in_progress', 'completed'])->default('not_started');
             $table->timestamps();
         });
