@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\V1\User\SubcriptionController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use App\Http\Controllers\API\V1\User\UserFaqController;
 
+use App\Http\Controllers\Api\V1\User\WeekController;
 use App\Http\Controllers\Api\V1\User\WeeklyTaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,8 +63,10 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
 
     //route for career goals and weekly tasks
     Route::apiResource('/career-goals', CareerGoalController::class)->except(['update']);
-    Route::apiResource('/weekly-tasks', WeeklyTaskController::class);
-
+    Route::apiResource('/weeks', WeekController::class);
+    Route::post('/weeks/mark-as-completed/{id}', [WeeklyTaskController::class, 'markAsCompleted']);
+    Route::apiResource('/weekly-tasks', WeeklyTaskController::class)->except(methods: ['index']);
+    Route::post('/weekly-tasks/mark-as-complete-single-task/{weeklyTaskId}', [WeeklyTaskController::class, 'markAsCompleteSingleTask']);
 
 });
 Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
