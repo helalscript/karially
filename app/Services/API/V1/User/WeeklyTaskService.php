@@ -3,6 +3,8 @@
 namespace App\Services\API\V1\User;
 
 use App\Models\Week;
+use App\Models\WeeklyTask;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -10,9 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class WeeklyTaskService
 {
     protected $user;
+    protected $aiGeneratorService;
 
-    public function __construct()
+    public function __construct(AIGeneratorService $aiGeneratorService)
     {
+        $this->aiGeneratorService = $aiGeneratorService;
         $this->user = Auth::user();
     }
     /**
@@ -22,59 +26,7 @@ class WeeklyTaskService
      */
     public function index($request)
     {
-        try {
-            $perPage = $request->get('per_page', 10);
-
-            // Step 1: Fetch paginated tasks
-            $weeklyTasks = Week::where('user_id', $this->user->id)
-                ->whereNull('career_goal_id')
-                ->latest()
-                ->get();
-                // ->paginate($perPage);
-
-            // Step 2: Count task stats
-            $totalTasks = Week::where('user_id', $this->user->id)
-                ->whereNull('career_goal_id')
-                ->count();
-
-            $inProgressCount = Week::where('user_id', $this->user->id)
-                ->whereNull('career_goal_id')
-                ->where('status', 'in_progress')
-                ->count();
-
-            $completedCount = Week::where('user_id', $this->user->id)
-                ->whereNull('career_goal_id')
-                ->where('status', 'completed')
-                ->count();
-
-            // Step 3: Calculate percentages
-            $completionPercentage = $totalTasks > 0
-                ? round(($completedCount / $totalTasks) * 100)
-                : 0;
-
-            $inProgressPercentage = $totalTasks > 0
-                ? round(($inProgressCount / $totalTasks) * 100)
-                : 0;
-
-            // Step 4: Return full response
-            return [
-                'status' => true,
-                'message' => 'Weekly tasks retrieved successfully.',
-                'code' => 200,
-                'meta' => [
-                    'total_tasks' => $totalTasks,
-                    'in_progress_count' => $inProgressCount,
-                    'completed_count' => $completedCount,
-                    'completion_percentage' => $completionPercentage,
-                    'in_progress_percentage' => $inProgressPercentage,
-                ],
-                'data' => $weeklyTasks,
-            ];
-
-        } catch (Exception $e) {
-            Log::error("WeeklyTaskService::index " . $e->getMessage());
-            throw $e;
-        }
+        //
     }
 
 
@@ -87,17 +39,26 @@ class WeeklyTaskService
     public function store(array $validatedData)
     {
         try {
-            $validatedData['user_id'] = $this->user->id;
-            $lastWeek = Week::where('user_id', $this->user->id)->whereNull('career_goal_id')->latest()->first();
-            $validatedData['week_number'] = $lastWeek ? $lastWeek->week_number + 1 : 1;
-            $validatedData['status'] = 'in_progress'; // Optional, can be set later
-            $week = Week::create($validatedData);
-            return $week;
+            $week = Week::where('user_id', $this->user->id)
+                ->whereNull('career_goal_id')
+                ->where('id', $validatedData['week_id'])
+                ->first();
+
+            if (!$week) {
+                throw new Exception("Week not found");
+            }
+            $week->weeklyTasks()->create([
+                'title' => $validatedData['title']
+            ]);
+            return $week->fresh('weeklyTasks:id,week_id,title,is_completed');
+
         } catch (Exception $e) {
-            Log::error("WeeklyTaskService::store" . $e->getMessage());
+            Log::error("WeeklyTaskService::store: " . $e->getMessage());
             throw $e;
         }
     }
+
+
 
     /**
      * Display a specific resource.
@@ -108,7 +69,12 @@ class WeeklyTaskService
     public function show(int $id)
     {
         try {
-
+            $week = WeeklyTask::select('id', 'week_id', 'title', 'status')
+                ->find($id);
+            if (!$week) {
+                throw new Exception("Week not found");
+            }
+            return $week;
         } catch (Exception $e) {
             Log::error("WeeklyTaskService::show" . $e->getMessage());
             throw $e;
@@ -126,7 +92,12 @@ class WeeklyTaskService
     public function update(int $id, array $validatedData)
     {
         try {
-
+            $week = WeeklyTask::find($id);
+            if (!$week) {
+                throw new Exception("Week not found");
+            }
+            $week->update($validatedData);
+            return $week;
         } catch (Exception $e) {
             Log::error("WeeklyTaskService::update" . $e->getMessage());
             throw $e;
@@ -142,11 +113,43 @@ class WeeklyTaskService
     public function destroy(int $id)
     {
         try {
-            // Logic to delete a specific resource
+            $week = WeeklyTask::find($id);
+            if (!$week) {
+                throw new Exception("Week not found");
+            }
+            $week->delete();
+            return true;
         } catch (Exception $e) {
             Log::error("WeeklyTaskService::destroy" . $e->getMessage());
             throw $e;
         }
     }
 
+    /**
+     * Mark a single weekly task as completed.
+     *
+     * @param int $weeklyTaskId
+     * @return WeeklyTask
+     * @throws Exception
+     */
+    public function markAsCompleteSingleTask(int $weeklyTaskId)
+    {
+        try {
+            $weeklyTask = WeeklyTask::find($weeklyTaskId);
+            if (!$weeklyTaskId) {
+                throw new Exception("Weekly task not found");
+            }
+            if ($weeklyTask->is_completed) {
+                throw new Exception("Weekly task is already marked as completed");
+            }
+            // Mark the task as completed
+            $weeklyTask->is_completed = true;
+            $weeklyTask->status = 'completed';
+            $weeklyTask->save();
+            return $weeklyTask;
+        } catch (Exception $e) {
+            Log::error("WeeklyTaskService::markAsCompleteSingleTask" . $e->getMessage());
+            throw $e;
+        }
+    }
 }

@@ -19,16 +19,16 @@ class WeeklyTaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        try {
-            $weeklyTasks = $this->weeklyTaskService->index($request);
-            return Helper::jsonResponse(true, 'Weekly tasks retrieved successfully.', 200, $weeklyTasks);
-        } catch (Exception $e) {
-            Log::error('Error retrieving weekly tasks: ' . $e->getMessage());
-            return Helper::jsonResponse(false, 'Failed to retrieve weekly tasks: ' . $e->getMessage(), 500);
-        }
-    }
+    // public function index(Request $request)
+    // {
+    //     try {
+    //         $weeklyTasks = $this->weeklyTaskService->index($request);
+    //         return Helper::jsonResponse(true, 'Weekly tasks retrieved successfully.', 200, $weeklyTasks);
+    //     } catch (Exception $e) {
+    //         Log::error('Error retrieving weekly tasks: ' . $e->getMessage());
+    //         return Helper::jsonResponse(false, 'Failed to retrieve weekly tasks: ' . $e->getMessage(), 500);
+    //     }
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -36,16 +36,15 @@ class WeeklyTaskController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            // 'week_number' => 'required|integer|min:1|max:52|unique:weeks,week_number,NULL,id,user_id,' . auth()->id(),
+            'week_id' => 'required|integer|exists:weeks,id,user_id,' . auth()->id(),
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
         ]);
 
         try {
             $weeklyTask = $this->weeklyTaskService->store($validatedData);
-            return Helper::jsonResponse(true, 'Weekly task created successfully.', 201, $weeklyTask);
+            return Helper::jsonResponse(true, 'New task created successfully.', 201, $weeklyTask);
         } catch (Exception $e) {
-            Log::error('Error creating weekly task: ' . $e->getMessage());
+            Log::error('WeeklyTaskController::store: Error creating weekly task: ' . $e->getMessage());
             return Helper::jsonResponse(false, 'Failed to create weekly task: ' . $e->getMessage(), 500);
         }
     }
@@ -59,7 +58,7 @@ class WeeklyTaskController extends Controller
             $weeklyTask = $this->weeklyTaskService->show($id);
             return Helper::jsonResponse(true, 'Weekly task retrieved successfully.', 200, $weeklyTask);
         } catch (Exception $e) {
-            Log::error('Error retrieving weekly task: ' . $e->getMessage());
+            Log::error('WeeklyTaskController::show: Error retrieving weekly task: ' . $e->getMessage());
             return Helper::jsonResponse(false, 'Failed to retrieve weekly task: ' . $e->getMessage(), 500);
         }
     }
@@ -71,14 +70,13 @@ class WeeklyTaskController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
         ]);
 
         try {
             $weeklyTask = $this->weeklyTaskService->update($id, $validatedData);
             return Helper::jsonResponse(true, 'Weekly task updated successfully.', 200, $weeklyTask);
         } catch (Exception $e) {
-            Log::error('Error updating weekly task: ' . $e->getMessage());
+            Log::error('WeeklyTaskController::update: Error updating weekly task: ' . $e->getMessage());
             return Helper::jsonResponse(false, 'Failed to update weekly task: ' . $e->getMessage(), 500);
         }
     }
@@ -92,8 +90,19 @@ class WeeklyTaskController extends Controller
             $this->weeklyTaskService->destroy($id);
             return Helper::jsonResponse(true, 'Weekly task deleted successfully.', 200);
         } catch (Exception $e) {
-            Log::error('Error deleting weekly task: ' . $e->getMessage());
+            Log::error('WeeklyTaskController::destroy: Error deleting weekly task: ' . $e->getMessage());
             return Helper::jsonResponse(false, 'Failed to delete weekly task: ' . $e->getMessage(), 500);
+        }
+    }
+
+    public function markAsCompleteSingleTask(string $weeklyTaskId)
+    {
+        try {
+            $weeklyTask = $this->weeklyTaskService->markAsCompleteSingleTask($weeklyTaskId);
+            return Helper::jsonResponse(true, 'Weekly task marked as completed successfully.', 200, $weeklyTask);
+        } catch (Exception $e) {
+            Log::error('Error marking weekly task as completed: ' . $e->getMessage());
+            return Helper::jsonResponse(false, 'Failed to mark weekly task as completed: ' . $e->getMessage(), 500);
         }
     }
 }
