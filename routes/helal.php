@@ -11,6 +11,7 @@
 
 use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\CMS\FaqController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
 use App\Http\Controllers\Web\Backend\CoachController;
 use App\Http\Controllers\Web\Backend\ContactMessageController;
@@ -74,8 +75,12 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   // Route for CoachController
   Route::resource('/coaches', CoachController::class)->names('coaches');
   Route::post('/coaches/status/{id}', [CoachController::class, 'status'])->name('coaches.status');
-  
 
+  //cms all part
+  Route::get('/cms/home-page/hero-section', [HomePageController::class, 'getHeroSection'])->name('cms.home_page.hero_section.create');
+  Route::post('/cms/home-page/hero-section', [HomePageController::class, 'updateHerosection'])->name('cms.home_page.hero_section.update');
+  Route::get('/cms/home-page/trust-section', [HomePageController::class, 'getTrustSection'])->name('cms.home_page.trust_section.create');
+  Route::post('/cms/home-page/trust-section', [HomePageController::class, 'updateTrustSection'])->name('cms.home_page.trust_section.update');
 
 
 
