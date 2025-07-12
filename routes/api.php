@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     //route for career goals and weekly tasks
     Route::apiResource('/career-goals', CareerGoalController::class)->except(['update']);
     Route::apiResource('/weeks', WeekController::class);
-    Route::post('/weeks/mark-as-completed/{id}', [WeeklyTaskController::class, 'markAsCompleted']);
+    Route::post('/weeks/mark-as-completed/{id}', [WeekController::class, 'markAsCompleted']);
     Route::apiResource('/weekly-tasks', WeeklyTaskController::class)->except(methods: ['index']);
     Route::post('/weekly-tasks/mark-as-complete-single-task/{weeklyTaskId}', [WeeklyTaskController::class, 'markAsCompleteSingleTask']);
 
