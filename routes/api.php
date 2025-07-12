@@ -8,16 +8,14 @@ use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
-use App\Http\Controllers\Api\V1\User\BookingController;
-use App\Http\Controllers\Api\V1\User\CareerGoalController;
-use App\Http\Controllers\ApI\V1\User\CoachController;
-use App\Http\Controllers\API\V1\User\StripePaymentController;
-use App\Http\Controllers\Api\V1\User\SubcriptionController;
+use App\Http\Controllers\API\V1\User\BookingController;
+use App\Http\Controllers\API\V1\User\CareerGoalController;
+use App\Http\Controllers\API\V1\User\CoachController;
+use App\Http\Controllers\API\V1\User\SubcriptionController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use App\Http\Controllers\API\V1\User\UserFaqController;
-
-use App\Http\Controllers\Api\V1\User\WeekController;
-use App\Http\Controllers\Api\V1\User\WeeklyTaskController;
+use App\Http\Controllers\API\V1\User\WeekController;
+use App\Http\Controllers\API\V1\User\WeeklyTaskController;
 use Illuminate\Support\Facades\Route;
 
 
