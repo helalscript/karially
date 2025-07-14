@@ -38,8 +38,7 @@
                             <p class="fs-15">Update Home Page Faq Container and site details here.</p>
                         </div>
 
-                        <form action="" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('faqs.container_update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <!-- Title Field -->
@@ -92,10 +91,6 @@
 
                             </div>
 
-
-
-
-
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="d-flex flex-wrap gap-3">
@@ -106,6 +101,7 @@
                                 </div>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
             </div>

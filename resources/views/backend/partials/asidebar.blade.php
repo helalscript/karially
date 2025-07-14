@@ -203,6 +203,12 @@ $systemSetting = App\Models\SystemSetting::first();
                             Trust Section
                         </a>
                     </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.feature.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.feature.*') ? 'active' : '' }}">
+                            Feature Section
+                        </a>
+                    </li>
 
                 </ul>
             </li>
