@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Web\Backend\CMS;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\Faq;
 use Illuminate\Http\Request;
 use App\Enums\Page;
 use App\Enums\Section;

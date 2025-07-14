@@ -1,14 +1,13 @@
 @extends('backend.app')
-@section('title', 'CMS Page')
+@section('title', 'Feature Page')
 
-@push('styles')
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
-@endpush
+
 
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">Home Why Choose Us List</h3>
+            <h3 class="mb-0">CMS Home Page Feature List</h3>
+
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb align-items-center mb-0 lh-1">
@@ -19,34 +18,34 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Home Why Choose Us</span>
+                        <span class="fw-medium">Feature Page </span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Home Why Choose Us List</span>
+                        <span class="fw-medium">Feature List</span>
                     </li>
                 </ol>
             </nav>
         </div>
         {{-- ---------------------- --}}
+
         <div class="row justify-content-center">
             <div class="col-xl-5 col-xxl-5 col-lg-6">
                 <div class="card bg-white border-0 rounded-3 mb-4">
                     <div class="card-body p-4">
 
                         <div class="mb-4">
-                            <h4 class="fs-20 mb-1">CMS Home Page Why Choose Us Container</h4>
-                            <p class="fs-15">Update Home Page Why Choose Us Container and site details here.</p>
+                            <h4 class="fs-20 mb-1">CMS Home Page Feature Container</h4>
+                            <p class="fs-15">Update Home Page Feature Container and site details here.</p>
                         </div>
 
-                        <form action="{{ route('cms.home_page.why_choose_us.why_choose_us_update') }}"
-                            method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('cms.home_page.why_choose_us.container_update') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <!-- Title Field -->
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
-                                        <label class="label text-secondary">Title<span
-                                                class="text-danger">*</span></label>
+                                        <label class="label text-secondary">Section Title<span class="text-danger">*</span></label>
                                         <div class="form-group position-relative">
                                             <input type="text"
                                                 class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
@@ -62,49 +61,34 @@
                                 <!-- Subtitle Field -->
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
-                                        <label class="label text-secondary">Sub Title<span
+                                        <label class="label text-secondary">Section Description<span
                                                 class="text-danger">*</span></label>
                                         <div class="form-group position-relative">
-                                            <input type="text"
-                                                class="form-control text-dark ps-5 h-55 @error('sub_title') is-invalid @enderror"
-                                                name="sub_title"
-                                                value="{{ old('sub_title', $WhyChooseUs->sub_title ?? '') }}"
-                                                placeholder="Enter Sub Title here">
+                                            <textarea class="form-control text-dark ps-5 h-55 " name="description" required=""
+                                                placeholder="Enter description here">{{ old('description', $WhyChooseUs->description ?? '') }}</textarea>
                                         </div>
-                                        @error('sub_title')
-                                            <div id="sub_title-error" class="text-danger">{{ $message }}</div>
+                                        @error('description')
+                                            <div id="description-error" class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-
                             </div>
-                            <!-- Image Field -->
-                            <div class="col-lg-12">
-                                <div class="form-group ">
-                                    <label class="label text-secondary mb-1">Image<span class="text-danger">*</span></label>
-                                    <input class="dropify form-control @error('image') is-invalid @enderror" type="file"
-                                        name="image"
-                                        data-default-file="{{ isset($WhyChooseUs) && $WhyChooseUs->image ? asset($WhyChooseUs->image) : '' }}">
-                                    @error('image')
-                                        <div id="image-error" class="text-danger">{{ $message }}</div>
-                                    @enderror
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="d-flex flex-wrap gap-3">
+                                        {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
+                                        <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
+                                                class="ri-check-line text-white fw-medium"></i> Submit</button>
+                                    </div>
                                 </div>
                             </div>
+                        </form>
 
                     </div>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="d-flex flex-wrap gap-3">
-                                <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
-                                        class="ri-check-line text-white fw-medium"></i> Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
                 </div>
             </div>
-
+            {{-- here table container --}}
             <div class="col-xl-7 col-xxl-7 col-lg-6">
                 <div class="card bg-white border-0 rounded-3 mb-4">
                     <div class="card-body p-0">
@@ -114,12 +98,11 @@
                                 <i
                                     class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y">search</i>
                             </span>
-                            <a href="javascript:void(0)"
-                                class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg"
-                                data-bs-toggle="modal" data-bs-target="#CreateServiceContainer">
+                            <a href="{{ route('cms.home_page.why_choose_us.create') }}"
+                                class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg">
                                 <span class="py-sm-1 d-block">
                                     <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                    <span>Add New Why Choose Us Container Content</span>
+                                    <span>Add New Content</span>
                                 </span>
                             </a>
                         </div>
@@ -130,7 +113,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Image</th>
+                                            <th scope="col">Icon</th>
                                             <th scope="col">Title</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Status</th>
@@ -149,8 +132,7 @@
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination mb-0 justify-content-center">
                                         <li class="page-item">
-                                            <a class="page-link icon" aria-label="Previous" href="#"
-                                                id="prevPage">
+                                            <a class="page-link icon" aria-label="Previous" href="#" id="prevPage">
                                                 <i class="material-symbols-outlined">keyboard_arrow_left</i>
                                             </a>
                                         </li>
@@ -172,24 +154,14 @@
                 </div>
             </div>
         </div>
+
         {{-- ---------------  --}}
-
-
-        <x-modal id="EditServiceContainer" title="Update" labelledby="customModalLabel" size="modal-lg"
-            saveButton="Update">
-            <div id="EditServiceContainerContent"></div>
-        </x-modal>
-
-        {{-- here this return a model  start --}}
-        @include('backend.layouts.cms.home_page.why_choose_us_container.create')
-
 
     </div>
 
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('backend') }}/admin/assets/datatables/data-tables.min.js"></script>
     <!--buttons dataTables-->
     <script src="{{ asset('backend') }}/admin/assets/datatables/datatables.buttons.min.js"></script>
@@ -227,7 +199,10 @@
 
                 ajax: {
                     url: "{{ route('cms.home_page.why_choose_us.index') }}",
-                    type: "get"
+                    type: "get",
+                    // success: function(data) {
+                    //     console.log(data);
+                    // }
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -392,110 +367,6 @@
             event.preventDefault();
             let deleteUrl = '{{ route('cms.home_page.why_choose_us.destroy', ':id') }}';
             showDeleteConfirm(id, deleteUrl);
-        }
-    </script>
-    <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.dropify').dropify();
-        })
-    </script>
-
-    <script>
-        $('#request-form').on('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            // Disable the submit button to prevent multiple submissions
-            let submitButton = $('#submitButton');
-            submitButton.prop('disabled', true).text('Submitting...');
-
-            let storeurl = '{{ route('cms.home_page.why_choose_us.store') }}';
-            let formData = new FormData(this); // Collect form data
-            $.ajax({
-                url: storeurl, // Route to handle form submission
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.success) {
-                        flasher.success(response?.message);
-                        $('#basic_tables').DataTable().ajax.reload();
-                        $('#request-form').trigger("reset");
-                        $('.btn-close').trigger('click');
-                        $('.dropify-clear').trigger('click');
-                    } else {
-                        flasher.error('Something went wrong.');
-                    }
-                },
-                error: function(response) {
-                    // Check if there are validation errors
-                    if (response.responseJSON.errors) {
-                        $('#show-error').html(
-                            `<div class="text-danger">${response.responseJSON.message}</div>`
-                        );
-                    }
-                },
-                complete: function() {
-                    // Re-enable the submit button after the request completes
-                    submitButton.prop('disabled', false).text('Submit Request');
-                }
-            });
-
-        });
-    </script>
-
-    {{--  for update data --}}
-    <script>
-        function viewModel(id) {
-            let url = '{{ route('cms.home_page.why_choose_us.edit', ':id') }}'.replace(':id', id);
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function(resp) {
-                    $('#EditServiceContainerContent').html(resp);
-                    $('#request-form-update').on('submit', function(event) {
-                        event.preventDefault(); // Prevent default form submission
-                        // Disable the submit button to prevent multiple submissions
-                        let submitButton = $('#submitButtonUpdate');
-                        submitButton.prop('disabled', true).text('Submitting...');
-
-                        let storeurl = '{{ route('cms.home_page.why_choose_us.update', ':id') }}'
-                            .replace(
-                                ':id', id);
-                        let formData = new FormData(this); // Collect form data
-                        $.ajax({
-                            url: storeurl, // Route to handle form submission
-                            type: "POST",
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function(response) {
-                                if (response.success) {
-                                    flasher.success(response?.message);
-                                    $('#basic_tables').DataTable().ajax.reload();
-                                    $('#request-form-update').trigger("reset");
-                                    $('.btn-close').trigger('click');
-                                } else {
-                                    flasher.error('Something went wrong.');
-                                }
-                            },
-                            error: function(response) {
-                                // Check if there are validation errors
-                                if (response.responseJSON.errors) {
-                                    $('#show-error').html(
-                                        `<div class="text-danger">${response.responseJSON.message}</div>`
-                                    );
-                                }
-                            },
-                            complete: function() {
-                                // Re-enable the submit button after the request completes
-                                submitButton.prop('disabled', false).text('Submit Request');
-                            }
-                        });
-
-                    });
-                }
-            });
         }
     </script>
 @endpush

@@ -102,5 +102,77 @@ class HomePageController extends Controller
             Log::error("HomePageController::updateTrustSection" . $e->getMessage());
             return redirect()->route('cms.home_page.trust_section.create')->with('error', 'Trust Section not Updated Successfully');
         }
+
+    }
+
+    public function getSpotlight()
+    {
+        $data = CMS::where('page', Page::HomePage->value)
+            ->where('section', Section::SpotLightSection->value)
+            ->first();
+        return view('backend.layouts.cms.home_page.spotlight_section.create', compact('data'));
+    }
+    public function updateSpotlight(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+            'button_text' => 'required|string|max:50',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        ]);
+
+        try {
+            $data = CMS::where('page', Page::HomePage->value)
+                ->where('section', Section::SpotLightSection->value)
+                ->first();
+            if ($request->hasFile('image')) {
+                if ($data && $data->image && file_exists(public_path($data->image))) {
+                    Helper::fileDelete(public_path($data->image));
+                }
+                $validatedData['image'] = Helper::fileUpload($request->file('image'), 'spotlight_section', time() . '_' . getFileName($request->file('image')));
+            }
+
+            // Update or create the CMS entry for the Spotlight section
+            CMS::updateOrCreate(
+                [
+                    'page' => Page::HomePage->value,
+                    'section' => Section::SpotLightSection->value,
+                ],
+                $validatedData
+            );
+            return redirect()->route('cms.home_page.spotlight_section.create')->with('success', 'Spotlight Section Updated Successfully');
+        } catch (Exception $e) {
+            Log::error("HomePageController::updateSpotlight" . $e->getMessage());
+            return redirect()->route('cms.home_page.spotlight_section.create')->with('error', 'Spotlight Section not Updated Successfully');
+        }
+    }
+    public function getPriceSection()
+    {
+        $data = CMS::where('page', Page::HomePage->value)
+            ->where('section', Section::PriceSection->value)
+            ->first();
+        return view('backend.layouts.cms.home_page.price_section.create', compact('data'));
+    }
+    public function updatePriceSection(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+        ]);
+
+        try {
+            // Update or create the CMS entry for the price section
+            CMS::updateOrCreate(
+                [
+                    'page' => Page::HomePage->value,
+                    'section' => Section::PriceSection->value,
+                ],
+                $validatedData
+            );
+            return redirect()->route('cms.home_page.price_section.create')->with('success', 'Price Section Updated Successfully');
+        } catch (Exception $e) {
+            Log::error("HomePageController::updatePriceSection" . $e->getMessage());
+            return redirect()->route('cms.home_page.price_section.create')->with('error', 'Price Section not Updated Successfully');
+        }
     }
 }

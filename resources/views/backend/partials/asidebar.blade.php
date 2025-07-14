@@ -209,7 +209,87 @@ $systemSetting = App\Models\SystemSetting::first();
                             Feature Section
                         </a>
                     </li>
-
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.why_choose_us.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.why_choose_us.*') ? 'active' : '' }}">
+                            Why Choose Us Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.price_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.price_section.*') ? 'active' : '' }}">
+                            Price Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.spotlight_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.spotlight_section.*') ? 'active' : '' }}">
+                            Spotlight Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- CMS Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.about_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">assignment_ind</span>
+                    <span class="title">About Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.about_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.about_page.hero_section.*') ? 'active' : '' }}">
+                            Hero Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.trust_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.trust_section.*') ? 'active' : '' }}">
+                            Our Mission Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.feature.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.feature.*') ? 'active' : '' }}">
+                            Success Story Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.about_page.spotlight_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.about_page.spotlight_section.*') ? 'active' : '' }}">
+                            Spotlight Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- CMS Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.home_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">star</span>
+                    <span class="title">Feature Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.hero_section.*') ? 'active' : '' }}">
+                            Hero Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- CMS Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.home_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">local_atm</span>
+                    <span class="title">Price Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.hero_section.*') ? 'active' : '' }}">
+                            Hero Section
+                        </a>
+                    </li>
                 </ul>
             </li>
 
