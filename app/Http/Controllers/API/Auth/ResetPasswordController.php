@@ -107,7 +107,7 @@ class ResetPasswordController extends Controller
     {
         $request->validate([
             'email' => 'required|email|exists:users,email',
-            'token' => 'required|string',
+            'otp' => 'required|digits:4',
             'password' => 'required|string|min:6|confirmed',
         ]);
         try {
