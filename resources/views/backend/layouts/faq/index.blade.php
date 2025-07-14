@@ -28,66 +28,143 @@
         </div>
         {{-- ---------------------- --}}
 
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-xxl-5 col-lg-6">
+                <div class="card bg-white border-0 rounded-3 mb-4">
+                    <div class="card-body p-4">
 
-        <div class="col-xl-12 col-xxl-12 col-lg-12">
-            <div class="card bg-white border-0 rounded-3 mb-4">
-                <div class="card-body p-0">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 p-4">
-                        <span class="position-relative table-src-form me-0">
-                            <input type="text" class="form-control" placeholder="Search here" id="customSearchBox">
-                            <i
-                                class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y">search</i>
-                        </span>
-                        <a href="{{ route('faqs.create') }}"
-                            class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg">
-                            <span class="py-sm-1 d-block">
-                                <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                <span>Add New Faq </span>
-                            </span>
-                        </a>
+                        <div class="mb-4">
+                            <h4 class="fs-20 mb-1">CMS Home Page Faq Container</h4>
+                            <p class="fs-15">Update Home Page Faq Container and site details here.</p>
+                        </div>
+
+                        <form action="{{ route('faqs.container_update') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <!-- Title Field -->
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-4">
+                                        <label class="label text-secondary">Title<span class="text-danger">*</span></label>
+                                        <div class="form-group position-relative">
+                                            <input type="text"
+                                                class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
+                                                name="title" value="{{ old('title', $FaqContainer->title ?? '') }}"
+                                                required placeholder="Enter Title here">
+                                        </div>
+                                        @error('title')
+                                            <div id="title-error" class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Subtitle Field -->
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-4">
+                                        <label class="label text-secondary">Description<span
+                                                class="text-danger">*</span></label>
+                                        <div class="form-group position-relative">
+                                            <textarea class="form-control text-dark ps-5 h-55 " name="description" required=""
+                                                placeholder="Enter description here">{{ old('description', $FaqContainer->description ?? '') }}</textarea>
+                                        </div>
+                                        @error('description')
+                                            <div id="description-error" class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- Subtitle Field -->
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-4">
+                                        <label class="label text-secondary">Button Text<span
+                                                class="text-danger">*</span></label>
+                                        <div class="form-group position-relative">
+                                            <input type="text"
+                                                class="form-control text-dark ps-5 h-55 @error('button_text') is-invalid @enderror"
+                                                name="button_text"
+                                                value="{{ old('button_text', $FaqContainer->button_text ?? '') }}"
+                                                placeholder="Enter Sub Title here">
+                                        </div>
+                                        @error('button_text')
+                                            <div id="button_text-error" class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="d-flex flex-wrap gap-3">
+                                        {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
+                                        <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
+                                                class="ri-check-line text-white fw-medium"></i> Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        
                     </div>
-
-                    <div class="default-table-area style-two all-products">
-                        <div class="table-responsive">
-                            <table class="table align-middle" id="basic_tables">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Question</th>
-                                        <th scope="col">Answer</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div
-                            class="d-flex justify-content-center justify-content-sm-between align-items-center text-center flex-wrap gap-2 showing-wrap">
-                            <span class="fs-12 fw-medium"></span>
-
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination mb-0 justify-content-center">
-                                    <li class="page-item">
-                                        <a class="page-link icon" aria-label="Previous" href="#" id="prevPage">
-                                            <i class="material-symbols-outlined">keyboard_arrow_left</i>
-                                        </a>
-                                    </li>
-                                    <!-- Pagination Container !-->
-                                    <li class="row " id="customPagination">
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link icon" aria-label="Next" href="#" id="nextPage">
-                                            <i class="material-symbols-outlined">keyboard_arrow_right</i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                </div>
+            </div>
+            <div class="col-xl-7 col-xxl-7 col-lg-6">
+                <div class="card bg-white border-0 rounded-3 mb-4">
+                    <div class="card-body p-0">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 p-4">
+                            <span class="position-relative table-src-form me-0">
+                                <input type="text" class="form-control" placeholder="Search here" id="customSearchBox">
+                                <i
+                                    class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y">search</i>
+                            </span>
+                            <a href="{{ route('faqs.create') }}"
+                                class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg">
+                                <span class="py-sm-1 d-block">
+                                    <i class="ri-add-line d-none d-sm-inline-block"></i>
+                                    <span>Add New Faq </span>
+                                </span>
+                            </a>
                         </div>
 
+                        <div class="default-table-area style-two all-products">
+                            <div class="table-responsive">
+                                <table class="table align-middle" id="basic_tables">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Question</th>
+                                            <th scope="col">Answer</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div
+                                class="d-flex justify-content-center justify-content-sm-between align-items-center text-center flex-wrap gap-2 showing-wrap">
+                                <span class="fs-12 fw-medium"></span>
 
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination mb-0 justify-content-center">
+                                        <li class="page-item">
+                                            <a class="page-link icon" aria-label="Previous" href="#" id="prevPage">
+                                                <i class="material-symbols-outlined">keyboard_arrow_left</i>
+                                            </a>
+                                        </li>
+                                        <!-- Pagination Container !-->
+                                        <li class="row " id="customPagination">
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link icon" aria-label="Next" href="#" id="nextPage">
+                                                <i class="material-symbols-outlined">keyboard_arrow_right</i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
             </div>

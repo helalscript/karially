@@ -21,6 +21,7 @@ class FaqController extends Controller
      */
     public function index(Request $request)
     {
+        $FaqContainer = CMS::where('page', Page::HomePage)->where('section', Section::FaqContainer)->first();
         if ($request->ajax()) {
             $data = Faq::latest();
             return DataTables::of($data)
@@ -53,7 +54,7 @@ class FaqController extends Controller
                 ->rawColumns(['status', 'action'])
                 ->make(true);
         }
-        return view("backend.layouts.faq.index");
+        return view("backend.layouts.faq.index",compact('FaqContainer'));
     }
 
     /**
@@ -73,7 +74,7 @@ class FaqController extends Controller
             'question' => 'required|string|max:255',
             'answer' => 'required|string',
         ]);
-// dd($validatedData);
+        // dd($validatedData);
         try {
             Faq::Create($validatedData);
             flash()->success('Faq created Successfully');
@@ -168,5 +169,30 @@ class FaqController extends Controller
             'success' => true,
             'message' => 'Item status changed successfully.'
         ]);
+    }
+
+    // update main Faq container
+    public function faqContainerUpdate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'button_text' => 'required|string|max:15',
+        ]);
+
+        try {
+           $data= CMS::updateOrCreate(
+                [
+                    'page' => Page::HomePage->value,
+                    'section' => Section::FaqContainer->value,
+                ],
+                $validatedData
+            );
+
+            return redirect()->route('faqs.index')->with('success', 'Faq container update successfully');
+        } catch (Exception $e) {
+            Log::error("FaqController::faqContainerUpdate" . $e->getMessage());
+            return redirect()->route('faqs.index')->with('error', 'Faq container update unsuccessfully');
+        }
     }
 }

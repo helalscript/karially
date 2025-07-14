@@ -44,7 +44,7 @@ $systemSetting = App\Models\SystemSetting::first();
             <!-- Coaches Menu Item -->
             <li class="menu-item {{ request()->routeIs('coaches.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
-                    <span class="material-symbols-outlined menu-icon">help</span>
+                    <span class="material-symbols-outlined menu-icon">psychology</span>
                     <span class="title">Coaches</span>
                 </a>
                 <ul class="menu-sub">
@@ -61,7 +61,7 @@ $systemSetting = App\Models\SystemSetting::first();
             <!-- Category Menu Item -->
             <li class="menu-item {{ request()->routeIs('category.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
-                    <span class="material-symbols-outlined menu-icon">help</span>
+                    <span class="material-symbols-outlined menu-icon">class</span>
                     <span class="title">Category</span>
                 </a>
                 <ul class="menu-sub">
@@ -114,7 +114,7 @@ $systemSetting = App\Models\SystemSetting::first();
 
                 </ul>
             </li>
-            
+
 
 
             <li class="menu-title small text-uppercase">
@@ -189,6 +189,24 @@ $systemSetting = App\Models\SystemSetting::first();
                         <a href="{{ route('cms.home_page.social_link.index') }}"
                             class="menu-link {{ request()->routeIs('cms.home_page.social_link.*') ? 'active' : '' }}">
                             Social Link
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.hero_section.*') ? 'active' : '' }}">
+                            Hero Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.trust_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.trust_section.*') ? 'active' : '' }}">
+                            Trust Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.feature.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.feature.*') ? 'active' : '' }}">
+                            Feature Section
                         </a>
                     </li>
 

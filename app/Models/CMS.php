@@ -19,6 +19,7 @@ class CMS extends Model
         'sub_description',  // Additional description text
         'button_text',      // Text for any button in the section
         'link_url',         // URL link for the button or other purpose
+        'tags',             // JSON field for additional data (e.g., SEO tags, metadata)
         'status',            // Status of the section (e.g., active, inactive)
     ];
 

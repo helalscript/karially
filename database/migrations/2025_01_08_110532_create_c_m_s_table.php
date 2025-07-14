@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('sub_description')->nullable();
             $table->string('button_text')->nullable();
             $table->string('link_url')->nullable();
+            $table->json('tags')->nullable(); // For storing additional data as JSON
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
