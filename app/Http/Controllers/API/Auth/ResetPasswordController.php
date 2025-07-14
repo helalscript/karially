@@ -128,7 +128,7 @@ class ResetPasswordController extends Controller
 
                 return Helper::jsonResponse(true, 'Password reset successfully.', 200);
             } else {
-                return Helper::jsonErrorResponse('Invalid Token', 419);
+                return Helper::jsonErrorResponse('Invalid OTP', 419);
             }
 
         } catch (Exception $e) {
