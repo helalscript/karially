@@ -69,7 +69,7 @@
                             </div>
                         </div>
 
-                        <!-- Title Field -->
+                        <!-- Button text Field -->
                         <div class="col-lg-6">
                             <div class="form-group mb-4">
                                 <label class="label text-secondary">Button Text<span class="text-danger">*</span></label>

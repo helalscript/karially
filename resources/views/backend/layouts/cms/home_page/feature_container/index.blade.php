@@ -38,7 +38,8 @@
                             <p class="fs-15">Update Home Page Feature Container and site details here.</p>
                         </div>
 
-                        <form action="{{ route('cms.home_page.feature.container_update') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('cms.home_page.feature.container_update') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <!-- Title Field -->
@@ -83,7 +84,7 @@
                                 </div>
                             </div>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
@@ -101,7 +102,7 @@
                                 class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg">
                                 <span class="py-sm-1 d-block">
                                     <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                    <span>Add New Faq </span>
+                                    <span>Add New Feature </span>
                                 </span>
                             </a>
                         </div>
@@ -112,8 +113,10 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Question</th>
-                                            <th scope="col">Answer</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Button Text</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -209,8 +212,14 @@
                         searchable: false
                     },
                     {
-                        data: 'question',
-                        name: 'question',
+                        data: 'image',
+                        name: 'image',
+                        orderable: false,
+                        searchable: false,
+                    },
+                    {
+                        data: 'title',
+                        name: 'title',
                         orderable: true,
                         searchable: true,
                         render: function(data, type, row) {
@@ -222,8 +231,21 @@
                         }
                     },
                     {
-                        data: 'answer',
-                        name: 'answer',
+                        data: 'description',
+                        name: 'description',
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data.length > 50) {
+                                return data.substring(0, 50) + '...';
+                            } else {
+                                return data;
+                            }
+                        }
+                    },
+                    {
+                        data: 'button_text',
+                        name: 'button_text',
                         orderable: true,
                         searchable: true,
                         render: function(data, type, row) {

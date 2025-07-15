@@ -1,5 +1,5 @@
 @extends('backend.app')
-@section('title', 'Banner')
+@section('title', 'Spotlight Section')
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
@@ -8,18 +8,18 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">CMS Home Page Banner</h3>
+            <h3 class="mb-0">CMS Home Page Spot Light</h3>
         </div>
 
         <div class="card bg-white border-0 rounded-3 mb-4">
             <div class="card-body p-4">
 
                 <div class="mb-4">
-                    <h4 class="fs-20 mb-1">CMS Home Page Banner</h4>
-                    <p class="fs-15">Update Home Page Banner and site details here.</p>
+                    <h4 class="fs-20 mb-1">CMS Home Page Spot Light</h4>
+                    <p class="fs-15">Update Home Page Spot Light and site details here.</p>
                 </div>
 
-                <form action="{{ route('cms.home_page.banner.update_banner') }}" method="POST"
+                <form action="{{ route('cms.home_page.spotlight_section.update') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="row">
@@ -39,9 +39,23 @@
                             </div>
                         </div>
 
-
-                        <!-- Description Field -->
+                        <!-- button Field -->
                         <div class="col-lg-6">
+                            <div class="form-group mb-4">
+                                <label class="label text-secondary">Button Text<span class="text-danger">*</span></label>
+                                <div class="form-group position-relative">
+                                    <input type="text"
+                                        class="form-control text-dark ps-5 h-55 @error('button_text') is-invalid @enderror"
+                                        name="button_text" value="{{ old('button_text', $data->button_text ?? '') }}"
+                                        required placeholder="Enter button text here">
+                                </div>
+                                @error('button_text')
+                                    <div id="button_text-error" class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <!-- Description Field -->
+                        <div class="col-lg-12">
                             <div class="form-group mb-4">
                                 <label class="label text-secondary">Description<span class="text-danger">*</span></label>
                                 <div class="form-group position-relative">
@@ -53,18 +67,17 @@
                                 @enderror
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-12">
-                        <div class="form-group ">
-                            <label class="label text-secondary mb-1">Background Image<span
-                                    class="text-danger">*</span></label>
-                            <input class="dropify form-control @error('background_image') is-invalid @enderror"
-                                type="file" name="background_image" accept="image/*"
-                                data-default-file="{{ isset($data) && $data->background_image ? asset($data->background_image) : '' }}">
-                            @error('background_image')
-                                <div id="background_image-error" class="text-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="col-lg-12">
+                            <div class="form-group ">
+                                <label class="label text-secondary mb-1">Image<span class="text-danger">*</span></label>
+                                <input class="dropify form-control @error('image') is-invalid @enderror" type="file"
+                                    name="image" accept="image/*"
+                                    data-default-file="{{ isset($data) && $data->image ? asset($data->image) : '' }}">
+                                @error('image')
+                                    <div id="image-error" class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
 
@@ -88,7 +101,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script>
     <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
     <script>
         $(document).ready(function() {

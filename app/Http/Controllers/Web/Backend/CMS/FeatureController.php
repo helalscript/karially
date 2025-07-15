@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Web\Backend\CMS;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\Faq;
 use Illuminate\Http\Request;
 use App\Enums\Page;
 use App\Enums\Section;
@@ -24,9 +23,12 @@ class FeatureController extends Controller
     {
         $FeatureContainer = CMS::where('page', Page::HomePage)->where('section', Section::FeatureContainer)->first();
         if ($request->ajax()) {
-            $data = CMS::where('page', Page::HomePage)->where('section', Section::FeatureContainerContent)->first();
+            $data = CMS::where('page', Page::HomePage)->where('section', Section::FeatureContainerContent)->get();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('image', function ($data) {
+                    return '<img src="' . asset($data->image) . '" class="wh-40 rounded-3" alt="user">';
+                })
                 ->addColumn('status', function ($data) {
                     $status = '<div class="form-check form-switch">';
                     $status .= '<input onclick="changeStatus(event,' . $data->id . ')" type="checkbox" class="form-check-input" style="border-radius: 25rem;width:40px"' . $data->id . '" name="status"';
@@ -52,7 +54,7 @@ class FeatureController extends Controller
              
                 </div>';
                 })
-                ->rawColumns(['status', 'action'])
+                ->rawColumns(['image', 'status', 'action'])
                 ->make(true);
         }
         return view("backend.layouts.cms.home_page.feature_container.index", compact('FeatureContainer'));
@@ -76,16 +78,18 @@ class FeatureController extends Controller
             'description' => 'required|string',
             'button_text' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'tags' => 'required|array', // Assuming tags is an array of strings
+            'tags.*' => 'string|max:255', // Each tag should be a string
         ]);
-        // dd($validatedData);
-        try {
 
+        try {
             if ($request->hasFile('image')) {
-                $validatedData['image'] = Helper::fileUpload($request->file('image'), 'FaqContainer', time() . '_' . getFileName($request->file('image')));
+                $validatedData['image'] = Helper::fileUpload($request->file('image'), 'feature', time() . '_' . getFileName($request->file('image')));
             }
+            $validatedData['tags'] = $request->input('tags') ? json_encode($request->input('tags')) : null; // Ensure tags is an array, even if empty, and json encode it
             $validatedData['page'] = Page::HomePage->value;
             $validatedData['section'] = Section::FeatureContainerContent->value;
-            CMS::create( $validatedData);
+            CMS::create($validatedData);
             return redirect()->route('cms.home_page.feature.index')->with('success', 'FeatureContainer created Successfully');
         } catch (Exception $e) {
             Log::error("FeatureController::store" . $e->getMessage());
@@ -107,7 +111,7 @@ class FeatureController extends Controller
      */
     public function edit(string $id)
     {
-        $data = Faq::findOrFail($id);
+        $data = CMS::findOrFail($id);
 
         return view("backend.layouts.cms.home_page.feature_container.edit", compact('data'));
     }
@@ -118,25 +122,37 @@ class FeatureController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'question' => 'required|string|max:255',
-            'answer' => 'required|string',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'button_text' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'tags' => 'required|array', // Assuming tags is an array of strings
+            'tags.*' => 'string|max:255', // Each tag should be a string
         ]);
 
+
         try {
-            $data = Faq::findOrFail($id);
+            $data = CMS::findOrFail($id);
+            if ($request->hasFile('image')) {
+                if ($data && $data->image && file_exists(public_path($data->image))) {
+                    Helper::fileDelete(public_path($data->image));
+                }
+                $validatedData['image'] = Helper::fileUpload($request->file('image'), 'feature', time() . '_' . getFileName($request->file('image')));
+            }
+
+            $validatedData['tags'] = $request->input('tags') ? json_encode($request->input('tags')) : null; // Ensure tags is an array, even if empty, and json encode it
+
             $data->update($validatedData);
-            flash()->success('Faq updated Successfully');
-            return redirect()->route('cms.home_page.feature.index');
+            return redirect()->route('cms.home_page.feature.index')->with('success', 'Feature updated Successfully');
         } catch (Exception $e) {
             Log::error("FeatureController::store" . $e->getMessage());
-            flash()->error('Faq updated Failed');
-            return redirect()->route('cms.home_page.feature.index');
+            return redirect()->route('cms.home_page.feature.index')->with('error', 'Feature updated Failed');
         }
     }
 
     public function destroy(string $id)
     {
-        $data = Faq::findOrFail($id);
+        $data = CMS::findOrFail($id);
         // check here BookingRequest hotel_id === identifyHotel
         if (empty($data)) {
             return response()->json([
@@ -159,7 +175,7 @@ class FeatureController extends Controller
 
     public function status(Request $request, $id)
     {
-        $data = Faq::find($id);
+        $data = CMS::find($id);
         if (empty($data)) {
             return response()->json([
                 "success" => false,

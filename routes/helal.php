@@ -10,6 +10,9 @@
 
 
 use App\Http\Controllers\Web\Backend\CategoryController;
+use App\Http\Controllers\Web\Backend\CMS\CMSAboutPageController;
+use App\Http\Controllers\Web\Backend\CMS\CMSOurMissionController;
+use App\Http\Controllers\Web\Backend\CMS\CMSWhyChooseUsController;
 use App\Http\Controllers\Web\Backend\CMS\FaqController;
 use App\Http\Controllers\Web\Backend\CMS\FeatureController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
@@ -78,15 +81,35 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   Route::resource('/coaches', CoachController::class)->names('coaches');
   Route::post('/coaches/status/{id}', [CoachController::class, 'status'])->name('coaches.status');
 
-  //cms all part
+  //cms all part home page 
   Route::get('/cms/home-page/hero-section', [HomePageController::class, 'getHeroSection'])->name('cms.home_page.hero_section.create');
   Route::post('/cms/home-page/hero-section', [HomePageController::class, 'updateHerosection'])->name('cms.home_page.hero_section.update');
   Route::get('/cms/home-page/trust-section', [HomePageController::class, 'getTrustSection'])->name('cms.home_page.trust_section.create');
   Route::post('/cms/home-page/trust-section', [HomePageController::class, 'updateTrustSection'])->name('cms.home_page.trust_section.update');
+  Route::get('/cms/home-page/spotlight-section', [HomePageController::class, 'getSpotlight'])->name('cms.home_page.spotlight_section.create');
+  Route::post('/cms/home-page/spotlight-section', [HomePageController::class, 'updateSpotlight'])->name('cms.home_page.spotlight_section.update');
+  Route::get('/cms/home-page/price-section', [HomePageController::class, 'getPriceSection'])->name('cms.home_page.price_section.create');
+  Route::post('/cms/home-page/price-section', [HomePageController::class, 'updatePriceSection'])->name('cms.home_page.price_section.update');
   // Route for FeatureController
-  Route::resource('/cms/home-page/feature-section', FeatureController::class)->names('cms.home_page.feature');
+  Route::resource('/cms/home-page/feature-section', FeatureController::class)->names('cms.home_page.feature')->except(['show']);
   Route::post('/cms/home-page/feature-section/status/{id}', [FeatureController::class, 'status'])->name('cms.home_page.feature.status');
   Route::post('/cms/home-page/feature-container-update', [FeatureController::class, 'featureContainerUpdate'])->name('cms.home_page.feature.container_update');
+  // Route for CMSWhyChooseUsController
+  Route::resource('/cms/home-page/why-choose-us', CMSWhyChooseUsController::class)->names('cms.home_page.why_choose_us')->except(['show']);
+  Route::post('/cms/home-page/why-choose-us/status/{id}', [CMSWhyChooseUsController::class, 'status'])->name('cms.home_page.why_choose_us.status');
+  Route::post('/cms/home-page/why-choose-us-container-update', [CMSWhyChooseUsController::class, 'whyChooseUsContainerUpdate'])->name('cms.home_page.why_choose_us.container_update');
+
+  //cms all part about page
+  Route::get('/cms/about-page/hero-section', [CMSAboutPageController::class, 'getHeroSection'])->name('cms.about_page.hero_section.create');
+  Route::post('/cms/about-page/hero-section', [CMSAboutPageController::class, 'updateHerosection'])->name('cms.about_page.hero_section.update');
+  Route::get('/cms/about-page/spotlight-section', [CMSAboutPageController::class, 'getSpotlight'])->name('cms.about_page.spotlight_section.create');
+  Route::post('/cms/about-page/spotlight-section', [CMSAboutPageController::class, 'updateSpotlight'])->name('cms.about_page.spotlight_section.update');
+
+  // Route for CMSOurMissionController
+  Route::resource('/cms/about-page/our-mission', CMSOurMissionController::class)->names('cms.about_page.our_mission')->except(['show']);
+  Route::post('/cms/about-page/our-mission/status/{id}', [CMSOurMissionController::class, 'status'])->name('cms.about_page.our_mission.status');
+  Route::post('/cms/about-page/our-mission-container-update', [CMSOurMissionController::class, 'ourMissionContainerUpdate'])->name('cms.about_page.our_mission.container_update');
+
 
 
 
