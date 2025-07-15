@@ -11,6 +11,7 @@ use App\Http\Controllers\API\V1\CMS\HomePageController;
 use App\Http\Controllers\API\V1\User\BookingController;
 use App\Http\Controllers\API\V1\User\CareerGoalController;
 use App\Http\Controllers\API\V1\User\CoachController;
+use App\Http\Controllers\API\V1\User\NewsletterController;
 use App\Http\Controllers\API\V1\User\SubcriptionController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use App\Http\Controllers\API\V1\User\UserFaqController;
@@ -64,6 +65,9 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::post('/weeks/mark-as-completed/{id}', [WeekController::class, 'markAsCompleted']);
     Route::apiResource('/weekly-tasks', WeeklyTaskController::class)->except(methods: ['index']);
     Route::post('/weekly-tasks/mark-as-complete-single-task/{weeklyTaskId}', [WeeklyTaskController::class, 'markAsCompleteSingleTask']);
+
+    //route for newsletter
+    Route::post('/subscribe-newsletter', [NewsletterController::class, 'store']);
 
 });
 Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
