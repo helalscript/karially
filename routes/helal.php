@@ -22,6 +22,7 @@ use App\Http\Controllers\Web\Backend\CMS\HomePageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
 use App\Http\Controllers\Web\Backend\CoachController;
 use App\Http\Controllers\Web\Backend\ContactMessageController;
+use App\Http\Controllers\Web\Backend\NewsletterController;
 use App\Http\Controllers\Web\Backend\NotificationController;
 use App\Http\Controllers\Web\Backend\PackageController;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +81,9 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   Route::resource('/packages', PackageController::class)->names('packages');
   Route::post('/packages/status/{id}', [PackageController::class, 'status'])->name('packages.status');
 
+  // Route for NewsletterController
+  Route::resource('/newsletters', NewsletterController::class)->names('newsletters')->only(['index', 'destroy']);
+
   // Route for CoachController
   Route::resource('/coaches', CoachController::class)->names('coaches');
   Route::post('/coaches/status/{id}', [CoachController::class, 'status'])->name('coaches.status');
@@ -93,6 +97,9 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   Route::post('/cms/home-page/spotlight-section', [HomePageController::class, 'updateSpotlight'])->name('cms.home_page.spotlight_section.update');
   Route::get('/cms/home-page/price-section', [HomePageController::class, 'getPriceSection'])->name('cms.home_page.price_section.create');
   Route::post('/cms/home-page/price-section', [HomePageController::class, 'updatePriceSection'])->name('cms.home_page.price_section.update');
+  //for auth page 
+  Route::get('/cms/home-page/login-section', [HomePageController::class, 'getLoginSection'])->name('cms.auth_page.login_section.create');
+  Route::post('/cms/home-page/login-section', [HomePageController::class, 'updateLoginSection'])->name('cms.auth_page.login_section.update');
   // Route for FeatureController
   Route::resource('/cms/home-page/feature-section', FeatureController::class)->names('cms.home_page.feature')->except(['show']);
   Route::post('/cms/home-page/feature-section/status/{id}', [FeatureController::class, 'status'])->name('cms.home_page.feature.status');

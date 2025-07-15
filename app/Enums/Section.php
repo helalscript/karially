@@ -26,6 +26,7 @@ enum Section: string
 
     case SuccessStoryContainer = 'success_story_container';
     case SuccessStoryContainerContent = 'success_story_container_content';
+    case LoginSection = 'login_section';
 
 
 

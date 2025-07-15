@@ -90,8 +90,21 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-
-
+            <!-- Packages Menu Item -->
+            <li class="menu-item {{ request()->routeIs('newsletters.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">mail</span>
+                    <span class="title">Newsletters</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item ">
+                        <a href="{{ route('newsletters.index') }}"
+                            class="menu-link {{ request()->routeIs('newsletters.index') ? 'active' : '' }} ">
+                            List
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
 
             <li class="menu-title small text-uppercase">
@@ -293,7 +306,21 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-
+            <!-- CMS Login Page Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.auth_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">vpn_key</span>
+                    <span class="title">Auth Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.auth_page.login_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.auth_page.login_section.*') ? 'active' : '' }}">
+                            SpotLight Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
             <!-- Logout Menu Item -->
             <li class="menu-item">

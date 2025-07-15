@@ -76,7 +76,7 @@ class HomePageController extends Controller
             'tags' => 'nullable|array', // Assuming tags is an array of strings
             'tags.*' => 'string|max:50', // Each tag should be a string
         ]);
-        
+
         try {
             $data = CMS::where('page', Page::HomePage->value)
                 ->where('section', Section::TrustSection->value)
@@ -88,7 +88,7 @@ class HomePageController extends Controller
                 $validatedData['image'] = Helper::fileUpload($request->file('image'), 'trust_section', time() . '_' . getFileName($request->file('image')));
             }
             $validatedData['tags'] = $request->input('tags') ? json_encode($request->input('tags')) : null; // Ensure tags is an array, even if empty, and json encode it
-            
+
             // Update or create the CMS entry for the trust section
             CMS::updateOrCreate(
                 [
@@ -173,6 +173,45 @@ class HomePageController extends Controller
         } catch (Exception $e) {
             Log::error("HomePageController::updatePriceSection" . $e->getMessage());
             return redirect()->route('cms.home_page.price_section.create')->with('error', 'Price Section not Updated Successfully');
+        }
+    }
+    public function getLoginSection()
+    {
+        $data = CMS::where('page', Page::HomePage->value)
+            ->where('section', Section::LoginSection->value)
+            ->first();
+        return view('backend.layouts.cms.home_page.login_section.create', compact('data'));
+    }
+    public function updateLoginSection(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        ]);
+
+        try {
+            $data = CMS::where('page', Page::HomePage->value)
+                ->where('section', Section::LoginSection->value)
+                ->first();
+            if ($request->hasFile('image')) {
+                if ($data && $data->image && file_exists(public_path($data->image))) {
+                    Helper::fileDelete(public_path($data->image));
+                }
+                $validatedData['image'] = Helper::fileUpload($request->file('image'), 'login_section', time() . '_' . getFileName($request->file('image')));
+            }
+            // Update or create the CMS entry for the price section
+            CMS::updateOrCreate(
+                [
+                    'page' => Page::HomePage->value,
+                    'section' => Section::LoginSection->value,
+                ],
+                $validatedData
+            );
+            return redirect()->route('cms.auth_page.login_section.create')->with('success', 'Section Updated Successfully');
+        } catch (Exception $e) {
+            Log::error("HomePageController::updateLoginSection" . $e->getMessage());
+            return redirect()->route('cms.auth_page.login_section.create')->with('error', 'Section not Updated Successfully');
         }
     }
 }
