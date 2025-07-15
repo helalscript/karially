@@ -44,7 +44,7 @@
                     <p class="fs-15">Add New Why Choose Us Create here.</p>
                 </div>
                 {{-- from start --}}
-                <form action="{{ route('cms.home_page.why_choose_us.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('cms.about_page.success_story.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="row">
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group ">
-                                <label class="label text-secondary mb-1">Icon Image<span class="text-danger">*</span></label>
+                                <label class="label text-secondary mb-1">Image<span class="text-danger">*</span></label>
                                 <input class="dropify form-control @error('image') is-invalid @enderror" type="file"
                                     name="image" accept="image/*"
                                     data-default-file="{{ isset($data) && $data->image ? asset($data->image) : '' }}">
@@ -91,7 +91,7 @@
                         <div class="col-lg-12">
                             <div class="d-flex flex-wrap gap-3">
                                 <button type="reset" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white"
-                                    onclick="window.location.href='{{ route('cms.home_page.feature.index') }}'">Cancel</button>
+                                    onclick="window.location.href='{{ route('cms.about_page.success_story.index') }}'">Cancel</button>
                                 <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
                                         class="ri-check-line text-white fw-medium"></i> Submit</button>
                             </div>

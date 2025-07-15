@@ -82,7 +82,6 @@ class CMSWhyChooseUsController extends Controller
             if ($request->hasFile('image')) {
                 $validatedData['image'] = Helper::fileUpload($request->file('image'), 'why_choose_us', time() . '_' . getFileName($request->file('image')));
             }
-            $validatedData['tags'] = $request->input('tags') ? json_encode($request->input('tags')) : null; // Ensure tags is an array, even if empty, and json encode it
             $validatedData['page'] = Page::HomePage->value;
             $validatedData['section'] = Section::WhyChooseUsContainer->value;
             CMS::create($validatedData);

@@ -90,31 +90,21 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-            <!-- Faqs Menu Item -->
-            <li class="menu-item {{ request()->routeIs('faqs.*') ? 'open' : '' }}">
+            <!-- Packages Menu Item -->
+            <li class="menu-item {{ request()->routeIs('newsletters.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
-                    <span class="material-symbols-outlined menu-icon">help</span>
-                    <span class="title">Faqs</span>
+                    <span class="material-symbols-outlined menu-icon">mail</span>
+                    <span class="title">Newsletters</span>
                 </a>
                 <ul class="menu-sub">
-                    <!-- Account Settings Submenu -->
                     <li class="menu-item ">
-                        <a href="{{ route('faqs.index') }}"
-                            class="menu-link {{ request()->routeIs('faqs.index') ? 'active' : '' }} ">
-                            Faqs List
+                        <a href="{{ route('newsletters.index') }}"
+                            class="menu-link {{ request()->routeIs('newsletters.index') ? 'active' : '' }} ">
+                            List
                         </a>
                     </li>
-                    <!-- Change Password Submenu -->
-                    <li class="menu-item">
-                        <a href="{{ route('faqs.create') }}"
-                            class="menu-link {{ request()->routeIs('faqs.create') ? 'active' : '' }}">
-                            Add New Faqs
-                        </a>
-                    </li>
-
                 </ul>
             </li>
-
 
 
             <li class="menu-title small text-uppercase">
@@ -178,7 +168,31 @@ $systemSetting = App\Models\SystemSetting::first();
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">CMS</span>
             </li>
-            <!-- CMS Menu Item -->
+            <!-- Faqs Menu Item -->
+            <li class="menu-item {{ request()->routeIs('faqs.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">help</span>
+                    <span class="title">Faqs</span>
+                </a>
+                <ul class="menu-sub">
+                    <!-- Account Settings Submenu -->
+                    <li class="menu-item ">
+                        <a href="{{ route('faqs.index') }}"
+                            class="menu-link {{ request()->routeIs('faqs.index') ? 'active' : '' }} ">
+                            Faqs List
+                        </a>
+                    </li>
+                    <!-- Change Password Submenu -->
+                    <li class="menu-item">
+                        <a href="{{ route('faqs.create') }}"
+                            class="menu-link {{ request()->routeIs('faqs.create') ? 'active' : '' }}">
+                            Add New Faqs
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <!-- CMS Home Page Menu Item -->
             <li class="menu-item {{ request()->routeIs('cms.home_page.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">handshake</span>
@@ -229,7 +243,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-            <!-- CMS Menu Item -->
+            <!-- CMS About Page Menu Item -->
             <li class="menu-item {{ request()->routeIs('cms.about_page.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">assignment_ind</span>
@@ -249,8 +263,8 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('cms.home_page.feature.index') }}"
-                            class="menu-link {{ request()->routeIs('cms.home_page.feature.*') ? 'active' : '' }}">
+                        <a href="{{ route('cms.about_page.success_story.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.about_page.success_story.*') ? 'active' : '' }}">
                             Success Story Section
                         </a>
                     </li>
@@ -262,37 +276,51 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-            <!-- CMS Menu Item -->
-            <li class="menu-item {{ request()->routeIs('cms.home_page.*') ? 'open' : '' }}">
+            <!-- CMS Feature Page Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.feature_page.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">star</span>
                     <span class="title">Feature Page</span>
                 </a>
                 <ul class="menu-sub">
                     <li class="menu-item">
-                        <a href="{{ route('cms.home_page.hero_section.create') }}"
-                            class="menu-link {{ request()->routeIs('cms.home_page.hero_section.*') ? 'active' : '' }}">
+                        <a href="{{ route('cms.feature_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.feature_page.hero_section.*') ? 'active' : '' }}">
                             Hero Section
                         </a>
                     </li>
                 </ul>
             </li>
-            <!-- CMS Menu Item -->
-            <li class="menu-item {{ request()->routeIs('cms.home_page.*') ? 'open' : '' }}">
+            <!-- CMS Price Page Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.price_page.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">local_atm</span>
                     <span class="title">Price Page</span>
                 </a>
                 <ul class="menu-sub">
                     <li class="menu-item">
-                        <a href="{{ route('cms.home_page.hero_section.create') }}"
-                            class="menu-link {{ request()->routeIs('cms.home_page.hero_section.*') ? 'active' : '' }}">
+                        <a href="{{ route('cms.price_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.price_page.hero_section.*') ? 'active' : '' }}">
                             Hero Section
                         </a>
                     </li>
                 </ul>
             </li>
-
+            <!-- CMS Login Page Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.auth_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">vpn_key</span>
+                    <span class="title">Auth Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.auth_page.login_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.auth_page.login_section.*') ? 'active' : '' }}">
+                            SpotLight Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
             <!-- Logout Menu Item -->
             <li class="menu-item">

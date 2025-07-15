@@ -14,7 +14,7 @@
                 <div class="mb-4">
                     <h3 class="fs-20 fw-semibold mb-1">Welcome Back, <span class="text-primary">{{ Auth::user()->name ?? 'Mr. John Doe' }}!</span>
                     </h3>
-                    <p style="line-height: 1.4;">Monitor and manage employee performance, attendance and more
+                    <p style="line-height: 1.4;">Monitor and manage coaches stucture, categories and more
                         in one place.</p>
                 </div>
             </div>
@@ -33,15 +33,15 @@
                 </div>
             </div> --}}
         </div>
-        {{-- <div class="row">
-            <div class="col-lg-4 col-md-6">
+        <div class="row">
+            {{-- <div class="col-lg-4 col-md-6">
                 <div class="card border-0 rounded-3 bg-white mb-4">
                     <div class="custom-padding-30 position-relative">
                         <div class="d-flex align-items-center mb-4 pb-2">
                             <div class="flex-shrink-0">
                                 <div class="text-center rounded-2 bg-primary-50"
                                     style="width: 44px; height: 44px; line-height: 44px;">
-                                    <img src="{{ asset('backend/admin/assets') }}/images/icon-employees.svg"
+                                    <img src="{{ asset('backend/admin/assets/images/icon-employees.svg') }}"
                                         alt="icon-employees">
                                 </div>
                             </div>
@@ -60,15 +60,15 @@
                         <div id="total_employees" class="chart-position top-50 translate-middle-y"></div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
+            </div> --}}
+            {{-- <div class="col-lg-4 col-md-6">
                 <div class="card border-0 rounded-3 bg-white mb-4">
                     <div class="custom-padding-30 position-relative">
                         <div class="d-flex align-items-center mb-4 pb-2">
                             <div class="flex-shrink-0">
                                 <div class="text-center rounded-2 bg-danger-50"
                                     style="width: 44px; height: 44px; line-height: 44px;">
-                                    <img src="{{ asset('backend/admin/assets') }}/images/icon-resigned.svg"
+                                    <img src="{{ asset('backend/admin/assets/images/icon-resigned.svg') }}"
                                         alt="icon-resigned">
                                 </div>
                             </div>
@@ -87,8 +87,8 @@
                         <div id="resigned_employees" class="chart-position top-50 translate-middle-y"></div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-12">
+            </div> --}}
+            {{-- <div class="col-lg-4 col-md-12">
                 <div class="card border-0 rounded-3 bg-white mb-4">
                     <div class="custom-padding-30 position-relative">
                         <div class="d-flex align-items-center mb-4 pb-2">
@@ -115,10 +115,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
-        <div class="card bg-white border-0 rounded-3 mb-4">
+        {{-- <div class="card bg-white border-0 rounded-3 mb-4">
             <div class="card-body p-0">
                 <div
                     class="d-flex justify-content-between align-items-center flex-wrap gap-3 custom-padding-30 border-bottom pb-4">
