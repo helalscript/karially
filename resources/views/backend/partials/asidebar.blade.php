@@ -243,8 +243,8 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('cms.home_page.trust_section.create') }}"
-                            class="menu-link {{ request()->routeIs('cms.home_page.trust_section.*') ? 'active' : '' }}">
+                        <a href="{{ route('cms.about_page.our_mission.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.about_page.our_mission.*') ? 'active' : '' }}">
                             Our Mission Section
                         </a>
                     </li>
