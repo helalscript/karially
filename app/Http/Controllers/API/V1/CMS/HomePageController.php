@@ -6,6 +6,7 @@ use App\Enums\Page;
 use App\Enums\Section;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\CMS\GetFeatureSectionResource;
 use App\Models\CMS;
 use App\Models\DynamicPage;
 use App\Models\SystemSetting;
@@ -13,6 +14,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Collection;
 
 class HomePageController extends Controller
 {
@@ -108,6 +110,125 @@ class HomePageController extends Controller
             return Helper::jsonResponse(true, 'Dynamic page retrieved successfully.', 200, $page);
         } catch (Exception $e) {
             return Helper::jsonErrorResponse('Failed to retrieve Dynamic page data.', 403);
+        }
+    }
+
+
+    public function getHeroSection()
+    {
+        try {
+            $data = CMS::select('id', 'sub_title', 'title', 'description', 'image', 'button_text')
+                ->where('page', Page::HomePage)
+                ->where('section', Section::HeroSection)
+                ->where('status', 'active')
+                ->first();
+            $data = [
+                'id' => $data->id,
+                'counter_text' => $data->sub_title,
+                'title' => $data->title,
+                'description' => $data->description,
+                'button_text' => $data->button_text,
+                'image' => $data->image
+            ];
+            return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
+        } catch (Exception $e) {
+            Log::error("HomePageController::getHeroSection" . $e->getMessage());
+            return Helper::jsonErrorResponse('Something went wrong', 500);
+        }
+    }
+    public function getTrustSection()
+    {
+        try {
+            $data = CMS::select('id', 'sub_title', 'title', 'description', 'image', 'button_text', 'tags')
+                ->where([
+                    ['page', Page::HomePage],
+                    ['section', Section::TrustSection],
+                    ['status', 'active']
+                ])
+                ->first();
+            $data['tags'] = json_decode($data->tags);
+
+            $data = [
+                'id' => $data->id,
+                'section_title' => $data->sub_title,
+                'title' => $data->title,
+                'description' => $data->description,
+                'button_text' => $data->button_text,
+                'image' => $data->image,
+                'tags' => $data->tags
+            ];
+            return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
+        } catch (Exception $e) {
+            Log::error("HomePageController::getTrustSection" . $e->getMessage());
+            return Helper::jsonErrorResponse('Something went wrong', 500);
+        }
+    }
+
+
+    public function getFeatureSection()
+    {
+        try {
+            $section = CMS::select('id', 'sub_title', 'title', 'description', 'image', 'button_text', 'tags')
+                ->where([
+                    ['page', Page::HomePage],
+                    ['section', Section::FeatureContainer],
+                    ['status', 'active']
+                ])
+                ->first();
+
+            $contents = CMS::select('id', 'title', 'description', 'image', 'button_text', 'tags')
+                ->where([
+                    ['page', Page::HomePage],
+                    ['section', Section::FeatureContainerContent],
+                    ['status', 'active']
+                ])
+                ->get();
+
+            // Use Laravel Collection to pass data
+            $data = collect([
+                'id' => $section->id,
+                'title' => $section->title,
+                'description' => $section->description,
+                'contents' => $contents,
+            ]);
+
+            return Helper::jsonResponse(true, 'Data fetched successfully', 200, new GetFeatureSectionResource($data));
+        } catch (Exception $e) {
+            Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
+            return Helper::jsonErrorResponse('Something went wrong', 500);
+        }
+    }
+    public function getWhyChooseUsSection()
+    {
+        try {
+            $section = CMS::select('id', 'sub_title', 'title', 'description', 'image', 'button_text', 'tags')
+                ->where([
+                    ['page', Page::HomePage],
+                    ['section', Section::FeatureContainer],
+                    ['status', 'active']
+                ])
+                ->first();
+
+            $contents = CMS::select('id', 'title', 'description', 'image', 'button_text', 'tags')
+                ->where([
+                    ['page', Page::HomePage],
+                    ['section', Section::FeatureContainerContent],
+                    ['status', 'active']
+                ])
+                ->get();
+
+            // Use Laravel Collection to pass data
+            $data = collect([
+                'id' => $section->id,
+                'title' => $section->title,
+                'description' => $section->description,
+                'contents' => $contents,
+            ]);
+
+            return Helper::jsonResponse(true, 'Data fetched successfully', 200, new GetFeatureSectionResource($data));
+        } catch (Exception $e) {
+            Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
+            return Helper::jsonErrorResponse('Something went wrong', 500);
         }
     }
 

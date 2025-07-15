@@ -66,8 +66,7 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::apiResource('/weekly-tasks', WeeklyTaskController::class)->except(methods: ['index']);
     Route::post('/weekly-tasks/mark-as-complete-single-task/{weeklyTaskId}', [WeeklyTaskController::class, 'markAsCompleteSingleTask']);
 
-    //route for newsletter
-    Route::post('/subscribe-newsletter', [NewsletterController::class, 'store']);
+
 
 });
 Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
@@ -76,13 +75,22 @@ Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
 
 // only for user and host
 Route::group(['middleware' => ['auth:api']], function ($router) {
-    Route::get('/faqs', [UserFaqController::class, 'index']);
     Route::post('/contact-support-message/sent', [UserContactSupportController::class, 'store']);
-    // --------- cms part --------------
-    Route::get('/cms/social-link', [HomePageController::class, 'getSocialLinks']);
-    Route::get('/cms/system-info', [HomePageController::class, 'getSystemInfo']);
-
-    // dynamic page
-    Route::get("dynamic-pages", [HomePageController::class, "getDynamicPages"]);
-    Route::get("dynamic-pages/single/{slug}", [HomePageController::class, "showDaynamicPage"]);
 });
+
+
+// --------- cms part --------------
+Route::get('/cms/social-link', [HomePageController::class, 'getSocialLinks']);
+Route::get('/cms/system-info', [HomePageController::class, 'getSystemInfo']);
+Route::get('/faqs', [UserFaqController::class, 'index']);
+
+// dynamic page
+Route::get("dynamic-pages", [HomePageController::class, "getDynamicPages"]);
+Route::get("dynamic-pages/single/{slug}", [HomePageController::class, "showDaynamicPage"]);
+//route for newsletter
+Route::post('/subscribe-newsletter', [NewsletterController::class, 'store']);
+
+Route::get('/cms/home-page/hero-section', [HomePageController::class, 'getHeroSection']);
+Route::get('/cms/home-page/trust-section', [HomePageController::class, 'getTrustSection']);
+Route::get('/cms/home-page/feature-section', [HomePageController::class, 'getFeatureSection']);
+Route::get('/cms/home-page/why-choose-us-section', [HomePageController::class, 'getWhyChooseUsSection']);
