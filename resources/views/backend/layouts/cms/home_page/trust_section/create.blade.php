@@ -136,7 +136,7 @@
                     <div class="d-flex flex-wrap gap-3">
                         {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
                         <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
-                                class="ri-check-line text-white fw-medium"></i> Submit Banner</button>
+                                class="ri-check-line text-white fw-medium"></i> Submit</button>
                     </div>
                 </div>
             </div>

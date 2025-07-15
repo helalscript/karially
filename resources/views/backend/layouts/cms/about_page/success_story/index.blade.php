@@ -1,12 +1,12 @@
 @extends('backend.app')
-@section('title', 'Feature Page')
+@section('title', 'About Us Page')
 
 
 
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">CMS Home Page Feature List</h3>
+            <h3 class="mb-0">CMS About Us Page Feature List</h3>
 
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -18,10 +18,10 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Feature Page </span>
+                        <span class="fw-medium">About Us Page </span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Feature List</span>
+                        <span class="fw-medium">Success Story List</span>
                     </li>
                 </ol>
             </nav>
@@ -34,11 +34,11 @@
                     <div class="card-body p-4">
 
                         <div class="mb-4">
-                            <h4 class="fs-20 mb-1">CMS Home Page Feature Container</h4>
-                            <p class="fs-15">Update Home Page Feature Container and site details here.</p>
+                            <h4 class="fs-20 mb-1">CMS About Us Page Success Story Container</h4>
+                            <p class="fs-15">Update About Us Page Success Story Container and site details here.</p>
                         </div>
 
-                        <form action="{{ route('cms.home_page.why_choose_us.container_update') }}" method="POST"
+                        <form action="{{ route('cms.about_page.success_story.container_update') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -98,7 +98,7 @@
                                 <i
                                     class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y">search</i>
                             </span>
-                            <a href="{{ route('cms.home_page.why_choose_us.create') }}"
+                            <a href="{{ route('cms.about_page.success_story.create') }}"
                                 class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg">
                                 <span class="py-sm-1 d-block">
                                     <i class="ri-add-line d-none d-sm-inline-block"></i>
@@ -198,7 +198,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('cms.home_page.why_choose_us.index') }}",
+                    url: "{{ route('cms.about_page.success_story.index') }}",
                     type: "get",
                     // success: function(data) {
                     //     console.log(data);
@@ -358,14 +358,14 @@
         // Use the status change alert
         function changeStatus(event, id) {
             event.preventDefault();
-            let statusUrl = '{{ route('cms.home_page.why_choose_us.status', ':id') }}';
+            let statusUrl = '{{ route('cms.about_page.success_story.status', ':id') }}';
             showStatusChangeAlert(id, statusUrl);
         }
 
         // Use the delete confirm alert
         function deleteRecord(event, id) {
             event.preventDefault();
-            let deleteUrl = '{{ route('cms.home_page.why_choose_us.destroy', ':id') }}';
+            let deleteUrl = '{{ route('cms.about_page.success_story.destroy', ':id') }}';
             showDeleteConfirm(id, deleteUrl);
         }
     </script>

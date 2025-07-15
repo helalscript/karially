@@ -11,7 +11,10 @@
 
 use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\CMS\CMSAboutPageController;
+use App\Http\Controllers\Web\Backend\CMS\CMSFeaturePageController;
 use App\Http\Controllers\Web\Backend\CMS\CMSOurMissionController;
+use App\Http\Controllers\Web\Backend\CMS\CMSPricePageController;
+use App\Http\Controllers\Web\Backend\CMS\CMSSuccessStoryController;
 use App\Http\Controllers\Web\Backend\CMS\CMSWhyChooseUsController;
 use App\Http\Controllers\Web\Backend\CMS\FaqController;
 use App\Http\Controllers\Web\Backend\CMS\FeatureController;
@@ -109,6 +112,18 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   Route::resource('/cms/about-page/our-mission', CMSOurMissionController::class)->names('cms.about_page.our_mission')->except(['show']);
   Route::post('/cms/about-page/our-mission/status/{id}', [CMSOurMissionController::class, 'status'])->name('cms.about_page.our_mission.status');
   Route::post('/cms/about-page/our-mission-container-update', [CMSOurMissionController::class, 'ourMissionContainerUpdate'])->name('cms.about_page.our_mission.container_update');
+  // Route for CMSSuccessStoryController
+  Route::resource('/cms/about-page/success-story', CMSSuccessStoryController::class)->names('cms.about_page.success_story')->except(['show']);
+  Route::post('/cms/about-page/success-story/status/{id}', [CMSSuccessStoryController::class, 'status'])->name('cms.about_page.success_story.status');
+  Route::post('/cms/about-page/success-story-container-update', [CMSSuccessStoryController::class, 'successStoryContainerUpdate'])->name('cms.about_page.success_story.container_update');
+
+  //cms all part feature page
+  Route::get('/cms/feature-page/hero-section', [CMSFeaturePageController::class, 'getHeroSection'])->name('cms.feature_page.hero_section.create');
+  Route::post('/cms/feature-page/hero-section', [CMSFeaturePageController::class, 'updateHerosection'])->name('cms.feature_page.hero_section.update');
+
+  //cms all part price page
+  Route::get('/cms/price-page/hero-section', [CMSPricePageController::class, 'getHeroSection'])->name('cms.price_page.hero_section.create');
+  Route::post('/cms/price-page/hero-section', [CMSPricePageController::class, 'updateHerosection'])->name('cms.price_page.hero_section.update');
 
 
 

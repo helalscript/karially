@@ -24,6 +24,9 @@ enum Section: string
     case OurMissionContainer = 'our_mission_container';
     case OurMissionContainerContent = 'our_mission_container_content';
 
+    case SuccessStoryContainer = 'success_story_container';
+    case SuccessStoryContainerContent = 'success_story_container_content';
+
 
 
 }

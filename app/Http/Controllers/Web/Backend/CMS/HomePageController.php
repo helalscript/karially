@@ -76,7 +76,7 @@ class HomePageController extends Controller
             'tags' => 'nullable|array', // Assuming tags is an array of strings
             'tags.*' => 'string|max:50', // Each tag should be a string
         ]);
-        // dd($validatedData);
+        
         try {
             $data = CMS::where('page', Page::HomePage->value)
                 ->where('section', Section::TrustSection->value)
@@ -88,7 +88,7 @@ class HomePageController extends Controller
                 $validatedData['image'] = Helper::fileUpload($request->file('image'), 'trust_section', time() . '_' . getFileName($request->file('image')));
             }
             $validatedData['tags'] = $request->input('tags') ? json_encode($request->input('tags')) : null; // Ensure tags is an array, even if empty, and json encode it
-            // dd($validatedData);
+            
             // Update or create the CMS entry for the trust section
             CMS::updateOrCreate(
                 [
