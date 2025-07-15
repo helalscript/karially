@@ -82,7 +82,7 @@ Route::group(['middleware' => ['auth:api']], function ($router) {
 // --------- cms part --------------
 Route::get('/cms/social-link', [HomePageController::class, 'getSocialLinks']);
 Route::get('/cms/system-info', [HomePageController::class, 'getSystemInfo']);
-Route::get('/faqs', [UserFaqController::class, 'index']);
+// Route::get('/faqs', [UserFaqController::class, 'index']);
 
 // dynamic page
 Route::get("dynamic-pages", [HomePageController::class, "getDynamicPages"]);
@@ -94,3 +94,6 @@ Route::get('/cms/home-page/hero-section', [HomePageController::class, 'getHeroSe
 Route::get('/cms/home-page/trust-section', [HomePageController::class, 'getTrustSection']);
 Route::get('/cms/home-page/feature-section', [HomePageController::class, 'getFeatureSection']);
 Route::get('/cms/home-page/why-choose-us-section', [HomePageController::class, 'getWhyChooseUsSection']);
+Route::get('/cms/home-page/price-section', [HomePageController::class, 'getPriceSection']);
+Route::get('/cms/home-page/spotlight-section', [HomePageController::class, 'getSpotlightSection']);
+Route::get('/cms/home-page/faqs-section', [HomePageController::class, 'getFaqsSection']);
