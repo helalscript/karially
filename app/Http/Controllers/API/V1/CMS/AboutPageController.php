@@ -2,28 +2,20 @@
 
 namespace App\Http\Controllers\API\V1\CMS;
 
-
 use App\Enums\Page;
 use App\Enums\Section;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\CMS\GetFeatureSectionResource;
 use App\Models\CMS;
-use App\Models\DynamicPage;
-use App\Models\Faq;
-use App\Models\SystemSetting;
 use Exception;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Collection;
 
 class AboutPageController extends Controller
 {
     public function getHeroSection()
     {
         try {
-            $data = CMS::select('id', 'title', 'description', 'image',)
+            $data = CMS::select('id', 'title', 'description', 'image', )
                 ->where('page', Page::AboutPage)
                 ->where('section', Section::HeroSection)
                 ->where('status', 'active')
@@ -38,17 +30,32 @@ class AboutPageController extends Controller
     public function getOurMissionSection()
     {
         try {
-            $faqs = Faq::select('id', 'question', 'answer')
-                ->where('status', 'active')
-                ->get();
-            $data = CMS::select('id', 'title', 'description', 'button_text')
+            $section = CMS::select('id', 'sub_title', 'title', 'image', 'description')
                 ->where([
-                    ['page', Page::HomePage],
-                    ['section', Section::FaqContainer],
+                    ['page', Page::AboutPage],
+                    ['section', Section::OurMissionContainer],
                     ['status', 'active']
                 ])
                 ->first();
-            $data['faqs'] = $faqs;
+
+            $contents = CMS::select('id', 'title', 'description')
+                ->where([
+                    ['page', Page::AboutPage],
+                    ['section', Section::OurMissionContainerContent],
+                    ['status', 'active']
+                ])
+                ->get();
+
+            // Use Laravel Collection to pass data
+            $data = collect([
+                'id' => $section->id,
+                'section_title' => $section->sub_title,
+                'title' => $section->title,
+                'image' => $section->image,
+                'description' => $section->description,
+                'contents' => $contents,
+            ]);
+
             return Helper::jsonResponse(true, 'Data fetched successfully', 200, $data);
         } catch (Exception $e) {
             Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
@@ -58,17 +65,30 @@ class AboutPageController extends Controller
     public function getSuccessStorySection()
     {
         try {
-            $faqs = Faq::select('id', 'question', 'answer')
-                ->where('status', 'active')
-                ->get();
-            $data = CMS::select('id', 'title', 'description', 'button_text')
+            $section = CMS::select('id', 'title', 'description')
                 ->where([
-                    ['page', Page::HomePage],
-                    ['section', Section::FaqContainer],
+                    ['page', Page::AboutPage],
+                    ['section', Section::SuccessStoryContainer],
                     ['status', 'active']
                 ])
                 ->first();
-            $data['faqs'] = $faqs;
+
+            $contents = CMS::select('id', 'title', 'description', 'image')
+                ->where([
+                    ['page', Page::AboutPage],
+                    ['section', Section::SuccessStoryContainerContent],
+                    ['status', 'active']
+                ])
+                ->get();
+
+            // Use Laravel Collection to pass data
+            $data = collect([
+                'id' => $section->id,
+                'title' => $section->title,
+                'description' => $section->description,
+                'contents' => $contents,
+            ]);
+
             return Helper::jsonResponse(true, 'Data fetched successfully', 200, $data);
         } catch (Exception $e) {
             Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
@@ -78,9 +98,9 @@ class AboutPageController extends Controller
     public function getSpotlightSection()
     {
         try {
-            $data = CMS::select('id', 'title', 'description', 'button_text', 'image')
+            $data = CMS::select('id', 'title', 'description', 'button_text')
                 ->where([
-                    ['page', Page::HomePage],
+                    ['page', Page::AboutPage],
                     ['section', Section::SpotLightSection],
                     ['status', 'active']
                 ])
@@ -88,6 +108,36 @@ class AboutPageController extends Controller
             return Helper::jsonResponse(true, 'Data fetched successfully', 200, $data);
         } catch (Exception $e) {
             Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
+            return Helper::jsonErrorResponse('Something went wrong', 500);
+        }
+    }
+
+    public function getFeaturePageHeroSection()
+    {
+        try {
+            $data = CMS::select('id', 'title', 'description', 'tags', )
+                ->where('page', Page::FeaturePage)
+                ->where('section', Section::HeroSection)
+                ->where('status', 'active')
+                ->first();
+            $data['tags'] = json_decode($data->tags);
+            return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
+        } catch (Exception $e) {
+            Log::error("HomePageController::getHeroSection" . $e->getMessage());
+            return Helper::jsonErrorResponse('Something went wrong', 500);
+        }
+    }
+    public function getPricePageHeroSection()
+    {
+        try {
+            $data = CMS::select('id', 'title', 'description')
+                ->where('page', Page::PricePage)
+                ->where('section', Section::HeroSection)
+                ->where('status', 'active')
+                ->first();
+            return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
+        } catch (Exception $e) {
+            Log::error("HomePageController::getHeroSection" . $e->getMessage());
             return Helper::jsonErrorResponse('Something went wrong', 500);
         }
     }

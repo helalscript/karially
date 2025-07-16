@@ -7,6 +7,7 @@ use App\Http\Controllers\API\Auth\LogoutController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\UserController;
+use App\Http\Controllers\API\V1\CMS\AboutPageController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
 use App\Http\Controllers\API\V1\User\BookingController;
 use App\Http\Controllers\API\V1\User\CareerGoalController;
@@ -99,3 +100,12 @@ Route::get('/cms/home-page/spotlight-section', [HomePageController::class, 'getS
 Route::get('/cms/home-page/faqs-section', [HomePageController::class, 'getFaqsSection']);
 //route for auth page 
 Route::get('/cms/home-page/login-section', [HomePageController::class, 'getLoginSection']);
+//route for about page
+Route::get('/cms/about-page/hero-section', [AboutPageController::class, 'getHeroSection']);
+Route::get('/cms/about-page/our-mission-section', [AboutPageController::class, 'getOurMissionSection']);
+Route::get('/cms/about-page/success-story-section', [AboutPageController::class, 'getSuccessStorySection']);
+Route::get('/cms/about-page/spotlight-section', [AboutPageController::class, 'getSpotlightSection']);
+//route for feature page
+Route::get('/cms/feature-page/hero-section', [AboutPageController::class, 'getFeaturePageHeroSection']);
+//route for price page
+Route::get('/cms/price-page/hero-section', [AboutPageController::class, 'getPricePageHeroSection']);
