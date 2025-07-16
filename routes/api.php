@@ -9,11 +9,11 @@ use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\V1\CMS\AboutPageController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
-use App\Http\Controllers\API\V1\PaymentController;
 use App\Http\Controllers\API\V1\User\BookingController;
 use App\Http\Controllers\API\V1\User\CareerGoalController;
 use App\Http\Controllers\API\V1\User\CoachController;
 use App\Http\Controllers\API\V1\User\NewsletterController;
+use App\Http\Controllers\API\V1\User\PaymentController;
 use App\Http\Controllers\API\V1\User\SubcriptionController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use App\Http\Controllers\API\V1\User\UserFaqController;
@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::get('/my-subscription', [SubcriptionController::class, 'getMySubscription']);
     Route::post('/create-subscription/{packageId}', [SubcriptionController::class, 'createSubscription']);
     //payment
-    Route::apiResource('/payments', PaymentController::class)->only(['index','show']);
+    Route::apiResource('/payments', PaymentController::class)->only(['index', 'show']);
 
     //route for career goals and weekly tasks
     Route::apiResource('/career-goals', CareerGoalController::class)->except(['update']);

@@ -7,6 +7,7 @@ use App\Models\Payment;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PaymentService
 {
@@ -56,7 +57,6 @@ class PaymentService
                 throw new Exception("Payment not found");
             }
             return $payment;
-
         } catch (Exception $e) {
             Log::error("PaymentService::show" . $e->getMessage());
             throw $e;
