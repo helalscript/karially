@@ -9,6 +9,7 @@ use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\V1\CMS\AboutPageController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
+use App\Http\Controllers\API\V1\PaymentController;
 use App\Http\Controllers\API\V1\User\BookingController;
 use App\Http\Controllers\API\V1\User\CareerGoalController;
 use App\Http\Controllers\API\V1\User\CoachController;
@@ -59,6 +60,8 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::get('/packages/single/{id}', [SubcriptionController::class, 'getSinglePackages']);
     Route::get('/my-subscription', [SubcriptionController::class, 'getMySubscription']);
     Route::post('/create-subscription/{packageId}', [SubcriptionController::class, 'createSubscription']);
+    //payment
+    Route::apiResource('/payments', PaymentController::class)->only(['index','show']);
 
     //route for career goals and weekly tasks
     Route::apiResource('/career-goals', CareerGoalController::class)->except(['update']);
@@ -66,8 +69,6 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::post('/weeks/mark-as-completed/{id}', [WeekController::class, 'markAsCompleted']);
     Route::apiResource('/weekly-tasks', WeeklyTaskController::class)->except(methods: ['index']);
     Route::post('/weekly-tasks/mark-as-complete-single-task/{weeklyTaskId}', [WeeklyTaskController::class, 'markAsCompleteSingleTask']);
-
-
 
 });
 Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
