@@ -7,11 +7,13 @@ use App\Http\Controllers\API\Auth\LogoutController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\UserController;
+use App\Http\Controllers\API\V1\CMS\AboutPageController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
 use App\Http\Controllers\API\V1\User\BookingController;
 use App\Http\Controllers\API\V1\User\CareerGoalController;
 use App\Http\Controllers\API\V1\User\CoachController;
 use App\Http\Controllers\API\V1\User\NewsletterController;
+use App\Http\Controllers\API\V1\User\PaymentController;
 use App\Http\Controllers\API\V1\User\SubcriptionController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use App\Http\Controllers\API\V1\User\UserFaqController;
@@ -58,6 +60,8 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::get('/packages/single/{id}', [SubcriptionController::class, 'getSinglePackages']);
     Route::get('/my-subscription', [SubcriptionController::class, 'getMySubscription']);
     Route::post('/create-subscription/{packageId}', [SubcriptionController::class, 'createSubscription']);
+    //payment
+    Route::apiResource('/payments', PaymentController::class)->only(['index', 'show']);
 
     //route for career goals and weekly tasks
     Route::apiResource('/career-goals', CareerGoalController::class)->except(['update']);
@@ -65,8 +69,6 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::post('/weeks/mark-as-completed/{id}', [WeekController::class, 'markAsCompleted']);
     Route::apiResource('/weekly-tasks', WeeklyTaskController::class)->except(methods: ['index']);
     Route::post('/weekly-tasks/mark-as-complete-single-task/{weeklyTaskId}', [WeeklyTaskController::class, 'markAsCompleteSingleTask']);
-
-
 
 });
 Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
@@ -89,7 +91,7 @@ Route::get("dynamic-pages", [HomePageController::class, "getDynamicPages"]);
 Route::get("dynamic-pages/single/{slug}", [HomePageController::class, "showDaynamicPage"]);
 //route for newsletter
 Route::post('/subscribe-newsletter', [NewsletterController::class, 'store']);
-
+//route for home page 
 Route::get('/cms/home-page/hero-section', [HomePageController::class, 'getHeroSection']);
 Route::get('/cms/home-page/trust-section', [HomePageController::class, 'getTrustSection']);
 Route::get('/cms/home-page/feature-section', [HomePageController::class, 'getFeatureSection']);
@@ -97,3 +99,14 @@ Route::get('/cms/home-page/why-choose-us-section', [HomePageController::class, '
 Route::get('/cms/home-page/price-section', [HomePageController::class, 'getPriceSection']);
 Route::get('/cms/home-page/spotlight-section', [HomePageController::class, 'getSpotlightSection']);
 Route::get('/cms/home-page/faqs-section', [HomePageController::class, 'getFaqsSection']);
+//route for auth page 
+Route::get('/cms/home-page/login-section', [HomePageController::class, 'getLoginSection']);
+//route for about page
+Route::get('/cms/about-page/hero-section', [AboutPageController::class, 'getHeroSection']);
+Route::get('/cms/about-page/our-mission-section', [AboutPageController::class, 'getOurMissionSection']);
+Route::get('/cms/about-page/success-story-section', [AboutPageController::class, 'getSuccessStorySection']);
+Route::get('/cms/about-page/spotlight-section', [AboutPageController::class, 'getSpotlightSection']);
+//route for feature page
+Route::get('/cms/feature-page/hero-section', [AboutPageController::class, 'getFeaturePageHeroSection']);
+//route for price page
+Route::get('/cms/price-page/hero-section', [AboutPageController::class, 'getPricePageHeroSection']);
