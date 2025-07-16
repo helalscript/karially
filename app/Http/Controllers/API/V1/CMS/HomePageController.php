@@ -286,4 +286,21 @@ class HomePageController extends Controller
         }
     }
 
+    public function getLoginSection()
+    {
+        try {
+            $data = CMS::select('id', 'title', 'description','image')
+                ->where([
+                    ['page', Page::HomePage],
+                    ['section', Section::LoginSection],
+                    ['status', 'active']
+                ])
+                ->first();
+            return Helper::jsonResponse(true, 'Data fetched successfully', 200, $data);
+        } catch (Exception $e) {
+            Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
+            return Helper::jsonErrorResponse('Something went wrong', 500);
+        }
+    }
+
 }

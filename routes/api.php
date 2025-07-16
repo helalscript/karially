@@ -89,7 +89,7 @@ Route::get("dynamic-pages", [HomePageController::class, "getDynamicPages"]);
 Route::get("dynamic-pages/single/{slug}", [HomePageController::class, "showDaynamicPage"]);
 //route for newsletter
 Route::post('/subscribe-newsletter', [NewsletterController::class, 'store']);
-
+//route for home page 
 Route::get('/cms/home-page/hero-section', [HomePageController::class, 'getHeroSection']);
 Route::get('/cms/home-page/trust-section', [HomePageController::class, 'getTrustSection']);
 Route::get('/cms/home-page/feature-section', [HomePageController::class, 'getFeatureSection']);
@@ -97,3 +97,5 @@ Route::get('/cms/home-page/why-choose-us-section', [HomePageController::class, '
 Route::get('/cms/home-page/price-section', [HomePageController::class, 'getPriceSection']);
 Route::get('/cms/home-page/spotlight-section', [HomePageController::class, 'getSpotlightSection']);
 Route::get('/cms/home-page/faqs-section', [HomePageController::class, 'getFaqsSection']);
+//route for auth page 
+Route::get('/cms/home-page/login-section', [HomePageController::class, 'getLoginSection']);
