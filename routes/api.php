@@ -56,8 +56,7 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::apiResource('/my-bookings', BookingController::class);
     Route::post('/my-bookings/cancel/{id}', [BookingController::class, 'cancelBooking'])->name('my_bookings.cancel');
     //route for subscription
-    Route::get('/packages', [SubcriptionController::class, 'getPackages']);
-    Route::get('/packages/single/{id}', [SubcriptionController::class, 'getSinglePackages']);
+    
     Route::get('/my-subscription', [SubcriptionController::class, 'getMySubscription']);
     Route::post('/create-subscription/{packageId}', [SubcriptionController::class, 'createSubscription']);
     //payment
@@ -79,7 +78,9 @@ Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
 Route::group(['middleware' => ['auth:api']], function ($router) {
     Route::post('/contact-support-message/sent', [UserContactSupportController::class, 'store']);
 });
-
+// subscription packages
+Route::get('/packages', [SubcriptionController::class, 'getPackages']);
+Route::get('/packages/single/{id}', [SubcriptionController::class, 'getSinglePackages']);
 
 // --------- cms part --------------
 Route::get('/cms/social-link', [HomePageController::class, 'getSocialLinks']);

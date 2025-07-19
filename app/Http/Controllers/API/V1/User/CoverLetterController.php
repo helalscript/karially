@@ -28,7 +28,19 @@ class CoverLetterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'prompt_text' => 'required|string',
+            'template_id' => 'required|integer|exists:templates,id',
+            'file' => 'required|mimes:doc,docx,pdf,txt|max:2048',
+        ]);
+
+        try {
+            $coverLetter = $this->coverLetterService->store($validatedData);
+            return Helper::jsonResponse(true, 'Cover letter generated successfully', 200, $coverLetter);
+        } catch (Exception $e) {
+            Log::error("CoverLetterController::generate" . $e->getMessage());
+            return Helper::jsonErrorResponse('Failed to generate cover letter ' . $e->getMessage(), 500);
+        }
     }
 
     /**
