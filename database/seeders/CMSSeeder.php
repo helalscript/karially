@@ -152,11 +152,26 @@ class CMSSeeder extends Seeder
                 'created_at' => Carbon::parse('2025-07-17 05:58:01'),
                 'updated_at' => Carbon::parse('2025-07-17 05:58:01')
             ],
-            ['page' => 'home_page', 'section' => 'feature_container_content', 'title' => '1:1 Expert Coaching Calls', 'sub_title' => NULL, 'image' => 'uploads/feature/1752731970-1752731970-883846b7a456da1210bc92d338a9e67d9be0526e.png', 'background_image' => NULL, 'description' => 'Get personalized guidance from career coaches when you need it most.', 'sub_description' => NULL, 'button_text' => 'Try for free', 'link_url' => NULL, 'tags' => json_encode([
+            [
+                'page' => 'home_page',
+                'section' => 'feature_container_content',
+                'title' => '1:1 Expert Coaching Calls',
+                'sub_title' => NULL,
+                'image' => 'uploads/feature/1752731970-1752731970-883846b7a456da1210bc92d338a9e67d9be0526e.png',
+                'background_image' => NULL,
+                'description' => 'Get personalized guidance from career coaches when you need it most.',
+                'sub_description' => NULL,
+                'button_text' => 'Try for free',
+                'link_url' => NULL,
+                'tags' => json_encode([
                     "Book monthly sessions to review progress, refine your strategy,",
                     "gain insights tailored to your goals",
                     "Exclusively available to premium members via Calendly."
-                ]), 'status' => 'active', 'created_at' => Carbon::parse('2025-07-17 05:59:30'), 'updated_at' => Carbon::parse('2025-07-17 05:59:30')],
+                ]),
+                'status' => 'active',
+                'created_at' => Carbon::parse('2025-07-17 05:59:30'),
+                'updated_at' => Carbon::parse('2025-07-17 05:59:30')
+            ],
             ['page' => 'home_page', 'section' => 'why_choose_us_container', 'title' => 'Save time', 'sub_title' => NULL, 'image' => 'uploads/why_choose_us/1752732053-1752732053-frame-61.png', 'background_image' => NULL, 'description' => 'Create standout, impressive professional resumes in under 5 minutes.', 'sub_description' => NULL, 'button_text' => NULL, 'link_url' => NULL, 'tags' => NULL, 'status' => 'active', 'created_at' => Carbon::parse('2025-07-17 06:00:53'), 'updated_at' => Carbon::parse('2025-07-17 06:00:53')],
             ['page' => 'home_page', 'section' => 'why_choose_us_container', 'title' => 'Increase success', 'sub_title' => NULL, 'image' => 'uploads/why_choose_us/1752732108-1752732108-frame-61-2.png', 'background_image' => NULL, 'description' => 'Boost your ATS success with optimized designs, tailored keywords, and engaging visuals.', 'sub_description' => NULL, 'button_text' => NULL, 'link_url' => NULL, 'tags' => NULL, 'status' => 'active', 'created_at' => Carbon::parse('2025-07-17 06:01:48'), 'updated_at' => Carbon::parse('2025-07-17 06:01:48')],
             ['page' => 'home_page', 'section' => 'why_choose_us_container', 'title' => 'Personalized to you', 'sub_title' => NULL, 'image' => 'uploads/why_choose_us/1752732130-1752732130-frame-61-1.png', 'background_image' => NULL, 'description' => 'Tailored resumes that highlight your goals, skills, and achievements to help you shine.', 'sub_description' => NULL, 'button_text' => NULL, 'link_url' => NULL, 'tags' => NULL, 'status' => 'active', 'created_at' => Carbon::parse('2025-07-17 06:02:10'), 'updated_at' => Carbon::parse('2025-07-17 06:02:10')],
