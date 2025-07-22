@@ -6,6 +6,7 @@ use App\Models\AiPrompt;
 use App\Models\CoverLatter;
 use App\Models\Template;
 use App\Models\UserProfile;
+use DB;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +14,12 @@ use Illuminate\Support\Facades\Auth;
 class CoverLetterService
 {
     protected $user;
+    protected $aiGeneratorService;
 
-    public function __construct()
+    public function __construct(AIGeneratorService $aiGeneratorService)
     {
         $this->user = Auth::user();
+        $this->aiGeneratorService = $aiGeneratorService;
     }
     /**
      * Fetch all resources.
@@ -26,6 +29,14 @@ class CoverLetterService
     public function index($request)
     {
         try {
+            $per_page = $request->get('per_page', 10);
+            $coverLetters = CoverLatter::
+                with('userProfile')
+                ->latest()
+                ->whereHas('userProfile', fn($q) =>
+                    $q->where('user_id', $this->user->id))
+                ->paginate($per_page);
+            return $coverLetters;
 
         } catch (Exception $e) {
             Log::error("CoverLetterService::index" . $e->getMessage());
@@ -44,8 +55,36 @@ class CoverLetterService
     public function store(array $validatedData)
     {
         try {
+            DB::beginTransaction();
+            $userProfile = UserProfile::create([
+                'user_id' => $this->user->id,
+                'full_name' => $validatedData['full_name'] ?? null,
+                'job_title' => $validatedData['job_title'] ?? null,
+                'email' => $validatedData['email'] ?? null,
+                'phone' => $validatedData['phone'] ?? null,
+                'website' => $validatedData['website'] ?? null,
+                'address' => $validatedData['address'] ?? null,
+                'summary' => $validatedData['summary'] ?? null,
+                'education' => $validatedData['education'] ? $validatedData['education'] : null,
+                'experience' => $validatedData['experience'] ? $validatedData['experience'] : null,
+                'certifications' => $validatedData['certifications'] ? $validatedData['certifications'] : null,
+                'languages' => $validatedData['languages'] ? $validatedData['languages'] : null,
+                'skills' => $validatedData['skills'] ? $validatedData['skills'] : null,
+                'projects' => $validatedData['projects'] ? $validatedData['projects'] : null,
+                'awards' => $validatedData['awards'] ? $validatedData['awards'] : null,
+                'social_links' => $validatedData['social_links'] ? $validatedData['social_links'] : null,
+                'interests' => $validatedData['interests'] ? $validatedData['interests'] : null,
 
+            ]);
+            $coverLetter = CoverLatter::create([
+                'user_profile_id' => $userProfile->id,
+                'title' => $validatedData['title'],
+                'template_name' => $validatedData['template_name']
+            ]);
+            DB::commit();
+            return $coverLetter;
         } catch (Exception $e) {
+            DB::rollBack();
             Log::error("CoverLetterService::store" . $e->getMessage());
             throw $e;
         }
@@ -60,12 +99,14 @@ class CoverLetterService
     public function show(int $id)
     {
         try {
-            $coverLetter = CoverLatter::where('id', $id)
-                ->where('user_profile_id', $this->user->profile->id)
-                ->firstOrFail();
-
+            $coverLetter = CoverLatter::with('userProfile')
+                ->whereHas('userProfile', fn($q) =>
+                    $q->where('user_id', $this->user->id))
+                ->find($id);
+            if (!$coverLetter) {
+                throw new Exception("Cover letter not found");
+            }
             return $coverLetter;
-
         } catch (Exception $e) {
             Log::error("CoverLetterService::show" . $e->getMessage());
             throw $e;
@@ -83,8 +124,38 @@ class CoverLetterService
     public function update(int $id, array $validatedData)
     {
         try {
+            $coverLetter = CoverLatter::with('userProfile')->find($id);
+            if (!$coverLetter) {
+                throw new Exception("Cover letter not found");
+            }
+            DB::beginTransaction();
+            $coverLetter->update([
+                'title' => $validatedData['title'],
+                'template_name' => $validatedData['template_name']
+            ]);
+            $coverLetter->userProfile()->update([
+                'full_name' => $validatedData['full_name'] ?? null,
+                'job_title' => $validatedData['job_title'] ?? null,
+                'email' => $validatedData['email'] ?? null,
+                'phone' => $validatedData['phone'] ?? null,
+                'website' => $validatedData['website'] ?? null,
+                'address' => $validatedData['address'] ?? null,
+                'summary' => $validatedData['summary'] ?? null,
+                'education' => $validatedData['education'] ? $validatedData['education'] : null,
+                'experience' => $validatedData['experience'] ? $validatedData['experience'] : null,
+                'certifications' => $validatedData['certifications'] ? $validatedData['certifications'] : null,
+                'languages' => $validatedData['languages'] ? $validatedData['languages'] : null,
+                'skills' => $validatedData['skills'] ? $validatedData['skills'] : null,
+                'projects' => $validatedData['projects'] ? $validatedData['projects'] : null,
+                'awards' => $validatedData['awards'] ? $validatedData['awards'] : null,
+                'social_links' => $validatedData['social_links'] ? $validatedData['social_links'] : null,
+                'interests' => $validatedData['interests'] ? $validatedData['interests'] : null,
+            ]);
+            DB::commit();
+            return $coverLetter;
 
         } catch (Exception $e) {
+            DB::rollBack();
             Log::error("CoverLetterService::update" . $e->getMessage());
             throw $e;
         }
@@ -99,7 +170,12 @@ class CoverLetterService
     public function destroy(int $id)
     {
         try {
-            // Logic to delete a specific resource
+            $coverLetter = CoverLatter::with('userProfile')->find($id);
+            if (!$coverLetter) {
+                throw new Exception("Cover letter not found");
+            }
+            $coverLetter->delete();
+            return true;
         } catch (Exception $e) {
             Log::error("CoverLetterService::destroy" . $e->getMessage());
             throw $e;
@@ -137,6 +213,17 @@ class CoverLetterService
             return $letter;
         } catch (Exception $e) {
             Log::error("CoverLetterService::generate" . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function generateCVSummary(array $validatedData)
+    {
+        try {
+            $summary = $this->aiGeneratorService->generateCVSummary($validatedData);
+            return $summary;
+        } catch (Exception $e) {
+            Log::error("CoverLetterService::generateCVSummary" . $e->getMessage());
             throw $e;
         }
     }

@@ -27,6 +27,7 @@ class UserProfile extends Model
         'awards',
         'social_links',
         'interests',
+        'image',
         'status',
     ];
 
@@ -38,7 +39,7 @@ class UserProfile extends Model
         'phone' => 'string',
         'website' => 'string',
         'address' => 'string',
-        'summary' => 'string',
+        'summary' => 'array',
         'education' => 'array',
         'experience' => 'array',
         'certifications' => 'array',
@@ -47,7 +48,8 @@ class UserProfile extends Model
         'projects' => 'array',
         'awards' => 'array',
         'social_links' => 'array',
-        'interests' => 'string',
+        'interests' => 'array',
+        'image' => 'string',
         'status' => 'string',
     ];
 
@@ -69,5 +71,20 @@ class UserProfile extends Model
     public function coverLatters()
     {
         return $this->hasMany(CoverLatter::class);
+    }
+
+    public function getImageAttribute($value): string|null
+    {
+        if (filter_var($value, FILTER_VALIDATE_URL)) {
+            return $value;
+        }
+        // Check if the request is an API request
+        if (request()->is('api/*') && !empty($value)) {
+            // Return the full URL for API requests
+            return url($value);
+        }
+
+        // Return only the path for web requests
+        return $value;
     }
 }

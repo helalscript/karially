@@ -92,32 +92,88 @@ class AIGeneratorService
         return $response->json()['choices'][0]['message']['content'];
     }
 
+    public function generateCVSummary($promptData, $file = null)
+    {
+        $systemMessage = "You are a helpful AI CV assistant.
+                            Generate a professional and polished CV summary. Expand each section (intro, body, and conclusion) with clarity and detail. Use formal tone, avoid repetition, and make each section informative and compelling. Emphasize technical skills, relevant experience, and enthusiasm for the role.
+                            Split the given job description or user input into 3 sections for a CV summary:
+
+                            Respond ONLY in valid JSON format like this:
+                            {
+                            \"intro\": \"...\",
+                            \"body\": \"...\",
+                            \"conclusion\": \"...\"
+                            }";
+
+        $userMessage = "Based on this prompt, generate a well-structured CV summary:\n";
+        $userMessage .= $promptData['prompt_text'];
+
+        if ($file) {
+            $fileText = $this->extractTextFromFile($file);
+            $userMessage .= "\n\nAlso consider this file content:\n" . $fileText;
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . config('services.openai.key'),
+        ])->timeout(90)->post('https://api.openai.com/v1/chat/completions', [
+                    'model' => 'gpt-4',
+                    'messages' => [
+                        ['role' => 'system', 'content' => $systemMessage],
+                        ['role' => 'user', 'content' => $userMessage],
+                    ],
+                    'temperature' => 0.7,
+                ]);
+
+        return json_decode($response->json()['choices'][0]['message']['content'], true);
+
+    }
+
+
+    protected function extractTextFromFile($file)
+    {
+        $extension = $file->getClientOriginalExtension();
+
+        switch ($extension) {
+            case 'txt':
+                return file_get_contents($file->getRealPath());
+            case 'pdf':
+                return (new \Smalot\PdfParser\Parser())->parseFile($file->getRealPath())->getText();
+            case 'doc':
+            case 'docx':
+                return \PhpOffice\PhpWord\IOFactory::load($file->getRealPath())->getSections()[0]->getElements()[0]->getText();
+            default:
+                return '';
+        }
+    }
+
+
+    public function generateProfileSummary(string $promptText, $file = null)
+    {
+        $systemPrompt = "You are a professional resume writing assistant.
+                            Based on the given background, generate a professional and polished resume profile summary.
+
+                            Respond ONLY with the summary as plain text. Do NOT include any headings, formatting, or JSON.";
+
+        // Combine prompt and file content (if any)
+        $userPrompt = "User Background:\n" . $promptText;
+
+        if ($file) {
+            $userPrompt .= "\n\nAdditional Info from Uploaded CV:\n" . $this->extractTextFromFile($file);
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . config('services.openai.key'),
+        ])->timeout(90)->post('https://api.openai.com/v1/chat/completions', [
+                    'model' => 'gpt-4',
+                    'messages' => [
+                        ['role' => 'system', 'content' => $systemPrompt],
+                        ['role' => 'user', 'content' => $userPrompt],
+                    ],
+                    'temperature' => 0.7,
+                ]);
+
+        return trim($response->json()['choices'][0]['message']['content'] ?? 'Summary not generated.');
+    }
 
 
 }
-
-
-// {
-//                             \"plan_description\": \"Overall description of the career plan\",
-//                             \"weeks\": [
-//                                 {
-//                                 \"week_number\": 1,
-//                                 \"title\": \"Week title\",
-//                                 \"goal\": \"Goal for the week\",
-//                                 \"tasks\": [
-//                                     {
-//                                     \"title\": \"Task title\",
-//                                     \"description\": \"Task description\",
-//                                     \"due_date\": \"Optional due date (YYYY-MM-DD)\",
-//                                     \"topics\": [
-//                                         {
-//                                         \"title\": \"Topic title\",
-//                                         \"description\": \"Topic details\",
-//                                         \"type\": \"theory | practical | tool\"
-//                                         }
-//                                     ]
-//                                     }
-//                                 ]
-//                                 }
-//                             ]
-//                             }";

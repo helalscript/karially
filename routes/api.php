@@ -12,6 +12,7 @@ use App\Http\Controllers\API\V1\CMS\HomePageController;
 use App\Http\Controllers\API\V1\User\BookingController;
 use App\Http\Controllers\API\V1\User\CareerGoalController;
 use App\Http\Controllers\API\V1\User\CoachController;
+use App\Http\Controllers\API\V1\User\CoverLetterController;
 use App\Http\Controllers\API\V1\User\NewsletterController;
 use App\Http\Controllers\API\V1\User\PaymentController;
 use App\Http\Controllers\API\V1\User\SubcriptionController;
@@ -56,7 +57,7 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::apiResource('/my-bookings', BookingController::class);
     Route::post('/my-bookings/cancel/{id}', [BookingController::class, 'cancelBooking'])->name('my_bookings.cancel');
     //route for subscription
-    
+
     Route::get('/my-subscription', [SubcriptionController::class, 'getMySubscription']);
     Route::post('/create-subscription/{packageId}', [SubcriptionController::class, 'createSubscription']);
     //payment
@@ -69,6 +70,12 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::apiResource('/weekly-tasks', WeeklyTaskController::class)->except(methods: ['index']);
     Route::post('/weekly-tasks/mark-as-complete-single-task/{weeklyTaskId}', [WeeklyTaskController::class, 'markAsCompleteSingleTask']);
 
+    //route for cover letter
+    Route::apiResource('/cover-letters', CoverLetterController::class);
+    Route::post('/cover-letters/generate-summary', [CoverLetterController::class, 'generateCVSummary']);
+
+    //route for resume
+    // Route::apiResource('/resumes', ResumeController::class);
 });
 Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
 
