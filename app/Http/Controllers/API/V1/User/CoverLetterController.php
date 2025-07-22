@@ -36,9 +36,6 @@ class CoverLetterController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            // 'prompt_text' => 'required|string',
-            // 'template_id' => 'required|integer|exists:templates,id',
-            // 'file' => 'required|mimes:doc,docx,pdf,txt|max:2048',
             'title' => 'required|string|max:255',
             'template_name' => 'required|string|max:255',
             'full_name' => 'nullable|string|max:255',
@@ -58,7 +55,7 @@ class CoverLetterController extends Controller
             'social_links' => 'nullable|array',
             'interests' => 'nullable|array',
         ]);
-        // dd($validatedData);
+
         try {
             $coverLetter = $this->coverLetterService->store($validatedData);
             return Helper::jsonResponse(true, 'Cover letter generated successfully', 200, $coverLetter);
@@ -131,21 +128,6 @@ class CoverLetterController extends Controller
         }
     }
 
-    public function generate(Request $request)
-    {
-        $validatedData = $request->validate([
-            'prompt_text' => 'required|string',
-            'template_id' => 'required|integer|exists:templates,id',
-        ]);
-
-        try {
-            $coverLetter = $this->coverLetterService->generate($validatedData);
-            return Helper::jsonResponse(true, 'Cover letter generated successfully', 200, $coverLetter);
-        } catch (Exception $e) {
-            Log::error("CoverLetterController::generate" . $e->getMessage());
-            return Helper::jsonErrorResponse('Failed to generate cover letter ' . $e->getMessage(), 500);
-        }
-    }
     public function generateCVSummary(Request $request)
     {
         $validatedData = $request->validate([

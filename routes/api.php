@@ -15,6 +15,7 @@ use App\Http\Controllers\API\V1\User\CoachController;
 use App\Http\Controllers\API\V1\User\CoverLetterController;
 use App\Http\Controllers\API\V1\User\NewsletterController;
 use App\Http\Controllers\API\V1\User\PaymentController;
+use App\Http\Controllers\API\V1\User\ResumeController;
 use App\Http\Controllers\API\V1\User\SubcriptionController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use App\Http\Controllers\API\V1\User\UserFaqController;
@@ -75,7 +76,8 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::post('/cover-letters/generate-summary', [CoverLetterController::class, 'generateCVSummary']);
 
     //route for resume
-    // Route::apiResource('/resumes', ResumeController::class);
+    Route::apiResource('/resumes', ResumeController::class);
+    Route::post('/resumes/generate-summary', [ResumeController::class, 'generateResumeSummary']);
 });
 Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
 

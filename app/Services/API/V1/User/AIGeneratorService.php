@@ -106,7 +106,7 @@ class AIGeneratorService
                             }";
 
         $userMessage = "Based on this prompt, generate a well-structured CV summary:\n";
-        $userMessage .= $promptData['prompt_text'];
+        $userMessage .= $promptData;
 
         if ($file) {
             $fileText = $this->extractTextFromFile($file);
@@ -147,7 +147,7 @@ class AIGeneratorService
     }
 
 
-    public function generateProfileSummary(string $promptText, $file = null)
+    public function generateResumeProfileSummary(string $promptText, $file = null)
     {
         $systemPrompt = "You are a professional resume writing assistant.
                             Based on the given background, generate a professional and polished resume profile summary.

@@ -220,7 +220,7 @@ class CoverLetterService
     public function generateCVSummary(array $validatedData)
     {
         try {
-            $summary = $this->aiGeneratorService->generateCVSummary($validatedData);
+            $summary = $this->aiGeneratorService->generateCVSummary($validatedData['prompt_text'], $validatedData['file'] ?? null);
             return $summary;
         } catch (Exception $e) {
             Log::error("CoverLetterService::generateCVSummary" . $e->getMessage());
