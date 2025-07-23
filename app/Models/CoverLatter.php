@@ -12,6 +12,8 @@ class CoverLatter extends Model
     protected $fillable = [
         'user_profile_id',
         'template_id',
+        'title',
+        'template_name',
         'ai_prompt_id',
         'uploaded_doc',
         'generated_html',
@@ -24,6 +26,8 @@ class CoverLatter extends Model
     protected $casts = [
         'user_profile_id' => 'integer',
         'template_id' => 'integer',
+        'title' => 'string',
+        'template_name' => 'string',
         'ai_prompt_id' => 'integer',
         'uploaded_doc' => 'string',
         'generated_html' => 'string',
@@ -52,4 +56,5 @@ class CoverLatter extends Model
     {
         return $this->belongsToMany(Tag::class, 'cover_latter_tags', 'cover_letter_id');
     }
+
 }

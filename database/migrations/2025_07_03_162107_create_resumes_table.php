@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_profile_id')->constrained()->onDelete('cascade');
             $table->foreignId('template_id')->nullable()->constrained('templates')->onDelete('set null');
+            $table->string('template_name')->nullable();
+            $table->string('title')->nullable();
             $table->foreignId('ai_prompt_id')->nullable()->constrained('ai_prompts')->onDelete('set null');
             $table->text('generated_html')->nullable();
             $table->string('status')->default('draft');

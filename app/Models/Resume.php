@@ -12,6 +12,8 @@ class Resume extends Model
     protected $fillable = [
         'user_profile_id',
         'template_id',
+        'title',
+        'template_name',
         'ai_prompt_id',
         'generated_html',
         'status',
@@ -23,6 +25,8 @@ class Resume extends Model
     protected $casts = [
         'user_profile_id' => 'integer',
         'template_id' => 'integer',
+        'title' => 'string',
+        'template_name' => 'string',
         'ai_prompt_id' => 'integer',
         'generated_html' => 'string',
         'status' => 'string',

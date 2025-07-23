@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
             $table->string('address')->nullable();
-            $table->text('summary')->nullable();
+            $table->json('summary')->nullable();
             $table->json('education')->nullable();
             $table->json('experience')->nullable();
             $table->json('certifications')->nullable();
@@ -28,8 +28,9 @@ return new class extends Migration {
             $table->json('projects')->nullable();
             $table->json('awards')->nullable();
             $table->json('social_links')->nullable();
-            $table->string('interests')->nullable();
+            $table->json('interests')->nullable();
             $table->string('status')->default('active');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
