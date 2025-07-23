@@ -54,9 +54,14 @@ class ResumeService
     {
         try {
             DB::beginTransaction();
+            if (isset($validatedData['image'])) {
+                $imagePath = Helper::fileUpload($validatedData['image'], 'user_profile_image', getFileName($validatedData['image']));
+                $validatedData['image'] = $imagePath;
+            }
             $userProfile = UserProfile::create([
                 'user_id' => $this->user->id,
                 'full_name' => $validatedData['full_name'] ?? null,
+                'image' => $validatedData['image'] ?? null,
                 'job_title' => $validatedData['job_title'] ?? null,
                 'email' => $validatedData['email'] ?? null,
                 'phone' => $validatedData['phone'] ?? null,

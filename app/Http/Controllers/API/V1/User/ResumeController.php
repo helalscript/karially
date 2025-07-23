@@ -39,6 +39,7 @@ class ResumeController extends Controller
             'title' => 'required|string|max:255',
             'template_name' => 'required|string|max:255',
             'full_name' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'job_title' => 'nullable|string|max:255',
             'email' => 'nullable|email',
             'phone' => 'nullable|string',
