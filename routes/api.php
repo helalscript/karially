@@ -9,6 +9,7 @@ use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\V1\CMS\AboutPageController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
+use App\Http\Controllers\API\V1\DashboardController;
 use App\Http\Controllers\API\V1\User\BookingController;
 use App\Http\Controllers\API\V1\User\CareerGoalController;
 use App\Http\Controllers\API\V1\User\CoachController;
@@ -66,6 +67,10 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
 
     //route for career goals and weekly tasks
     Route::apiResource('/career-goals', CareerGoalController::class)->except(['update']);
+    Route::post('/career-goals/mark-as-completed/{id}', [CareerGoalController::class, 'markAsCompleted']);
+    Route::post('/career-goals/week-mark-as-completed/{weekId}', [CareerGoalController::class, 'markAsWeekComplete']);
+
+    //route for weeks
     Route::apiResource('/weeks', WeekController::class);
     Route::post('/weeks/mark-as-completed/{id}', [WeekController::class, 'markAsCompleted']);
     Route::apiResource('/weekly-tasks', WeeklyTaskController::class)->except(methods: ['index']);
@@ -78,6 +83,9 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     //route for resume
     Route::apiResource('/resumes', ResumeController::class);
     Route::post('/resumes/generate-summary', [ResumeController::class, 'generateResumeSummary']);
+
+    //route for dashboard data
+    Route::get('/dashboard-data', [DashboardController::class, 'dashboardData']);
 });
 Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
 

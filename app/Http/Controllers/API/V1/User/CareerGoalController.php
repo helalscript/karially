@@ -99,4 +99,28 @@ class CareerGoalController extends Controller
             return Helper::jsonResponse(false, 'Failed to delete career goal: ' . $e->getMessage(), 500);
         }
     }
+
+    public function markAsCompleted(string $id)
+    {
+        try {
+            $careerGoal = $this->careerGoalService->markAsCompleted($id);
+            return Helper::jsonResponse(true, 'Career goal marked as completed successfully.', 200, $careerGoal);
+        } catch (Exception $e) {
+            Log::error('Error marking career goal as completed: ' . $e->getMessage());
+            return Helper::jsonResponse(false, 'Failed to mark career goal as completed: ' . $e->getMessage(), 500);
+        }
+    }
+
+    public function markAsWeekComplete(string $weekId)
+    {
+        try {
+            $careerGoal = $this->careerGoalService->markAsWeekComplete($weekId);
+            return Helper::jsonResponse(true, 'Career goal week marked as completed successfully.', 200, $careerGoal);
+        } catch (Exception $e) {
+            Log::error('Error marking career goal week as completed: ' . $e->getMessage());
+            return Helper::jsonResponse(false, 'Failed to mark career goal week as completed: ' . $e->getMessage(), 500);
+        }
+    }
+
+
 }

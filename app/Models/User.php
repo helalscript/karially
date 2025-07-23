@@ -118,4 +118,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Booking::class, 'user_id', 'id');
     }
 
+    public function careerGoals()
+    {
+        return $this->hasMany(CareerGoal::class, 'user_id', 'id');
+    }
+
+    public function weeks()
+    {
+        return $this->hasMany(Week::class, 'user_id', 'id');
+    }
 }
