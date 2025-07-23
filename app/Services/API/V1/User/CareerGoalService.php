@@ -175,6 +175,60 @@ class CareerGoalService
             throw $e;
         }
     }
+    public function markAsCompleted(int $id)
+    {
+        try {
+            $careerGoal = CareerGoal::where('user_id', $this->user->id)->find($id);
+            if (!$careerGoal) {
+                throw new Exception("Career goal not found");
+            }
+            $careerGoal->status = 'completed';
+            $careerGoal->save();
+            return $careerGoal;
+        } catch (Exception $e) {
+            Log::error("CareerGoalService::markAsCompleted" . $e->getMessage());
+            throw $e;
+        }
+    }
 
+    public function markAsWeekComplete($weekId)
+    {
+        try {
+            DB::beginTransaction();
+            $careerGoalWeek = Week::with(['careerGoal'])->find($weekId);
+            if (!$careerGoalWeek) {
+                throw new Exception("Career goal not found");
+            }
+            if ($careerGoalWeek->status === 'completed') {
+                throw new Exception("Week is already marked as completed");
+            }
+            $careerGoalWeek->status = 'completed';
+            $careerGoalWeek->save();
+
+            //check if all weeks are completed
+            $careerGoal = CareerGoal::where('id', $careerGoalWeek->career_goal_id)
+                ->withCount([
+                    'weeks as total_weeks',
+                    'weeks as completed_weeks' => function ($query) {
+                        $query->where('status', 'completed');
+                    },
+                ])
+                ->first();
+            
+            if ($careerGoal) {
+                if ($careerGoal->total_weeks === $careerGoal->completed_weeks) {
+                    $careerGoal->status = 'completed';
+                    $careerGoal->save();
+                }
+            }
+
+            DB::commit();
+            return $careerGoalWeek;
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error("CareerGoalService::markAsWeekComplete" . $e->getMessage());
+            throw $e;
+        }
+    }
 
 }
