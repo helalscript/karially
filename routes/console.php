@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Artisan;
 // Artisan::command('inspire', function () {
 //     $this->comment(Inspiring::quote());
 // })->purpose('Display an inspiring quote')->hourly();
-Schedule::call( function () {
-    logger()->info('test it');
-})->everySecond();
+// Schedule::call( function () {
+//     logger()->info('test it');
+// })->everySecond();
 
 Schedule::command(WeeklyTaskStatusUpdate::class)->everyFourHours();
