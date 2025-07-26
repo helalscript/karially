@@ -58,22 +58,22 @@ class CoverLetterService
             DB::beginTransaction();
             $userProfile = UserProfile::create([
                 'user_id' => $this->user->id,
-                'full_name' => $validatedData['full_name'] ?? null,
-                'job_title' => $validatedData['job_title'] ?? null,
-                'email' => $validatedData['email'] ?? null,
-                'phone' => $validatedData['phone'] ?? null,
-                'website' => $validatedData['website'] ?? null,
-                'address' => $validatedData['address'] ?? null,
-                'summary' => $validatedData['summary'] ?? null,
-                'education' => $validatedData['education'] ? $validatedData['education'] : null,
-                'experience' => $validatedData['experience'] ? $validatedData['experience'] : null,
-                'certifications' => $validatedData['certifications'] ? $validatedData['certifications'] : null,
-                'languages' => $validatedData['languages'] ? $validatedData['languages'] : null,
-                'skills' => $validatedData['skills'] ? $validatedData['skills'] : null,
-                'projects' => $validatedData['projects'] ? $validatedData['projects'] : null,
-                'awards' => $validatedData['awards'] ? $validatedData['awards'] : null,
-                'social_links' => $validatedData['social_links'] ? $validatedData['social_links'] : null,
-                'interests' => $validatedData['interests'] ? $validatedData['interests'] : null,
+                'full_name' => isset($validatedData['full_name']) ?? null,
+                'job_title' => isset($validatedData['job_title']) ?? null,
+                'email' => isset($validatedData['email']) ?? null,
+                'phone' => isset($validatedData['phone']) ?? null,
+                'website' => isset($validatedData['website']) ?? null,
+                'address' => isset($validatedData['address']) ?? null,
+                'summary' => isset($validatedData['summary']) ?? null,
+                'education' => isset($validatedData['education']) ? $validatedData['education'] : null,
+                'experience' => isset($validatedData['experience']) ? $validatedData['experience'] : null,
+                'certifications' => isset($validatedData['certifications']) ? $validatedData['certifications'] : null,
+                'languages' => isset($validatedData['languages']) ? $validatedData['languages'] : null,
+                'skills' => isset($validatedData['skills']) ? $validatedData['skills'] : null,
+                'projects' => isset($validatedData['projects']) ? $validatedData['projects'] : null,
+                'awards' => isset($validatedData['awards']) ? $validatedData['awards'] : null,
+                'social_links' => isset($validatedData['social_links']) ? $validatedData['social_links'] : null,
+                'interests' => isset($validatedData['interests']) ? $validatedData['interests'] : null,
 
             ]);
             $coverLetter = CoverLatter::create([
@@ -130,26 +130,26 @@ class CoverLetterService
             }
             DB::beginTransaction();
             $coverLetter->update([
-                'title' => $validatedData['title'],
-                'template_name' => $validatedData['template_name']
+                'title' => isset($validatedData['title']) ? $validatedData['title'] : $validatedData['title'],
+                'template_name' => isset($validatedData['template_name']) ? $validatedData['template_name'] : $validatedData['template_name']
             ]);
             $coverLetter->userProfile()->update([
-                'full_name' => $validatedData['full_name'] ?? null,
-                'job_title' => $validatedData['job_title'] ?? null,
-                'email' => $validatedData['email'] ?? null,
-                'phone' => $validatedData['phone'] ?? null,
-                'website' => $validatedData['website'] ?? null,
-                'address' => $validatedData['address'] ?? null,
-                'summary' => $validatedData['summary'] ?? null,
-                'education' => $validatedData['education'] ? $validatedData['education'] : null,
-                'experience' => $validatedData['experience'] ? $validatedData['experience'] : null,
-                'certifications' => $validatedData['certifications'] ? $validatedData['certifications'] : null,
-                'languages' => $validatedData['languages'] ? $validatedData['languages'] : null,
-                'skills' => $validatedData['skills'] ? $validatedData['skills'] : null,
-                'projects' => $validatedData['projects'] ? $validatedData['projects'] : null,
-                'awards' => $validatedData['awards'] ? $validatedData['awards'] : null,
-                'social_links' => $validatedData['social_links'] ? $validatedData['social_links'] : null,
-                'interests' => $validatedData['interests'] ? $validatedData['interests'] : null,
+                'full_name' => isset($validatedData['full_name']) ?? null,
+                'job_title' => isset($validatedData['job_title']) ?? null,
+                'email' => isset($validatedData['email']) ?? null,
+                'phone' => isset($validatedData['phone']) ?? null,
+                'website' => isset($validatedData['website']) ?? null,
+                'address' => isset($validatedData['address']) ?? null,
+                'summary' => isset($validatedData['summary']) ?? null,
+                'education' => isset($validatedData['education']) ? $validatedData['education'] : null,
+                'experience' => isset($validatedData['experience']) ? $validatedData['experience'] : null,
+                'certifications' => isset($validatedData['certifications']) ? $validatedData['certifications'] : null,
+                'languages' => isset($validatedData['languages']) ? $validatedData['languages'] : null,
+                'skills' => isset($validatedData['skills']) ? $validatedData['skills'] : null,
+                'projects' => isset($validatedData['projects']) ? $validatedData['projects'] : null,
+                'awards' => isset($validatedData['awards']) ? $validatedData['awards'] : null,
+                'social_links' => isset($validatedData['social_links']) ? $validatedData['social_links'] : null,
+                'interests' => isset($validatedData['interests']) ? $validatedData['interests'] : null,
             ]);
             DB::commit();
             return $coverLetter;

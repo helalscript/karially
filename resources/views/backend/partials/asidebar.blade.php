@@ -14,7 +14,7 @@ $systemSetting = App\Models\SystemSetting::first();
         </button>
     </div>
 
-    <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar>
+    <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar style="height: calc(100vh - 100px)">
         <ul class="menu-inner">
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">MAIN</span>

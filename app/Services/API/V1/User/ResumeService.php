@@ -54,44 +54,48 @@ class ResumeService
     {
         try {
             DB::beginTransaction();
+
             if (isset($validatedData['image'])) {
                 $imagePath = Helper::fileUpload($validatedData['image'], 'user_profile_image', getFileName($validatedData['image']));
                 $validatedData['image'] = $imagePath;
             }
+
             $userProfile = UserProfile::create([
                 'user_id' => $this->user->id,
-                'full_name' => $validatedData['full_name'] ?? null,
-                'image' => $validatedData['image'] ?? null,
-                'job_title' => $validatedData['job_title'] ?? null,
-                'email' => $validatedData['email'] ?? null,
-                'phone' => $validatedData['phone'] ?? null,
-                'website' => $validatedData['website'] ?? null,
-                'address' => $validatedData['address'] ?? null,
-                'summary' => $validatedData['summary'] ?? null,
-                'education' => $validatedData['education'] ? $validatedData['education'] : null,
-                'experience' => $validatedData['experience'] ? $validatedData['experience'] : null,
-                'certifications' => $validatedData['certifications'] ? $validatedData['certifications'] : null,
-                'languages' => $validatedData['languages'] ? $validatedData['languages'] : null,
-                'skills' => $validatedData['skills'] ? $validatedData['skills'] : null,
-                'projects' => $validatedData['projects'] ? $validatedData['projects'] : null,
-                'awards' => $validatedData['awards'] ? $validatedData['awards'] : null,
-                'social_links' => $validatedData['social_links'] ? $validatedData['social_links'] : null,
-                'interests' => $validatedData['interests'] ? $validatedData['interests'] : null,
-
+                'full_name' => isset($validatedData['full_name']) ? $validatedData['full_name'] : null,
+                'image' => isset($validatedData['image']) ? $validatedData['image'] : null,
+                'job_title' => isset($validatedData['job_title']) ? $validatedData['job_title'] : null,
+                'email' => isset($validatedData['email']) ? $validatedData['email'] : null,
+                'phone' => isset($validatedData['phone']) ? $validatedData['phone'] : null,
+                'website' => isset($validatedData['website']) ? $validatedData['website'] : null,
+                'address' => isset($validatedData['address']) ? $validatedData['address'] : null,
+                'summary' => isset($validatedData['summary']) ? $validatedData['summary'] : null,
+                'education' => isset($validatedData['education']) ? $validatedData['education'] : null,
+                'experience' => isset($validatedData['experience']) ? $validatedData['experience'] : null,
+                'certifications' => isset($validatedData['certifications']) ? $validatedData['certifications'] : null,
+                'languages' => isset($validatedData['languages']) ? $validatedData['languages'] : null,
+                'skills' => isset($validatedData['skills']) ? $validatedData['skills'] : null,
+                'projects' => isset($validatedData['projects']) ? $validatedData['projects'] : null,
+                'awards' => isset($validatedData['awards']) ? $validatedData['awards'] : null,
+                'social_links' => isset($validatedData['social_links']) ? $validatedData['social_links'] : null,
+                'interests' => isset($validatedData['interests']) ? $validatedData['interests'] : null,
             ]);
+
             $resume = Resume::create([
                 'user_profile_id' => $userProfile->id,
                 'title' => $validatedData['title'],
-                'template_name' => $validatedData['template_name']
+                'template_name' => $validatedData['template_name'],
             ]);
+
             DB::commit();
             return $resume;
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error("ResumeService::store" . $e->getMessage());
+            Log::error("ResumeService::store - " . $e->getMessage());
             throw $e;
         }
     }
+
 
     /**
      * Display a specific resource.
@@ -129,30 +133,30 @@ class ResumeService
 
             $resume = Resume::with('userProfile')->find($id);
             if (!$resume) {
-                throw new Exception("Cover letter not found");
+                throw new Exception("Resume not found");
             }
             DB::beginTransaction();
             $resume->update([
-                'title' => $validatedData['title'],
-                'template_name' => $validatedData['template_name']
+                'title' => isset($validatedData['title']) ? $validatedData['title'] : $validatedData['title'],
+                'template_name' => isset($validatedData['template_name']) ? $validatedData['template_name'] : $validatedData['template_name'],
             ]);
             $resume->userProfile()->update([
-                'full_name' => $validatedData['full_name'] ?? null,
-                'job_title' => $validatedData['job_title'] ?? null,
-                'email' => $validatedData['email'] ?? null,
-                'phone' => $validatedData['phone'] ?? null,
-                'website' => $validatedData['website'] ?? null,
-                'address' => $validatedData['address'] ?? null,
-                'summary' => $validatedData['summary'] ?? null,
-                'education' => $validatedData['education'] ? $validatedData['education'] : null,
-                'experience' => $validatedData['experience'] ? $validatedData['experience'] : null,
-                'certifications' => $validatedData['certifications'] ? $validatedData['certifications'] : null,
-                'languages' => $validatedData['languages'] ? $validatedData['languages'] : null,
-                'skills' => $validatedData['skills'] ? $validatedData['skills'] : null,
-                'projects' => $validatedData['projects'] ? $validatedData['projects'] : null,
-                'awards' => $validatedData['awards'] ? $validatedData['awards'] : null,
-                'social_links' => $validatedData['social_links'] ? $validatedData['social_links'] : null,
-                'interests' => $validatedData['interests'] ? $validatedData['interests'] : null,
+                'full_name' => isset($validatedData['full_name']) ?? null,
+                'job_title' => isset($validatedData['job_title']) ?? null,
+                'email' => isset($validatedData['email']) ?? null,
+                'phone' => isset($validatedData['phone']) ?? null,
+                'website' => isset($validatedData['website']) ?? null,
+                'address' => isset($validatedData['address']) ?? null,
+                'summary' => isset($validatedData['summary']) ?? null,
+                'education' => isset($validatedData['education']) ? $validatedData['education'] : null,
+                'experience' => isset($validatedData['experience']) ? $validatedData['experience'] : null,
+                'certifications' => isset($validatedData['certifications']) ? $validatedData['certifications'] : null,
+                'languages' => isset($validatedData['languages']) ? $validatedData['languages'] : null,
+                'skills' => isset($validatedData['skills']) ? $validatedData['skills'] : null,
+                'projects' => isset($validatedData['projects']) ? $validatedData['projects'] : null,
+                'awards' => isset($validatedData['awards']) ? $validatedData['awards'] : null,
+                'social_links' => isset($validatedData['social_links']) ? $validatedData['social_links'] : null,
+                'interests' => isset($validatedData['interests']) ? $validatedData['interests'] : null,
             ]);
             DB::commit();
             return $resume;
