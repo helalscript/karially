@@ -108,7 +108,7 @@ class ResetPasswordController extends Controller
     {
         $request->validate([
             'email' => 'required|email|exists:users,email',
-            'otp' => 'required|digits:4',
+            'token' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
         ]);
         try {
@@ -120,11 +120,11 @@ class ResetPasswordController extends Controller
                 return Helper::jsonErrorResponse('User not found', 404);
             }
 
-            if (!empty($user->otp) && $user->otp === $request->otp && $user->otp_expires_at >= Carbon::now()) {
+            if (!empty($user->reset_password_token) && $user->reset_password_token === $request->token && $user->reset_password_token_expire_at >= Carbon::now()) {
                 $user->update([
                     'password' => Hash::make($newPassword),
-                    'otp' => null,
-                    'otp_expires_at' => null,
+                    'reset_password_token' => null,
+                    'reset_password_token_expire_at' => null,
                 ]);
 
                 return Helper::jsonResponse(true, 'Password reset successfully.', 200);
