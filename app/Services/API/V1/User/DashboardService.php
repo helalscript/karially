@@ -24,7 +24,7 @@ class DashboardService
                 $totalCareerGoals = $this->user->careerGoals()->count();
                 $completedCareerGoals = $this->user->careerGoals()->where('status', 'Completed')->count();
                 $completedPercentage = $totalCareerGoals > 0 ? round(($completedCareerGoals / $totalCareerGoals) * 100) : 0;
-                
+
                 $runningWeeklyTasks = $this->user->weeks()
                     ->where('status', 'in_progress')
                     ->whereNull('career_goal_id')
@@ -40,12 +40,13 @@ class DashboardService
                         }
                     ])
                     ->get();
-
+                $userCareerGoals = $this->user->careerGoals()->select('id', 'user_id', 'roadmap_name', 'status')->get();
                 $inProgressWeeklyTasksPercentage = $runningWeeklyTasks->sum('in_progress_tasks') > 0 ? round(($runningWeeklyTasks->sum('in_progress_tasks') / $runningWeeklyTasks->sum('total_tasks')) * 100) : 0;
                 $completedTasksWeeklyTasksPercentage = $runningWeeklyTasks->sum('completed_tasks') > 0 ? round(($runningWeeklyTasks->sum('completed_tasks') / $runningWeeklyTasks->sum('total_tasks')) * 100) : 0;
 
                 $data = [
                     'total_career_goals' => $totalCareerGoals,
+                    'user_career_goals' => $userCareerGoals,
                     'completed_career_goals' => $completedCareerGoals,
                     'completed_percentage' => $completedPercentage,
                     'running_weekly_tasks' => $runningWeeklyTasks,
