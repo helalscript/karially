@@ -16,10 +16,10 @@ class SystemSettingSeeder extends Seeder
         SystemSetting::create([
             'title' => 'Karially',
             'system_name' => 'Karially',
-            'email' => 'example@email.com',
-            'contact_number' => '+88084936789',
+            'email' => 'hello@karially.com',
+            'contact_number' => '+000000',
             'company_open_hour' => '24 HOUR',
-            'copyright_text' => '© Copyright 2023, All right reserved',
+            'copyright_text' => '© Copyright 2025, All right reserved',
             'logo' => 'uploads/logos/logo.png',
             'favicon' => 'uploads/favicons/favicon.png',
             'address' => 'TEST',
