@@ -10,6 +10,7 @@ use App\Http\Controllers\API\Auth\SocialLoginController;
 use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\V1\CMS\AboutPageController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
+use App\Http\Controllers\API\V1\CoachMatchController;
 use App\Http\Controllers\API\V1\DashboardController;
 use App\Http\Controllers\API\V1\User\BookingController;
 use App\Http\Controllers\API\V1\User\CareerGoalController;
@@ -86,6 +87,9 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     //route for resume
     Route::apiResource('/resumes', ResumeController::class);
     Route::post('/resumes/generate-summary', [ResumeController::class, 'generateResumeSummary']);
+
+    //route for coach matches
+    Route::apiResource('/coach-matches', CoachMatchController::class)->only(['index', 'show', 'store']);
 
     //route for dashboard data
     Route::get('/dashboard-data', [DashboardController::class, 'dashboardData']);
