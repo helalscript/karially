@@ -6,6 +6,7 @@ use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\LogoutController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
+use App\Http\Controllers\API\Auth\SocialLoginController;
 use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\V1\CMS\AboutPageController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
@@ -37,6 +38,8 @@ Route::group(['middleware' => 'guest:api'], function ($router) {
     Route::post('/forget-password', [ResetPasswordController::class, 'forgotPassword']);
     Route::post('/verify-otp', [ResetPasswordController::class, 'VerifyOTP']);
     Route::post('/reset-password', [ResetPasswordController::class, 'ResetPassword']);
+    //social login
+    Route::post(' ', [SocialLoginController::class, 'SocialLogin']);
 
 });
 
