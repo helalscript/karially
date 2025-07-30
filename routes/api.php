@@ -43,7 +43,7 @@ Route::group(['middleware' => 'guest:api'], function ($router) {
 
 });
 
-Route::group(['middleware' => 'auth:api'], function ($router) {
+Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router) {
     Route::get('/refresh-token', [LoginController::class, 'refreshToken']);
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::get('/me', [UserController::class, 'me']);

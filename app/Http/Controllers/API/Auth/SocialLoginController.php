@@ -56,41 +56,25 @@ class SocialLoginController extends Controller
         $request->validate([
             'token' => 'required',
             'provider' => 'required|in:google,facebook,apple,instagram',
-            'role' => 'required|in:host,user',
         ]);
 
         try {
             $provider = $request->provider;
             $socialUser = Socialite::driver($provider)->stateless()->userFromToken($request->token);
-            // return response()->json($socialUser);
 
             if ($socialUser) {
                 $user = User::where('email', $socialUser->email)->first();
-                if ($user && $request->role !== $user->role) {
-                    switch ($user->role) {
-                        case 'user':
-                            return Helper::jsonErrorResponse('you are not authorized as a host.', 401);
-                        case 'host':
-                            return Helper::jsonErrorResponse('you are not authorized as a user.', 401);
-                        default:
-                            return Helper::jsonErrorResponse('invalid specified.', 401);
-                    }
-                }
-
-                $isNewUser = false;
 
                 if (!$user) {
                     $password = Str::random(16);
                     $user = User::create([
                         'name' => $socialUser->getName(),
-                        'first_name' => $socialUser->getName(),
                         'email' => $socialUser->getEmail(),
                         'password' => bcrypt($password),
                         'avatar' => $socialUser->getAvatar(),
-                        'role' => $request->role,
+                        'role' => 'user',
                         'email_verified_at' => now(),
                     ]);
-                    $isNewUser = true;
                 }
 
                 Auth::login($user);
