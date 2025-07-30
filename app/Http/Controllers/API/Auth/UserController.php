@@ -23,7 +23,14 @@ class UserController extends Controller
      */
     public function me()
     {
-        return Helper::jsonResponse(true, 'User details fetched successfully', 200, auth('api')->user());
+        $user = User::with([
+            'subcriptions' => function ($query) {
+                $query->where('status', 'active')
+                    ->where('ended_at', '>=', now());
+            }
+        ])->find(auth()->id());
+
+        return Helper::jsonResponse(true, 'User details fetched successfully', 200, $user);
     }
 
     /**

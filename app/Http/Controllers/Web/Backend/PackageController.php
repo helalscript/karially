@@ -137,7 +137,8 @@ class PackageController extends Controller
      */
     public function edit(string $id)
     {
-        return view('backend.layouts.packages.edit');
+        return redirect()->back()->with('warning', 'You cant changes a pakage details its already created in system and its not editable. If you want to add new package please create new package.');
+        // return view('backend.layouts.packages.edit');
     }
 
     /**

@@ -127,4 +127,18 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Week::class, 'user_id', 'id');
     }
+
+    public function subcriptions()
+    {
+        return $this->hasMany(Subcription::class, 'user_id', 'id');
+    }
+
+    // Accessor to check if the user has at least one active subscription
+    public function hasActiveSubscription(): bool
+    {
+        return $this->subscriptions()
+            ->where('status', 'active')
+            ->where('ended_at', '>=', now())
+            ->exists();
+    }
 }

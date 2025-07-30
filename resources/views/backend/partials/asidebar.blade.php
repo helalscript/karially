@@ -41,7 +41,7 @@ $systemSetting = App\Models\SystemSetting::first();
             </li> --}}
 
             <!-- Coaches Menu Item -->
-            <li class="menu-item {{ request()->routeIs('coaches.*') ? 'open' : '' }}">
+            {{-- <li class="menu-item {{ request()->routeIs('coaches.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">psychology</span>
                     <span class="title">Coaches</span>
@@ -73,7 +73,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
 
                 </ul>
-            </li>
+            </li> --}}
             <!-- Packages Menu Item -->
             <li class="menu-item {{ request()->routeIs('packages.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">

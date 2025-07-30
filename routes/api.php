@@ -55,19 +55,14 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
 });
 
 
-// only for user
-Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router) {
+// only for user and mustbe subscribed
+Route::group(['middleware' => ['auth:api', 'check_is_user', 'check_subscription']], function ($router) {
     //route for coaches
     Route::apiResource('/coaches', CoachController::class)->only(['index', 'show']);
     //route for bookings
     Route::apiResource('/my-bookings', BookingController::class);
     Route::post('/my-bookings/cancel/{id}', [BookingController::class, 'cancelBooking'])->name('my_bookings.cancel');
-    //route for subscription
 
-    Route::get('/my-subscription', [SubcriptionController::class, 'getMySubscription']);
-    Route::post('/create-subscription/{packageId}', [SubcriptionController::class, 'createSubscription']);
-    //payment
-    Route::apiResource('/payments', PaymentController::class)->only(['index', 'show']);
 
     //route for career goals and weekly tasks
     Route::apiResource('/career-goals', CareerGoalController::class)->except(['update']);
@@ -91,17 +86,30 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     //route for coach matches
     Route::apiResource('/coach-matches', CoachMatchController::class)->only(['index', 'show', 'store']);
 
+
+});
+
+
+// without subscription see this
+Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router) {
+    //route for subscription
+    Route::get('/my-subscription', [SubcriptionController::class, 'getMySubscription']);
+    Route::post('/create-subscription/{packageId}', [SubcriptionController::class, 'createSubscription']);
+    //payment
+    Route::apiResource('/payments', PaymentController::class)->only(['index', 'show']);
+    
     //route for dashboard data
     Route::get('/dashboard-data', [DashboardController::class, 'dashboardData']);
 });
-Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
 
 
-
-// only for user and host
+// only for user 
 Route::group(['middleware' => ['auth:api']], function ($router) {
     Route::post('/contact-support-message/sent', [UserContactSupportController::class, 'store']);
 });
+
+// webhook
+Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
 // subscription packages
 Route::get('/packages', [SubcriptionController::class, 'getPackages']);
 Route::get('/packages/single/{id}', [SubcriptionController::class, 'getSinglePackages']);

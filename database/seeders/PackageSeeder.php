@@ -62,10 +62,10 @@ class PackageSeeder extends Seeder
 
             // Free Plan
             ['package' => 'free-plan', 'feature' => 'Career Roadmap', 'access_lavel' => 'view_only', 'description' => 'View-only access to Career Roadmap'],
-            ['package' => 'free-plan', 'feature' => 'Progress Tracker', 'access_lavel' => 'custom', 'custom_tag' => 'goal', 'custom_value' => 1, 'description' => 'Track 1 goal'],
-            ['package' => 'free-plan', 'feature' => 'Resume Builder', 'access_lavel' => 'custom', 'custom_tag' => 'resume', 'custom_value' => 1, 'description' => 'Build 1 resume'],
-            ['package' => 'free-plan', 'feature' => 'Cover Letter', 'access_lavel' => 'custom', 'custom_tag' => 'cover_letter', 'custom_value' => 1, 'description' => 'Create 1 cover letter'],
-            ['package' => 'free-plan', 'feature' => 'Slack Community', 'access_lavel' => 'read_only', 'description' => 'Read-only access to community'],
+            // ['package' => 'free-plan', 'feature' => 'Progress Tracker', 'access_lavel' => 'custom', 'custom_tag' => 'goal', 'custom_value' => 1, 'description' => 'Track 1 goal'],
+            // ['package' => 'free-plan', 'feature' => 'Resume Builder', 'access_lavel' => 'custom', 'custom_tag' => 'resume', 'custom_value' => 1, 'description' => 'Build 1 resume'],
+            // ['package' => 'free-plan', 'feature' => 'Cover Letter', 'access_lavel' => 'custom', 'custom_tag' => 'cover_letter', 'custom_value' => 1, 'description' => 'Create 1 cover letter'],
+            // ['package' => 'free-plan', 'feature' => 'Slack Community', 'access_lavel' => 'read_only', 'description' => 'Read-only access to community'],
 
             // Basic Plan
             ['package' => 'basic-plan', 'feature' => 'Career Roadmap', 'access_lavel' => 'unlimited', 'description' => 'Full access to Career Roadmap'],
