@@ -173,4 +173,8 @@ class AboutPageController extends Controller
             return Helper::jsonErrorResponse('Something went wrong', 500);
         }
     }
+
+
+
+
 }

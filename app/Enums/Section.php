@@ -9,6 +9,7 @@ enum Section: string
     case HowItWork = 'how_it_work';
     case HowItWorkContainer = 'how_it_work_container';
     case SocialLinkContainer = 'social_link_container';
+    case CommunityLink = 'community_link';
 
     case HeroSection = 'hero_section';
     case TrustSection = 'trust_section';
@@ -27,7 +28,6 @@ enum Section: string
     case SuccessStoryContainer = 'success_story_container';
     case SuccessStoryContainerContent = 'success_story_container_content';
     case LoginSection = 'login_section';
-
 
 
 }

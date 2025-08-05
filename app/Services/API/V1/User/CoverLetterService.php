@@ -82,6 +82,7 @@ class CoverLetterService
                 'title' => $validatedData['title'],
                 'template_name' => $validatedData['template_name']
             ]);
+            $coverLetter->load('userProfile');
             DB::commit();
             return $coverLetter;
         } catch (Exception $e) {
@@ -152,6 +153,7 @@ class CoverLetterService
                 'social_links' => isset($validatedData['social_links']) ? $validatedData['social_links'] : null,
                 'interests' => isset($validatedData['interests']) ? $validatedData['interests'] : null,
             ]);
+            $coverLetter->load('userProfile');
             DB::commit();
             return $coverLetter;
 

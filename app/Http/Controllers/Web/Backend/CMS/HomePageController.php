@@ -214,4 +214,37 @@ class HomePageController extends Controller
             return redirect()->route('cms.auth_page.login_section.create')->with('error', 'Section not Updated Successfully');
         }
     }
+
+    public function getCommunitySection()
+    {
+        $data = CMS::where('page', Page::HomePage->value)
+            ->where('section', Section::CommunityLink->value)
+            ->first();
+        return view('backend.layouts.cms.home_page.community_section.create', compact('data'));
+    }
+    public function updateCommunitySection(Request $request)
+    {
+        $validatedData = $request->validate([
+            'link_url' => 'required|url',
+        ]);
+
+        try {
+            $data = CMS::where('page', Page::HomePage->value)
+                ->where('section', Section::CommunityLink->value)
+                ->first();
+
+            // Update or create the CMS entry for the price section
+            CMS::updateOrCreate(
+                [
+                    'page' => Page::HomePage->value,
+                    'section' => Section::CommunityLink->value,
+                ],
+                $validatedData
+            );
+            return redirect()->route('community.create')->with('success', 'Updated Successfully');
+        } catch (Exception $e) {
+            Log::error("HomePageController::updateCommunitySection" . $e->getMessage());
+            return redirect()->route('community.create')->with('error', 'Updated Unsuccessfully');
+        }
+    }
 }
