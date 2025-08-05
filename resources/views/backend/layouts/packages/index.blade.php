@@ -29,6 +29,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Price</th>
+                                        <th scope="col">Billing Cycle</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -65,12 +66,12 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('backend') }}/admin/assets/datatables/data-tables.min.js"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/datatables.buttons.min.js"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/jszip.min.js"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/pdfmake.min.js"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/buttons.html5.min.js"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/buttons.print.min.js"></script>
+    <script src="{{ asset('backend/admin/assets/datatables/data-tables.min.js') }}"></script>
+    <script src="{{ asset('backend/admin/assets/datatables/datatables.buttons.min.js') }}"></script>
+    <script src="{{ asset('backend/admin/assets/datatables/jszip.min.js') }}"></script>
+    <script src="{{ asset('backend/admin/assets/datatables/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('backend/admin/assets/datatables/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('backend/admin/assets/datatables/buttons.print.min.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -105,6 +106,7 @@
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'title', name: 'title', orderable: true, searchable: true },
                     { data: 'price', name: 'price', orderable: true, searchable: false },
+                    { data: 'billing_cycle', name: 'billing_cycle', orderable: true, searchable: false },
                     { data: 'status', name: 'status', orderable: true, searchable: false },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],

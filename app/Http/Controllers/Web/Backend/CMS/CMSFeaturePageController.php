@@ -59,4 +59,38 @@ class CMSFeaturePageController extends Controller
             return redirect()->route('cms.feature_page.hero_section.create')->with('error', 'Hero Section not Updated Successfully');
         }
     }
+
+    public function getFeatureSection()
+    {
+        $data = CMS::where('page', Page::FeaturePage->value)
+            ->where('section', Section::FeatureContainer->value)
+            ->first();
+        return view('backend.layouts.cms.feature_page.feature_section.create', compact('data'));
+    }
+    public function updateFeaturesection(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:500'
+        ]);
+
+        try {
+            $data = CMS::where('page', Page::FeaturePage->value)
+                ->where('section', Section::FeatureContainer->value)
+                ->first();
+
+            // Update or create the CMS entry for the hero section
+            CMS::updateOrCreate(
+                [
+                    'page' => Page::FeaturePage->value,
+                    'section' => Section::FeatureContainer->value,
+                ],
+                $validatedData
+            );
+            return redirect()->route('cms.feature_page.feature_section.create')->with('success', 'Hero Section Updated Successfully');
+        } catch (Exception $e) {
+            Log::error("CMSFeaturePageController::updateFeaturesection" . $e->getMessage());
+            return redirect()->route('cms.feature_page.feature_section.create')->with('error', 'Hero Section not Updated Successfully');
+        }
+    }
 }

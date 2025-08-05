@@ -41,7 +41,7 @@ $systemSetting = App\Models\SystemSetting::first();
             </li> --}}
 
             <!-- Coaches Menu Item -->
-            <li class="menu-item {{ request()->routeIs('coaches.*') ? 'open' : '' }}">
+            {{-- <li class="menu-item {{ request()->routeIs('coaches.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">psychology</span>
                     <span class="title">Coaches</span>
@@ -73,7 +73,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
 
                 </ul>
-            </li>
+            </li> --}}
             <!-- Packages Menu Item -->
             <li class="menu-item {{ request()->routeIs('packages.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
@@ -286,6 +286,12 @@ $systemSetting = App\Models\SystemSetting::first();
                         <a href="{{ route('cms.feature_page.hero_section.create') }}"
                             class="menu-link {{ request()->routeIs('cms.feature_page.hero_section.*') ? 'active' : '' }}">
                             Hero Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.feature_page.feature_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.feature_page.feature_section.*') ? 'active' : '' }}">
+                            Feature Section
                         </a>
                     </li>
                 </ul>

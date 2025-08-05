@@ -23,7 +23,7 @@ class CoachMatchSubmitted extends Mailable
 
     public function build()
     {
-        Log::info('Email data: ' . json_encode($this->data));
+        // Log::info('Email data: ' . json_encode($this->data));
         return $this->subject('New Coach Match Request')
             ->view('mail.coach_match');
     }

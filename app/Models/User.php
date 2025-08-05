@@ -127,4 +127,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Week::class, 'user_id', 'id');
     }
+
+    public function subcriptions()
+    {
+        return $this->hasMany(Subcription::class, 'user_id', 'id');
+    }
+
+
 }

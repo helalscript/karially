@@ -30,7 +30,6 @@ class CoachMatchService
             $per_page = $request->get('per_page', 10);
             $coachMatches = CoachMatch::where('user_id', $this->user->id)->latest()->paginate($per_page);
             return $coachMatches;
-
         } catch (Exception $e) {
             Log::error("CoachMatchService::index" . $e->getMessage());
             throw $e;
