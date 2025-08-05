@@ -288,6 +288,12 @@ $systemSetting = App\Models\SystemSetting::first();
                             Hero Section
                         </a>
                     </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.feature_page.feature_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.feature_page.feature_section.*') ? 'active' : '' }}">
+                            Feature Section
+                        </a>
+                    </li>
                 </ul>
             </li>
             <!-- CMS Price Page Menu Item -->

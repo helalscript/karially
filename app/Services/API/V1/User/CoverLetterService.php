@@ -55,16 +55,17 @@ class CoverLetterService
     public function store(array $validatedData)
     {
         try {
+            // dd($validatedData);
             DB::beginTransaction();
             $userProfile = UserProfile::create([
                 'user_id' => $this->user->id,
-                'full_name' => isset($validatedData['full_name']) ?? null,
-                'job_title' => isset($validatedData['job_title']) ?? null,
-                'email' => isset($validatedData['email']) ?? null,
-                'phone' => isset($validatedData['phone']) ?? null,
-                'website' => isset($validatedData['website']) ?? null,
-                'address' => isset($validatedData['address']) ?? null,
-                'summary' => isset($validatedData['summary']) ?? null,
+                'full_name' => isset($validatedData['full_name']) ? $validatedData['full_name'] : null,
+                'job_title' => isset($validatedData['job_title']) ? $validatedData['job_title'] : null,
+                'email' => isset($validatedData['email']) ? $validatedData['email'] : null,
+                'phone' => isset($validatedData['phone']) ? $validatedData['phone'] : null,
+                'website' => isset($validatedData['website']) ? $validatedData['website'] : null,
+                'address' => isset($validatedData['address']) ? $validatedData['address'] : null,
+                'summary' => isset($validatedData['summary']) ? $validatedData['summary'] : null,
                 'education' => isset($validatedData['education']) ? $validatedData['education'] : null,
                 'experience' => isset($validatedData['experience']) ? $validatedData['experience'] : null,
                 'certifications' => isset($validatedData['certifications']) ? $validatedData['certifications'] : null,
@@ -134,13 +135,13 @@ class CoverLetterService
                 'template_name' => isset($validatedData['template_name']) ? $validatedData['template_name'] : $validatedData['template_name']
             ]);
             $coverLetter->userProfile()->update([
-                'full_name' => isset($validatedData['full_name']) ?? null,
-                'job_title' => isset($validatedData['job_title']) ?? null,
-                'email' => isset($validatedData['email']) ?? null,
-                'phone' => isset($validatedData['phone']) ?? null,
-                'website' => isset($validatedData['website']) ?? null,
-                'address' => isset($validatedData['address']) ?? null,
-                'summary' => isset($validatedData['summary']) ?? null,
+                'full_name' => isset($validatedData['full_name']) ? $validatedData['full_name'] : null,
+                'job_title' => isset($validatedData['job_title']) ? $validatedData['job_title'] : null,
+                'email' => isset($validatedData['email']) ? $validatedData['email'] : null,
+                'phone' => isset($validatedData['phone']) ? $validatedData['phone'] : null,
+                'website' => isset($validatedData['website']) ? $validatedData['website'] : null,
+                'address' => isset($validatedData['address']) ? $validatedData['address'] : null,
+                'summary' => isset($validatedData['summary']) ? $validatedData['summary'] : null,
                 'education' => isset($validatedData['education']) ? $validatedData['education'] : null,
                 'experience' => isset($validatedData['experience']) ? $validatedData['experience'] : null,
                 'certifications' => isset($validatedData['certifications']) ? $validatedData['certifications'] : null,

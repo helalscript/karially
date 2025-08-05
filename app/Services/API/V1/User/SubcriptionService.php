@@ -44,6 +44,7 @@ class SubcriptionService
                     return $query->where('billing_cycle', $billing_cycle);
                 })
                 ->select('id', 'title', 'slug', 'trial_period_days', 'billing_cycle', 'price', 'status')
+                ->where('status', 'active')
                 ->latest()
                 ->paginate($per_page);
             return $data;

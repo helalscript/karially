@@ -127,6 +127,8 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   //cms all part feature page
   Route::get('/cms/feature-page/hero-section', [CMSFeaturePageController::class, 'getHeroSection'])->name('cms.feature_page.hero_section.create');
   Route::post('/cms/feature-page/hero-section', [CMSFeaturePageController::class, 'updateHerosection'])->name('cms.feature_page.hero_section.update');
+  Route::get('/cms/feature-page/feature-section', [CMSFeaturePageController::class, 'getFeatureSection'])->name('cms.feature_page.feature_section.create');
+  Route::post('/cms/feature-page/feature-section', [CMSFeaturePageController::class, 'updateFeaturesection'])->name('cms.feature_page.feature_section.update');
 
   //cms all part price page
   Route::get('/cms/price-page/hero-section', [CMSPricePageController::class, 'getHeroSection'])->name('cms.price_page.hero_section.create');

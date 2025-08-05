@@ -141,5 +141,6 @@ Route::get('/cms/about-page/success-story-section', [AboutPageController::class,
 Route::get('/cms/about-page/spotlight-section', [AboutPageController::class, 'getSpotlightSection']);
 //route for feature page
 Route::get('/cms/feature-page/hero-section', [AboutPageController::class, 'getFeaturePageHeroSection']);
+Route::get('/cms/feature-page/feature-section', [AboutPageController::class, 'getFeaturePageFeatureSection']);
 //route for price page
 Route::get('/cms/price-page/hero-section', [AboutPageController::class, 'getPricePageHeroSection']);
