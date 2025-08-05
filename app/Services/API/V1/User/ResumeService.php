@@ -87,7 +87,7 @@ class ResumeService
                 'title' => $validatedData['title'],
                 'template_name' => $validatedData['template_name'],
             ]);
-
+            $resume->load('userProfile');
             DB::commit();
             return $resume;
         } catch (Exception $e) {
@@ -159,6 +159,7 @@ class ResumeService
                 'social_links' => isset($validatedData['social_links']) ? $validatedData['social_links'] : null,
                 'interests' => isset($validatedData['interests']) ? $validatedData['interests'] : null,
             ]);
+            $resume->load('userProfile');
             DB::commit();
             return $resume;
         } catch (Exception $e) {
