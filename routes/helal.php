@@ -88,6 +88,11 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   Route::resource('/coaches', CoachController::class)->names('coaches');
   Route::post('/coaches/status/{id}', [CoachController::class, 'status'])->name('coaches.status');
 
+
+  // for community-link
+  Route::get('/community-link', [HomePageController::class, 'getCommunitySection'])->name('community.create');
+  Route::post('/community-link', [HomePageController::class, 'updateCommunitySection'])->name('community.update');
+
   //cms all part home page 
   Route::get('/cms/home-page/hero-section', [HomePageController::class, 'getHeroSection'])->name('cms.home_page.hero_section.create');
   Route::post('/cms/home-page/hero-section', [HomePageController::class, 'updateHerosection'])->name('cms.home_page.hero_section.update');
@@ -100,6 +105,7 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   //for auth page 
   Route::get('/cms/home-page/login-section', [HomePageController::class, 'getLoginSection'])->name('cms.auth_page.login_section.create');
   Route::post('/cms/home-page/login-section', [HomePageController::class, 'updateLoginSection'])->name('cms.auth_page.login_section.update');
+
   // Route for FeatureController
   Route::resource('/cms/home-page/feature-section', FeatureController::class)->names('cms.home_page.feature')->except(['show']);
   Route::post('/cms/home-page/feature-section/status/{id}', [FeatureController::class, 'status'])->name('cms.home_page.feature.status');

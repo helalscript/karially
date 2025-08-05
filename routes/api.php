@@ -87,8 +87,10 @@ Route::group(['middleware' => ['auth:api', 'check_is_user', 'check_subscription'
     Route::apiResource('/coach-matches', CoachMatchController::class)->only(['index', 'show', 'store']);
 
 
-});
+    //route for community link
+    Route::get('/community-link', [HomePageController::class, 'getCommunityLink']);
 
+});
 
 // without subscription see this
 Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router) {
@@ -97,7 +99,7 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
     Route::post('/create-subscription/{packageId}', [SubcriptionController::class, 'createSubscription']);
     //payment
     Route::apiResource('/payments', PaymentController::class)->only(['index', 'show']);
-    
+
     //route for dashboard data
     Route::get('/dashboard-data', [DashboardController::class, 'dashboardData']);
 });
@@ -144,3 +146,4 @@ Route::get('/cms/feature-page/hero-section', [AboutPageController::class, 'getFe
 Route::get('/cms/feature-page/feature-section', [AboutPageController::class, 'getFeaturePageFeatureSection']);
 //route for price page
 Route::get('/cms/price-page/hero-section', [AboutPageController::class, 'getPricePageHeroSection']);
+

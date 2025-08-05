@@ -39,6 +39,22 @@ class CMSSeeder extends Seeder
                 'created_at' => Carbon::parse('2025-07-12 09:30:09'),
                 'updated_at' => Carbon::parse('2025-07-17 05:35:33')
             ],
+            [
+                'page' => 'home_page',
+                'section' => 'community_link',
+                'title' => Null,
+                'sub_title' => Null,
+                'image' => Null,
+                'background_image' => NULL,
+                'description' => Null,
+                'sub_description' => NULL,
+                'button_text' => Null,
+                'link_url' => 'https://join.slack.com/t/kariallycommunity/shared_invite/zt-3aiv1dqmq-XgB6CcTEBj1x5FXmmtdM8w',
+                'tags' => Null,
+                'status' => 'active',
+                'created_at' => Carbon::parse('2025-07-12 09:30:09'),
+                'updated_at' => Carbon::parse('2025-07-17 05:35:33')
+            ],
             ['page' => 'home_page', 'section' => 'faq_container', 'title' => 'FAQs', 'sub_title' => NULL, 'image' => NULL, 'background_image' => NULL, 'description' => 'Find detailed answers to the most commonly asked questions about creating and optimizing resumes with Resumate AI.', 'sub_description' => NULL, 'button_text' => 'Contact us', 'link_url' => NULL, 'tags' => NULL, 'status' => 'active', 'created_at' => Carbon::parse('2025-07-14 02:58:37'), 'updated_at' => Carbon::parse('2025-07-17 06:04:36')],
             ['page' => 'home_page', 'section' => 'feature_container', 'title' => 'Our features', 'sub_title' => NULL, 'image' => NULL, 'background_image' => NULL, 'description' => 'Elevate your profile with smart resumes for faster results & more interviews.', 'sub_description' => NULL, 'button_text' => NULL, 'link_url' => NULL, 'tags' => NULL, 'status' => 'active', 'created_at' => Carbon::parse('2025-07-14 05:03:23'), 'updated_at' => Carbon::parse('2025-07-17 05:36:00')],
             ['page' => 'home_page', 'section' => 'why_choose_us', 'title' => 'Why choose us', 'sub_title' => NULL, 'image' => NULL, 'background_image' => NULL, 'description' => 'Built to help you stand out: Smarter resumes, faster results, more interviews.', 'sub_description' => NULL, 'button_text' => NULL, 'link_url' => NULL, 'tags' => NULL, 'status' => 'active', 'created_at' => Carbon::parse('2025-07-14 05:40:03'), 'updated_at' => Carbon::parse('2025-07-17 05:59:47')],
@@ -66,6 +82,22 @@ class CMSSeeder extends Seeder
                     "Time-saving tool",
                     "Job-specific resumes"
                 ]),
+                'status' => 'active',
+                'created_at' => Carbon::parse('2025-07-15 06:24:19'),
+                'updated_at' => Carbon::parse('2025-07-17 06:15:06')
+            ],
+            [
+                'page' => 'feature_page',
+                'section' => 'feature_section',
+                'title' => 'Unlock the tools to succeed',
+                'sub_title' => NULL,
+                'image' => NULL,
+                'background_image' => NULL,
+                'description' => 'Discover how ResuMate AI transforms the way you create, customize, and optimize your resume.',
+                'sub_description' => NULL,
+                'button_text' => NULL,
+                'link_url' => NULL,
+                'tags' => Null,
                 'status' => 'active',
                 'created_at' => Carbon::parse('2025-07-15 06:24:19'),
                 'updated_at' => Carbon::parse('2025-07-17 06:15:06')

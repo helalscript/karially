@@ -14,7 +14,8 @@ $systemSetting = App\Models\SystemSetting::first();
         </button>
     </div>
 
-    <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar style="height: calc(100vh - 100px)">
+    <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar
+        style="height: calc(100vh - 100px)">
         <ul class="menu-inner">
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">MAIN</span>
@@ -100,6 +101,21 @@ $systemSetting = App\Models\SystemSetting::first();
                         <a href="{{ route('newsletters.index') }}"
                             class="menu-link {{ request()->routeIs('newsletters.index') ? 'active' : '' }} ">
                             List
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- Packages Menu Item -->
+            <li class="menu-item {{ request()->routeIs('community.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">mail</span>
+                    <span class="title">Community</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item ">
+                        <a href="{{ route('community.create') }}"
+                            class="menu-link {{ request()->routeIs('community.create') ? 'active' : '' }} ">
+                            Community Link
                         </a>
                     </li>
                 </ul>
