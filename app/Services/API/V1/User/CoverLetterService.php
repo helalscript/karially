@@ -230,5 +230,15 @@ class CoverLetterService
             throw $e;
         }
     }
+    public function generateText(array $validatedData)
+    {
+        try {
+            $summary = $this->aiGeneratorService->generateText($validatedData['prompt_text'], $validatedData['prompt_text'],$validatedData['file'] ?? null);
+            return $summary;
+        } catch (Exception $e) {
+            Log::error("CoverLetterService::generateCVSummary" . $e->getMessage());
+            throw $e;
+        }
+    }
 
 }

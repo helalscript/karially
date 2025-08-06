@@ -139,8 +139,24 @@ class CoverLetterController extends Controller
             $coverLetter = $this->coverLetterService->generateCVSummary($validatedData);
             return Helper::jsonResponse(true, 'Cover letter generated successfully', 200, $coverLetter);
         } catch (Exception $e) {
-            Log::error("CoverLetterController::generate" . $e->getMessage());
+            Log::error("CoverLetterController::generateCVSummary" . $e->getMessage());
             return Helper::jsonErrorResponse('Failed to generate cover letter ' . $e->getMessage(), 500);
+        }
+    }
+    public function generateText(Request $request)
+    {
+        $validatedData = $request->validate([
+            'prompt_text' => 'required|string',
+            'type' => 'required|string|in:cover_letter,resume,cv',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,txt', // Add this if file upload is allowed
+        ]);
+
+        try {
+            $coverLetter = $this->coverLetterService->generateText($validatedData);
+            return Helper::jsonResponse(true, 'Text generated successfully', 200, $coverLetter);
+        } catch (Exception $e) {
+            Log::error("CoverLetterController::generateText" . $e->getMessage());
+            return Helper::jsonErrorResponse('Failed to generate text ' . $e->getMessage(), 500);
         }
     }
 }

@@ -175,5 +175,49 @@ class AIGeneratorService
         return trim($response->json()['choices'][0]['message']['content'] ?? 'Summary not generated.');
     }
 
+    public function generateText(string $promptText, string $type, $file = null)
+    {
+        // Beautify the $type
+        $typeFormatted = match (strtolower($type)) {
+            'cv', 'resume' => 'resume','cover', 'coverletter', 'cover-letter', 'cover latter' => 'cover letter',
+            default => 'document',
+        };
+
+        // Set base system prompt
+        $systemPrompt = "You are a professional {$typeFormatted} writing assistant.
+                        Based on the given background, generate a professional and polished {$typeFormatted}.";
+
+        // Add section-related instructions only for cover letter
+        if ($typeFormatted === 'cover letter') {
+            $systemPrompt .= "
+                            The user may provide only parts such as intro, body, or conclusion.
+                            You should complete or enhance the cover letter based on that.";
+        }
+
+        // Final system prompt instructions
+        $systemPrompt .= "Respond ONLY with plain text. Do NOT include any headings, formatting, or JSON.";
+
+        // Build user prompt
+        $userPrompt = "User has provided the following input:\n\n" . $promptText;
+
+        if ($file) {
+            $userPrompt .= "\n\nAdditional Info from Uploaded File:\n" . $this->extractTextFromFile($file);
+        }
+
+        // Make API call
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . config('services.openai.key'),
+        ])->timeout(90)->post('https://api.openai.com/v1/chat/completions', [
+                    'model' => 'gpt-4',
+                    'messages' => [
+                        ['role' => 'system', 'content' => $systemPrompt],
+                        ['role' => 'user', 'content' => $userPrompt],
+                    ],
+                    'temperature' => 0.7,
+                ]);
+
+        return trim($response->json()['choices'][0]['message']['content'] ?? 'Text not generated.');
+    }
+
 
 }
