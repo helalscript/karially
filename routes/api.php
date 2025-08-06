@@ -56,7 +56,8 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
 
 
 // only for user and mustbe subscribed
-Route::group(['middleware' => ['auth:api', 'check_is_user', 'check_subscription']], function ($router) {
+Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router) {
+// Route::group(['middleware' => ['auth:api', 'check_is_user', 'check_subscription']], function ($router) {
     //route for coaches
     Route::apiResource('/coaches', CoachController::class)->only(['index', 'show']);
     //route for bookings
@@ -78,6 +79,7 @@ Route::group(['middleware' => ['auth:api', 'check_is_user', 'check_subscription'
     //route for cover letter
     Route::apiResource('/cover-letters', CoverLetterController::class);
     Route::post('/cover-letters/generate-summary', [CoverLetterController::class, 'generateCVSummary']);
+    Route::post('/cover-letters/generate-text', [CoverLetterController::class, 'generateText']);
 
     //route for resume
     Route::apiResource('/resumes', ResumeController::class);
