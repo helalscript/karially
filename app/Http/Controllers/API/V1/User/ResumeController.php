@@ -139,7 +139,22 @@ class ResumeController extends Controller
             $coverLetter = $this->resumeService->generateResumeSummary($validatedData);
             return Helper::jsonResponse(true, 'Resume summary generated successfully', 200, $coverLetter);
         } catch (Exception $e) {
-            Log::error("CoverLetterController::generate" . $e->getMessage());
+            Log::error("ResumeController::generateResumeSummary" . $e->getMessage());
+            return Helper::jsonErrorResponse('Failed to generate cover letter ' . $e->getMessage(), 500);
+        }
+    }
+    public function generateResume(Request $request)
+    {
+        $validatedData = $request->validate([
+            'prompt_text' => 'required|string',
+            'file' => 'nullable|mimes:doc,docx,pdf,txt|max:2048',
+        ]);
+
+        try {
+            $coverLetter = $this->resumeService->generateResume($validatedData);
+            return Helper::jsonResponse(true, 'Resume generated successfully', 200, $coverLetter);
+        } catch (Exception $e) {
+            Log::error("ResumeController::generateResume" . $e->getMessage());
             return Helper::jsonErrorResponse('Failed to generate cover letter ' . $e->getMessage(), 500);
         }
     }

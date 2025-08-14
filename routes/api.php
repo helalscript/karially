@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth:api', 'check_is_user', 'check_subscription'
     //route for resume
     Route::apiResource('/resumes', ResumeController::class);
     Route::post('/resumes/generate-summary', [ResumeController::class, 'generateResumeSummary']);
+    Route::post('/resumes/generate', [ResumeController::class, 'generateResume']);
 
     //route for coach matches
     Route::apiResource('/coach-matches', CoachMatchController::class)->only(['index', 'show', 'store']);

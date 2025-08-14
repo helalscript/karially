@@ -1,6 +1,14 @@
 @extends('backend.app')
 @section('title', 'FAQ Page')
 
+@push('styles')
+   <style>
+        [type=checkbox]:checked,
+        [type=radio]:checked {
+            background-size: 40% !important;
+        }
+    </style>
+@endpush
 
 
 @section('content')

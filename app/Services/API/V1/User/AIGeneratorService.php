@@ -179,7 +179,7 @@ class AIGeneratorService
     {
         // Beautify the $type
         $typeFormatted = match (strtolower($type)) {
-            'cv', 'resume' => 'resume','cover', 'coverletter', 'cover-letter', 'cover latter' => 'cover letter',
+            'cv', 'resume' => 'resume', 'cover', 'coverletter', 'cover-letter', 'cover latter' => 'cover letter',
             default => 'document',
         };
 
@@ -219,5 +219,108 @@ class AIGeneratorService
         return trim($response->json()['choices'][0]['message']['content'] ?? 'Text not generated.');
     }
 
+    public function generateResume(string $promptText, $file = null)
+    {
+        $systemPrompt = <<<EOT
+                            You are a professional resume writing assistant.
+                            Generate a full resume in **valid JSON** strictly matching the following structure:
+
+                            {
+                                "title": "",
+                                "template_name": "",
+                                "full_name": "",
+                                "job_title": "",
+                                "email": "",
+                                "phone": "",
+                                "website": "",
+                                "address": "",
+                                "summary": {
+                                    "profile": ""
+                                },
+                                "education": [
+                                    {
+                                        "degree": "",
+                                        "institution": "",
+                                        "year": ""
+                                    }
+                                ],
+                                "experience": [
+                                    {
+                                        "position": "",
+                                        "company": "",
+                                        "duration": "",
+                                        "description": ""
+                                    }
+                                ],
+                                "certifications": [
+                                    {
+                                        "name": "",
+                                        "issuer": "",
+                                        "year": ""
+                                    }
+                                ],
+                                "languages": [],
+                                "skills": [],
+                                "projects": [
+                                    {
+                                        "name": "",
+                                        "description": "",
+                                        "url": ""
+                                    }
+                                ],
+                                "awards": [
+                                    {
+                                        "title": "",
+                                        "issuer": "",
+                                        "year": ""
+                                    }
+                                ],
+                                "social_links": {
+                                    "linkedin": "",
+                                    "github": ""
+                                },
+                                "interests": [
+                                    {
+                                        "name": ""
+                                    }
+                                ]
+                            }
+
+                            Guidelines:
+                            - Fill in missing details creatively but realistically based on the user’s background.
+                            - Always return **only** valid JSON. No extra text or explanation.
+                            - The "summary.profile" must be a professional single-paragraph profile summary.
+                            - If a field is unknown, make a plausible assumption.
+                            - Maintain professional tone for all text fields.
+                            EOT;
+
+        $userPrompt = "User Background:\n" . $promptText;
+
+        if ($file) {
+            $userPrompt .= "\n\nAdditional Info from Uploaded CV:\n" . $this->extractTextFromFile($file);
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . config('services.openai.key'),
+        ])->timeout(90)->post('https://api.openai.com/v1/chat/completions', [
+                    'model' => 'gpt-4',
+                    'messages' => [
+                        ['role' => 'system', 'content' => $systemPrompt],
+                        ['role' => 'user', 'content' => $userPrompt],
+                    ],
+                    'temperature' => 0.7,
+                ]);
+
+        $content = $response->json()['choices'][0]['message']['content'] ?? null;
+
+        if ($content) {
+            $decoded = json_decode($content, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                return $decoded;
+            }
+        }
+
+        return ['error' => 'Invalid JSON received from AI'];
+    }
 
 }
