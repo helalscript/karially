@@ -201,4 +201,14 @@ class ResumeService
             throw $e;
         }
     }
+    public function generateResume(array $validatedData)
+    {
+        try {
+            $summary = $this->aiGeneratorService->generateResume($validatedData['prompt_text'], $validatedData['file'] ?? null);
+            return $summary;
+        } catch (Exception $e) {
+            Log::error("ResumeService::generateResume" . $e->getMessage());
+            throw $e;
+        }
+    }
 }
