@@ -56,8 +56,8 @@ Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router)
 
 
 // only for user and mustbe subscribed
-// Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router) {
-Route::group(['middleware' => ['auth:api', 'check_is_user', 'check_subscription']], function ($router) {
+Route::group(['middleware' => ['auth:api', 'check_is_user']], function ($router) {
+// Route::group(['middleware' => ['auth:api', 'check_is_user', 'check_subscription']], function ($router) {
     //route for coaches
     Route::apiResource('/coaches', CoachController::class)->only(['index', 'show']);
     //route for bookings
