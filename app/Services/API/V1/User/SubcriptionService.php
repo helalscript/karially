@@ -129,7 +129,7 @@ class SubcriptionService
             if (!$product) {
                 $product = StripeProduct::create([
                     'name' => $packageName,
-                    'description' => 'This is a premium ' . $package->billing_cycle . ' plan.',
+                    'description' => 'This is a ' . $package->billing_cycle . ' plan.',
                 ]);
             }
 
