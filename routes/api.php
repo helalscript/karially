@@ -1,7 +1,6 @@
 <?php
 
 
-
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\LogoutController;
 use App\Http\Controllers\API\Auth\RegisterController;
@@ -26,8 +25,6 @@ use App\Http\Controllers\API\V1\User\WeekController;
 use App\Http\Controllers\API\V1\User\WeeklyTaskController;
 use Illuminate\Support\Facades\Route;
 
-// Stripe webhook - must be first and unprotected
-Route::post('/stripe-webhook', [SubcriptionController::class, 'handleWebhook']);
 
 Route::group(['middleware' => 'guest:api'], function ($router) {
     //register
