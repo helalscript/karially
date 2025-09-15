@@ -114,7 +114,10 @@ class SubcriptionService
         if (!$package) {
             throw new Exception('Plan item not found.');
         }
-
+        //if its free
+        if ($package->price == 0) {
+            return $this->subscribeFreePackage($package);
+        }
         try {
             DB::beginTransaction();
             // $feature = $package->features->first();
@@ -377,6 +380,50 @@ class SubcriptionService
             ]);
 
         Log::info('SubcriptionService::handleSubscriptionUpdated- Subscription updated (possibly scheduled cancel): ' . $stripeSub->id);
+    }
+
+    private function subscribeFreePackage($package)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Payment record 
+            $package->payments()->create([
+                'user_id' => $this->user->id,
+                'amount' => 0,
+                'currency' => 'usd',
+                'status' => 'completed',
+                'stripe_payment_id' => null,
+            ]);
+
+            // ended_at billing_cycle 
+            $endedAt = match ($package->billing_cycle) {
+                'lifetime' => null,
+                'yearly' => now()->addYear(),
+                'monthly' => now()->addMonth(),
+                'weekly' => now()->addWeek(),
+                default => null,
+            };
+
+            Subcription::create([
+                'user_id' => $this->user->id,
+                'package_id' => $package->id,
+                'stripe_subscription_id' => null,
+                'started_at' => now(),
+                'ended_at' => $endedAt,
+                'status' => 'active',
+            ]);
+
+            DB::commit();
+
+            return [
+                'message' => 'Free package successfully subscribed',
+                'package' => $package,
+            ];
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception('Failed to subscribe free package: ' . $e->getMessage());
+        }
     }
 
 }

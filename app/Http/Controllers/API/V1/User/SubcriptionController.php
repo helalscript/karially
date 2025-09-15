@@ -78,6 +78,15 @@ class SubcriptionController extends Controller
 
         try {
             $session = $this->subscriptionService->createSubscription($validatedData, $id);
+            
+            //if free plan
+            if (is_array($session) && isset($session['message'])) {
+                return response()->json([
+                    'message' => $session['message'],
+                    'package' => $session['package'],
+                ], 201);
+            }
+
             return response()->json([
                 'payment_url' => $session->url,
                 'message' => 'Checkout session created successfully.',
