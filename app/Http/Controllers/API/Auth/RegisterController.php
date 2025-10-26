@@ -37,8 +37,8 @@ class RegisterController extends Controller
         ]);
 
         try {
-            $otp = 1234; // For testing purposes, you can use a fixed OTP. In production, generate a random OTP.
-            // $otp = rand(1000, 9999);
+            // $otp = 1234; // For testing purposes, you can use a fixed OTP. In production, generate a random OTP.
+            $otp = rand(1000, 9999);
             $otpExpiresAt = Carbon::now()->addMinutes(60); // 1 hour
 
             // Check for soft-deleted user
@@ -183,9 +183,7 @@ class RegisterController extends Controller
             $user->save();
 
             //* Send the new OTP to the user's email
-
             try {
-                // Mail::to($user->email)->send(new OtpMail($otp, $user, 'Verify Your Email Address'));
                 Mail::to($user->email)->send(new OtpMail($newOtp, $user, 'Verify Your Email Address'));
                 return Helper::jsonResponse(true, 'A new OTP has been sent to your email.', 200);
             } catch (Exception $e) {
